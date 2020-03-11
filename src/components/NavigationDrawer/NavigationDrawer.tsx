@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Drawer, List } from '@material-ui/core';
-
-//Styles
-import * as Styled from './stylesNavigationDrawer';
 
 // Components
 import NavigationItem from '../NavigationItem/NavigationItem';

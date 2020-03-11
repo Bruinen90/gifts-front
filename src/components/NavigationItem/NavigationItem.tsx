@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 //Styles
 // import * as Styled from './stylesNavigationItem';
@@ -7,7 +7,7 @@ import React, { ReactElement } from 'react';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 interface NavigationItemProps {
-	icon: ReactElement;
+	icon: JSX.Element;
 	text: string;
 }
 

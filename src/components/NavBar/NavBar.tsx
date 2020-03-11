@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import {
+	AppBar,
+	IconButton,
+	Button,
+	ButtonGroup,
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 //Styles
-// import * as Styled from './stylesNavBar';
+import * as Styled from './stylesNavBar';
 
 // Components
 import NavigationDrawer from '../NavigationDrawer/NavigationDrawer';
@@ -15,8 +21,8 @@ const NavBar = () => {
 	};
 	return (
 		<>
-			<AppBar position="fixed">
-				<Toolbar>
+			<AppBar position="sticky">
+				<Styled.ToolbarCont>
 					<IconButton
 						edge="start"
 						color="inherit"
@@ -25,7 +31,25 @@ const NavBar = () => {
 					>
 						<MenuIcon />
 					</IconButton>
-				</Toolbar>
+					<ButtonGroup>
+						<Button
+							component={RouterLink}
+							to="/logowanie"
+							color="secondary"
+							variant="contained"
+						>
+							Zaloguj się
+						</Button>
+						<Button
+							component={RouterLink}
+							to="/rejestracja"
+							color="secondary"
+							variant="contained"
+						>
+							Utwórz konto
+						</Button>
+					</ButtonGroup>
+				</Styled.ToolbarCont>
 			</AppBar>
 			<NavigationDrawer
 				opened={navOpened}
