@@ -23,18 +23,22 @@ const NavigationDrawer = ({
 		<Drawer anchor="left" open={opened} onClose={toggleNavigationDrawer}>
 			<List>
 				<NavigationItem
+					target="/nowe-losowanie"
 					icon={<AddCircleIcon />}
 					text="Stwórz nowe losowanie"
 				/>
 				<NavigationItem
+					target="/moje-losowania"
 					icon={<ListIcon />}
 					text="Moje losowania"
 				/>
-                <NavigationItem
+				<NavigationItem
+					target="/lista-zyczen"
 					icon={<CardGiftcardIcon />}
 					text="Lista życzeń"
 				/>
-                <NavigationItem
+				<NavigationItem
+					target="/znajomi"
 					icon={<PeopleIcon />}
 					text="Znajomi"
 				/>

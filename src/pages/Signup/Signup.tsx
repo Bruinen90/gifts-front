@@ -8,6 +8,7 @@ import {
 	IconButton,
 	Button,
 	Box,
+	FormHelperText,
 } from '@material-ui/core';
 
 // Icons
@@ -33,7 +34,7 @@ interface ValidationProps {
 	required?: boolean;
 	minLength?: number;
 	maxLength?: number;
-	exact?: number | string | boolean;
+	compareValue?: number | string | boolean;
 }
 
 interface ValidationFunctionInput {
@@ -99,6 +100,11 @@ const Signup = () => {
 						isValid = false;
 					}
 					break;
+				case 'compareValue':
+					if (value !== validationProps.compareValue) {
+						isValid = false;
+					}
+					break;
 			}
 		});
 		setFormData(prev => ({
@@ -155,7 +161,12 @@ const Signup = () => {
 						'Podaj prawidłowy adres email'
 					}
 				/>
-				<FormControl margin="normal">
+				<FormControl
+					margin="normal"
+					error={
+						!formData.password.isValid && formData.password.changed
+					}
+				>
 					<InputLabel htmlFor="password">Hasło</InputLabel>
 					<Input
 						id="password"
@@ -167,7 +178,7 @@ const Signup = () => {
 								key: 'password',
 								validationProps: {
 									required: true,
-									minLength: 8,
+									minLength: 5,
 								},
 								value: event.target.value,
 							})
@@ -188,8 +199,20 @@ const Signup = () => {
 							</InputAdornment>
 						}
 					/>
+					{!formData.password.isValid &&
+						formData.password.changed && (
+							<FormHelperText>
+								Hasło powinno zawierać co najmniej 5 znaków
+							</FormHelperText>
+						)}
 				</FormControl>
-				<FormControl margin="normal">
+				<FormControl
+					margin="normal"
+					error={
+						!formData.rePassword.isValid &&
+						formData.rePassword.changed
+					}
+				>
 					<InputLabel htmlFor="rePassword">Powtórz hasło</InputLabel>
 					<Input
 						id="rePassword"
@@ -200,8 +223,7 @@ const Signup = () => {
 							handleValidate({
 								key: 'rePassword',
 								validationProps: {
-									required: true,
-									minLength: 8,
+									compareValue: formData.password.value,
 								},
 								value: event.target.value,
 							})
@@ -222,6 +244,12 @@ const Signup = () => {
 							</InputAdornment>
 						}
 					/>
+					{!formData.rePassword.isValid &&
+						formData.rePassword.changed && (
+							<FormHelperText>
+								Hasła muszą być takie same
+							</FormHelperText>
+						)}
 				</FormControl>
 				<Box mt={2} mx="auto">
 					<Button
