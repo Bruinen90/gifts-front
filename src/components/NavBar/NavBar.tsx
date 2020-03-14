@@ -5,6 +5,7 @@ import {
 	IconButton,
 	Button,
 	ButtonGroup,
+	Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -31,24 +32,26 @@ const NavBar = () => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<ButtonGroup>
-						<Button
-							component={RouterLink}
-							to="/logowanie"
-							color="secondary"
-							variant="contained"
-						>
-							Zaloguj się
-						</Button>
-						<Button
-							component={RouterLink}
-							to="/rejestracja"
-							color="secondary"
-							variant="contained"
-						>
-							Utwórz konto
-						</Button>
-					</ButtonGroup>
+					<Hidden smDown>
+						<ButtonGroup>
+							<Button
+								component={RouterLink}
+								to="/logowanie"
+								color="secondary"
+								variant="contained"
+							>
+								Zaloguj się
+							</Button>
+							<Button
+								component={RouterLink}
+								to="/rejestracja"
+								color="secondary"
+								variant="contained"
+							>
+								Utwórz konto
+							</Button>
+						</ButtonGroup>
+					</Hidden>
 				</Styled.ToolbarCont>
 			</AppBar>
 			<NavigationDrawer

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Drawer, List } from '@material-ui/core';
+import { Drawer, List, Box, Button } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 
 // Components
 import NavigationItem from '../NavigationItem/NavigationItem';
@@ -21,28 +22,61 @@ const NavigationDrawer = ({
 }: NavigationDrawerProps) => {
 	return (
 		<Drawer anchor="left" open={opened} onClose={toggleNavigationDrawer}>
-			<List>
-				<NavigationItem
-					target="/nowe-losowanie"
-					icon={<AddCircleIcon />}
-					text="Stwórz nowe losowanie"
-				/>
-				<NavigationItem
-					target="/moje-losowania"
-					icon={<ListIcon />}
-					text="Moje losowania"
-				/>
-				<NavigationItem
-					target="/lista-zyczen"
-					icon={<CardGiftcardIcon />}
-					text="Lista życzeń"
-				/>
-				<NavigationItem
-					target="/znajomi"
-					icon={<PeopleIcon />}
-					text="Znajomi"
-				/>
-			</List>
+			<Box
+				paddingY="30px"
+				display="flex"
+				flexDirection="column"
+				justifyContent="space-between"
+				height="100%"
+			>
+				<List>
+					<NavigationItem
+						target="/nowe-losowanie"
+						icon={<AddCircleIcon />}
+						text="Stwórz nowe losowanie"
+					/>
+					<NavigationItem
+						target="/moje-losowania"
+						icon={<ListIcon />}
+						text="Moje losowania"
+					/>
+					<NavigationItem
+						target="/lista-zyczen"
+						icon={<CardGiftcardIcon />}
+						text="Lista życzeń"
+					/>
+					<NavigationItem
+						target="/znajomi"
+						icon={<PeopleIcon />}
+						text="Znajomi"
+					/>
+				</List>
+				<Box
+					display="flex"
+					flexDirection="column"
+					justifyContent="space-between"
+					height="90px"
+					width="80%"
+					margin="0 auto"
+				>
+					<Button
+						component={RouterLink}
+						to="/logowanie"
+						color="secondary"
+						variant="contained"
+					>
+						Zaloguj się
+					</Button>
+					<Button
+						component={RouterLink}
+						to="/rejestracja"
+						color="secondary"
+						variant="contained"
+					>
+						Utwórz konto
+					</Button>
+				</Box>
+			</Box>
 		</Drawer>
 	);
 };
