@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 
 //Styles
 import * as Styled from './stylesCreateDraw';
@@ -22,60 +23,47 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import plLocale from 'date-fns/locale/pl';
 
-interface NewDrawForm {
-	title: string;
-	price: '' | number;
-}
-
-const defaultFormData: NewDrawForm = {
-	title: '',
-	price: '',
-};
-
 const CreateDraw = () => {
 	const dispatch = useDispatch();
+	const { handleSubmit, register, errors } = useForm();
 	const theme = useTheme();
 
-	const [formData, setFormData] = useState(defaultFormData);
-
-	const handleChange = (keyName: keyof NewDrawForm) => (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
-		setFormData({ ...formData, [keyName]: event.target.value });
-	};
-
-	const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+	const [selectedDate, setSelectedDate] = useState<Date | null>(
 		new Date('2020-12-24T21:11:54')
 	);
 
-	const handleFormSubmit = (event: React.SyntheticEvent) => {
-		event.preventDefault();
-		const payload = {
-			...formData,
-			date: selectedDate,
-		};
-		console.log('POSTing data: ', payload, ' to the API');
-		dispatch({ type: 'CREATE_DRAW_WATCHER', payload: payload });
+	const onSubmit = (data: any) => {
+		console.log(data);
 	};
 
 	return (
-		<PageWrapper>
+		// Custom wrapper breaks react-hook-form lib, gotta check on that
+		<>
 			<Typography variant="h4" component="h2" align="center">
 				Utwórz losowanie
 			</Typography>
-			<Styled.MyForm onSubmit={handleFormSubmit}>
+			<Styled.MyForm onSubmit={handleSubmit(onSubmit)}>
 				<TextField
+					error={errors.title !== undefined}
+					helperText={
+						errors.title &&
+						'Tytuł losowania powinen zawierać co najmniej 3 znaki'
+					}
 					label="Nazwa losowania"
-					value={formData.title}
-					onChange={handleChange('title')}
 					margin="normal"
+					inputRef={register({ required: true, minLength: 3 })}
+					name="title"
 				/>
 				<TextField
+					error={errors.price !== undefined}
+					helperText={
+						errors.price && 'Podaj maksymalną cenę prezentu'
+					}
 					type="number"
 					label="Maksymalna cena prezentu"
-					value={formData.price}
-					onChange={handleChange('price')}
 					margin="normal"
+					inputRef={register({ required: true })}
+					name="price"
 					InputProps={{
 						endAdornment: (
 							<InputAdornment position="end">zł</InputAdornment>
@@ -106,7 +94,7 @@ const CreateDraw = () => {
 					Utwórz losowanie
 				</Button>
 			</Styled.MyForm>
-		</PageWrapper>
+		</>
 	);
 };
 export default CreateDraw;
