@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core';
 
 // Redux
-import * as actions from '../../store/actions/actions';
 import { useDispatch } from 'react-redux';
 
 // Icons
@@ -47,7 +46,10 @@ const Login = () => {
 
 	const handleLogin = (event: React.SyntheticEvent) => {
 		event.preventDefault();
-		dispatch({ type: 'LOGIN_USER_ASYNC' });
+		dispatch({
+			type: 'LOGIN_USER_WATCHER',
+			payload: { username: formData.user, password: formData.password },
+		});
 	};
 	return (
 		<Styled.Wrapper>

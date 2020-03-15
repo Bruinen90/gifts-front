@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import {
 	AppBar,
 	IconButton,
-	Button,
-	ButtonGroup,
-	Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -14,6 +10,7 @@ import * as Styled from './stylesNavBar';
 
 // Components
 import NavigationDrawer from '../NavigationDrawer/NavigationDrawer';
+import SignInUpOut from '../SignInUpOut/SignInUpOut';
 
 const NavBar = () => {
 	const [navOpened, setNavOpened] = useState(false);
@@ -32,26 +29,7 @@ const NavBar = () => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Hidden smDown>
-						<ButtonGroup>
-							<Button
-								component={RouterLink}
-								to="/logowanie"
-								color="secondary"
-								variant="contained"
-							>
-								Zaloguj się
-							</Button>
-							<Button
-								component={RouterLink}
-								to="/rejestracja"
-								color="secondary"
-								variant="contained"
-							>
-								Utwórz konto
-							</Button>
-						</ButtonGroup>
-					</Hidden>
+					<SignInUpOut />
 				</Styled.ToolbarCont>
 			</AppBar>
 			<NavigationDrawer

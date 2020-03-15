@@ -71,6 +71,7 @@ const CreateDraw = () => {
 					margin="normal"
 				/>
 				<TextField
+					type="number"
 					label="Maksymalna cena prezentu"
 					value={formData.price}
 					onChange={handleChange('price')}

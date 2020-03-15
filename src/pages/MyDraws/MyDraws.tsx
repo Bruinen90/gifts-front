@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 // MUI
@@ -15,7 +15,7 @@ const MyDraws = () => {
 	const usersDraws = useSelector((state: StateInterface) => state.usersDraws);
 	return (
 		<PageWrapper>
-			<Typography variant="h4" component="h2">
+			<Typography variant="h4" component="h2" align="center">
 				Moje losowania
 			</Typography>
 			<List>

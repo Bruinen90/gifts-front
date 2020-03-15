@@ -10,3 +10,8 @@ export interface StateInterface {
 	token?: string;
 	usersDraws: DrawInterface[];
 }
+
+export interface LoginDataInterface {
+	username: string;
+	password: string;
+}

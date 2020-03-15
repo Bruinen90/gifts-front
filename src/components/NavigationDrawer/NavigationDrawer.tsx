@@ -34,21 +34,25 @@ const NavigationDrawer = ({
 						target="/nowe-losowanie"
 						icon={<AddCircleIcon />}
 						text="Stwórz nowe losowanie"
+						hideDrawer={toggleNavigationDrawer}
 					/>
 					<NavigationItem
 						target="/moje-losowania"
 						icon={<ListIcon />}
 						text="Moje losowania"
+						hideDrawer={toggleNavigationDrawer}
 					/>
 					<NavigationItem
 						target="/lista-zyczen"
 						icon={<CardGiftcardIcon />}
 						text="Lista życzeń"
+						hideDrawer={toggleNavigationDrawer}
 					/>
 					<NavigationItem
 						target="/znajomi"
 						icon={<PeopleIcon />}
 						text="Znajomi"
+						hideDrawer={toggleNavigationDrawer}
 					/>
 				</List>
 				<Box
@@ -64,6 +68,7 @@ const NavigationDrawer = ({
 						to="/logowanie"
 						color="secondary"
 						variant="contained"
+						onClick={toggleNavigationDrawer}
 					>
 						Zaloguj się
 					</Button>
@@ -72,6 +77,7 @@ const NavigationDrawer = ({
 						to="/rejestracja"
 						color="secondary"
 						variant="contained"
+						onClick={toggleNavigationDrawer}
 					>
 						Utwórz konto
 					</Button>

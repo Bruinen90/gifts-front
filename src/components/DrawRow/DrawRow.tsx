@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+// Redux
+import * as actionTypes from '../../store/actions/actionTypes';
+import { useDispatch } from 'react-redux';
+
 // Date-fns
 import { format } from 'date-fns';
 
@@ -30,6 +34,8 @@ interface DrawRowProps {
 }
 
 const DrawRow = ({ title, date }: DrawRowProps) => {
+	const dispatch = useDispatch();
+
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [confirmationDialogOpened, setConfirmationDialogOpened] = useState(
 		false
@@ -45,6 +51,11 @@ const DrawRow = ({ title, date }: DrawRowProps) => {
 
 	const handleToggleConfirmationDialog = () => {
 		setConfirmationDialogOpened(prev => !prev);
+	};
+
+	const handleDeleteDraw = () => {
+		dispatch({ type: actionTypes.DELETE_DRAW, payload: title });
+		handleToggleConfirmationDialog();
 	};
 
 	return (
@@ -122,10 +133,7 @@ const DrawRow = ({ title, date }: DrawRowProps) => {
 					>
 						Anuluj
 					</Button>
-					<Button
-						onClick={handleToggleConfirmationDialog}
-						color="secondary"
-					>
+					<Button onClick={handleDeleteDraw} color="secondary">
 						Usuń
 					</Button>
 				</DialogActions>
