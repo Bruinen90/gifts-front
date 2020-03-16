@@ -12,7 +12,7 @@ import {
 	InputAdornment,
 	Button,
 } from '@material-ui/core';
-import PageWrapper from '../../components/PageWrapper/PageWrapper';
+// import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { useTheme } from '@material-ui/core/styles';
 
 // Date picker
@@ -23,17 +23,58 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import plLocale from 'date-fns/locale/pl';
 
+// Types
+import { DrawInterface } from '../../interfaces/interfaces';
+
 const CreateDraw = () => {
 	const dispatch = useDispatch();
-	const { handleSubmit, register, errors } = useForm();
+	const {
+		handleSubmit,
+		register,
+		errors,
+		triggerValidation,
+		setValue,
+	} = useForm();
 	const theme = useTheme();
 
-	const [selectedDate, setSelectedDate] = useState<Date | null>(
-		new Date('2020-12-24T21:11:54')
-	);
+	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
 	const onSubmit = (data: any) => {
 		console.log(data);
+		const payload: DrawInterface = {
+			...data,
+		};
+		dispatch({ type: 'CREATE_DRAW_WATCHER', payload: payload });
+	};
+
+	const handleTriggerValidation = async (
+		event: React.FocusEvent<HTMLInputElement>
+	) => {
+		triggerValidation(event.target.getAttribute('name')!);
+	};
+
+	// Register datepicker in validate hook
+	useEffect(() => {
+		register(
+			{ name: 'date', type: 'text' },
+			{
+				validate: {
+					inTheFuture: (value: Date) => {
+						if (!value) {
+							return false;
+						}
+						const now = new Date();
+						return value.getTime() > now.getTime();
+					},
+				},
+			}
+		);
+	}, [register]);
+
+	const handleDateChange = (date: any) => {
+		setSelectedDate(date);
+		setValue('date', date);
+		triggerValidation('date');
 	};
 
 	return (
@@ -44,7 +85,7 @@ const CreateDraw = () => {
 			</Typography>
 			<Styled.MyForm onSubmit={handleSubmit(onSubmit)}>
 				<TextField
-					error={errors.title !== undefined}
+					error={errors.hasOwnProperty('title')}
 					helperText={
 						errors.title &&
 						'Tytuł losowania powinen zawierać co najmniej 3 znaki'
@@ -53,9 +94,10 @@ const CreateDraw = () => {
 					margin="normal"
 					inputRef={register({ required: true, minLength: 3 })}
 					name="title"
+					onBlur={handleTriggerValidation}
 				/>
 				<TextField
-					error={errors.price !== undefined}
+					error={errors.hasOwnProperty('price')}
 					helperText={
 						errors.price && 'Podaj maksymalną cenę prezentu'
 					}
@@ -64,6 +106,7 @@ const CreateDraw = () => {
 					margin="normal"
 					inputRef={register({ required: true })}
 					name="price"
+					onBlur={handleTriggerValidation}
 					InputProps={{
 						endAdornment: (
 							<InputAdornment position="end">zł</InputAdornment>
@@ -79,10 +122,14 @@ const CreateDraw = () => {
 						id="date-picker-inline"
 						label="Data losowania"
 						value={selectedDate}
-						onChange={setSelectedDate}
+						onChange={handleDateChange}
 						KeyboardButtonProps={{
 							'aria-label': 'wybierz datę',
 						}}
+						// inputRef={register}
+						name="date"
+                        error={errors.hasOwnProperty('date')}
+                        helperText={errors.date && 'Wybrana data powinna być w przyszłości'}
 					/>
 				</MuiPickersUtilsProvider>
 				<Button
