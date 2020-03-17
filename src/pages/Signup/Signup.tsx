@@ -1,4 +1,6 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
+import axios from 'axios';
+
 import {
 	TextField,
 	FormControl,
@@ -113,9 +115,29 @@ const Signup = () => {
 		}));
 	};
 
-	const handleSubmitForm = (event: SyntheticEvent) => {
+	const handleSubmitForm = async (event: SyntheticEvent) => {
 		event.preventDefault();
-		console.log('Submiting form');
+		console.log('Submiting form...', formData);
+		const graphqlQuery = {
+			query: `
+                mutation {
+                    createUser(userInput: 
+                        {
+                            username: "${formData.userName.value}", 
+                            email: "${formData.email.value}", 
+                            password: "${formData.password.value}"
+                        }
+                    ) 
+                {
+                    _id username email password
+                }}
+            `,
+		};
+		const response = await axios.post(
+			'http://localhost:8080/graphql',
+			graphqlQuery
+		);
+		console.log('Signup response: ', response.data);
 	};
 
 	return (

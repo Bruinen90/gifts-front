@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -26,30 +26,18 @@ import plLocale from 'date-fns/locale/pl';
 // Types
 import { DrawInterface } from '../../interfaces/interfaces';
 
-// Default row date calculation
-const TOMMOROW = new Date();
-TOMMOROW.setDate(TOMMOROW.getDate() + 7);
-
 const CreateDraw = () => {
 	const dispatch = useDispatch();
-	const theme = useTheme();
-	// Validation
 	const {
 		handleSubmit,
 		register,
 		errors,
 		triggerValidation,
 		setValue,
-		watch,
-	} = useForm({
-		defaultValues: {
-			title: '',
-			price: '',
-			date: TOMMOROW,
-		},
-	});
+	} = useForm();
+	const theme = useTheme();
 
-	const { date } = watch();
+	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
 	const onSubmit = (data: any) => {
 		console.log(data);
@@ -84,6 +72,7 @@ const CreateDraw = () => {
 	}, [register]);
 
 	const handleDateChange = (date: any) => {
+		setSelectedDate(date);
 		setValue('date', date);
 		triggerValidation('date');
 	};
@@ -132,17 +121,15 @@ const CreateDraw = () => {
 						margin="normal"
 						id="date-picker-inline"
 						label="Data losowania"
-						value={date}
+						value={selectedDate}
 						onChange={handleDateChange}
 						KeyboardButtonProps={{
 							'aria-label': 'wybierz datę',
 						}}
+						// inputRef={register}
 						name="date"
-						error={errors.hasOwnProperty('date')}
-						helperText={
-							errors.date &&
-							'Wybrana data powinna być w przyszłości'
-						}
+                        error={errors.hasOwnProperty('date')}
+                        helperText={errors.date && 'Wybrana data powinna być w przyszłości'}
 					/>
 				</MuiPickersUtilsProvider>
 				<Button
