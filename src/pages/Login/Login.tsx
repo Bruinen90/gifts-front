@@ -8,10 +8,12 @@ import {
 	IconButton,
 	Button,
 	Box,
+	FormHelperText,
 } from '@material-ui/core';
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { StateInterface } from '../../interfaces/interfaces';
 
 // Icons
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -26,6 +28,9 @@ interface FormFields {
 
 const Login = () => {
 	const dispatch = useDispatch();
+	const errorMessage = useSelector(
+		(state: StateInterface) => state.loginError
+	);
 
 	const [formData, setFormData] = useState<FormFields>({
 		user: '',
@@ -36,7 +41,6 @@ const Login = () => {
 	const handleChange = (keyName: keyof FormFields) => (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
-		// Doesn't work with prev => {... prev} - googles' team used below syntax so it should be fine
 		setFormData({ ...formData, [keyName]: event.target.value });
 	};
 
@@ -51,6 +55,7 @@ const Login = () => {
 			payload: { username: formData.user, password: formData.password },
 		});
 	};
+
 	return (
 		<Styled.Wrapper>
 			<Styled.LoginForm onSubmit={handleLogin}>
@@ -59,8 +64,13 @@ const Login = () => {
 					value={formData.user}
 					onChange={handleChange('user')}
 					margin="normal"
+					error={errorMessage === 'User not found'}
+					helperText={
+						errorMessage === 'User not found' &&
+						'Użytkownik nie istnieje'
+					}
 				/>
-				<FormControl margin="normal">
+				<FormControl margin="normal" error={errorMessage === 'Invalid password'}>
 					<InputLabel htmlFor="password">Hasło</InputLabel>
 					<Input
 						id="password"
@@ -83,6 +93,11 @@ const Login = () => {
 							</InputAdornment>
 						}
 					/>
+					{errorMessage === 'Invalid password' && (
+						<FormHelperText>
+							Podane hasło jest nieprawidłowe
+						</FormHelperText>
+					)}
 				</FormControl>
 				<Box mt={2} mx="auto">
 					<Button variant="contained" color="primary" type="submit">

@@ -133,10 +133,7 @@ const Signup = () => {
                 }}
             `,
 		};
-		const response = await axios.post(
-			'http://localhost:8080/graphql',
-			graphqlQuery
-		);
+		const response = await axios.post('graphql', graphqlQuery);
 		console.log('Signup response: ', response.data);
 	};
 

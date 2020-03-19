@@ -9,6 +9,7 @@ export interface StateInterface {
 	email?: string;
 	token?: string;
 	usersDraws: DrawInterface[];
+	loginError?: string;
 }
 
 export interface LoginDataInterface {

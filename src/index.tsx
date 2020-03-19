@@ -4,7 +4,26 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Redux
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import reducer from './store/reducer';
+
+// Sagas
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './store/sagas/sagas';
+
+const sagaMiddleWare = createSagaMiddleware();
+const composeEnhancers =
+	(window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+	reducer,
+	composeEnhancers(applyMiddleware(sagaMiddleWare))
+);
+
+sagaMiddleWare.run(rootSaga);
+
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

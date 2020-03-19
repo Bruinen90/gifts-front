@@ -14,13 +14,18 @@ const reducer = (state = initalState, action: actionInterface) => {
 	switch (action.type) {
 		case actionTypes.USER_LOGIN:
 			console.log('LOGGING IN... ... ...');
-			const { username } = action.payload;
+            const { username, email, token } = action.payload;
 			return {
 				...state,
 				username: username,
-				// Replace with real data when backend added
-				email: 'test@test.pl',
-				token: '#H$#&*GHE^T^DDDASioaaaa8823',
+				email: email,
+				token: token,
+			};
+		case actionTypes.USER_LOGIN_FAILED:
+			console.log('LOGIN FAILED');
+			return {
+				...state,
+				loginError: action.payload.message,
 			};
 		case actionTypes.USER_LOGOUT:
 			console.log('LOGGING OUT...');
