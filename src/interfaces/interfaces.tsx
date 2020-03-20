@@ -1,18 +1,23 @@
 export interface DrawInterface {
-	title: string;
-	price: number;
-	date: Date;
+  id?: string;
+  title: string;
+  price: number;
+  date: Date;
+  creatorsId: string;
 }
 
 export interface StateInterface {
-	username?: string;
-	email?: string;
-	token?: string;
-	usersDraws: DrawInterface[];
-	loginError?: string;
+  username?: string;
+  email?: string;
+  userId?: string;
+  token?: string;
+  usersDraws: DrawInterface[];
+  loginError?: string;
 }
 
 export interface LoginDataInterface {
-	username: string;
-	password: string;
+  username: string;
+  password: string;
 }
+
+export type DrawsList = DrawInterface[] 
