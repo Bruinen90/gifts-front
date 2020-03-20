@@ -118,12 +118,17 @@ function* watchAutoLoginUser() {
   yield takeEvery("USER_AUTOLOGIN_WATCHER", autoLoginUser);
 }
 
-function* getUserDrawsList(action: { type: string; payload: { userId: string } }) {
-  yield console.log("getting draws list", action.payload);
-  yield put({
-    type: actionTypes.SET_DRAWS_LIST,
-    payload: action.payload
-  });
+function* getUserDrawsList(action: { type: string }) {
+  const userId = yield localStorage.getItem("userId");
+  if (userId) {
+    yield put({
+      type: actionTypes.SET_DRAWS_LIST,
+      payload: { userId: userId }
+    });
+  } else {
+    const error = new Error("No user ID found, please login!");
+    throw error;
+  }
 }
 
 function* watchGetUserDrawsList() {
@@ -136,7 +141,7 @@ export default function* rootSaga() {
     watchCreateDraw(),
     watchDeleteDraw(),
     watchUserLogout(),
-    watchAutoLoginUser(),
-    watchGetUserDrawsList()
+    watchGetUserDrawsList(),
+    watchAutoLoginUser()
   ]);
 }
