@@ -31,9 +31,10 @@ import { MoreVert, AddCircle, Edit, Delete } from '@material-ui/icons';
 interface DrawRowProps {
 	title: string;
 	date: Date;
+	_id: String | undefined;
 }
 
-const DrawRow = ({ title, date }: DrawRowProps) => {
+const DrawRow = ({ title, date, _id }: DrawRowProps) => {
 	const dispatch = useDispatch();
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -54,7 +55,10 @@ const DrawRow = ({ title, date }: DrawRowProps) => {
 	};
 
 	const handleDeleteDraw = () => {
-		dispatch({ type: actionTypes.DELETE_DRAW, payload: title });
+		dispatch({
+			type: 'DELETE_DRAW_WATCHER',
+			payload: { drawId: _id },
+		});
 		handleToggleConfirmationDialog();
 	};
 

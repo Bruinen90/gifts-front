@@ -24,8 +24,8 @@ const App = () => {
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (token) {
-			axios.defaults.headers.common['Authorization'] = token.toString();
-			dispatch({type: 'USER_AUTOLOGIN_WATCHER'});
+			dispatch({ type: 'USER_AUTOLOGIN_WATCHER' });
+			dispatch({ type: 'FETCH_USER_DRAWS_LIST_WATCHER' });
 		}
 	}, [dispatch]);
 	return (
