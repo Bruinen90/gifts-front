@@ -20,9 +20,13 @@ export interface LoginDataInterface {
 	password: string;
 }
 
-export interface User {
+export interface BasicUser {
+    username: string,
+    email?: string
+}
+
+export interface User extends BasicUser {
 	_id: string;
-	username: string;
 	password?: string;
 	draws?: String[];
 	wishes?: String[];
@@ -34,4 +38,17 @@ export interface PopulatedInterface extends DrawInterface {
 	participants?: User[];
 }
 
+export type SearchState =
+	| 'too-short'
+	| 'loading'
+	| 'no-results'
+	| 'display-results'
+	| 'error';
+
+export interface SearchResultsBoxProps {
+	searchState: SearchState;
+}
+
 export type DrawsList = DrawInterface[];
+
+export type UsersListType = User[] | [];

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -25,10 +25,16 @@ import DateFnsUtils from '@date-io/date-fns';
 import plLocale from 'date-fns/locale/pl';
 
 // Types
-import { DrawInterface, StateInterface } from '../../interfaces/interfaces';
+import {
+	DrawInterface,
+	StateInterface,
+	UsersListType,
+	User,
+} from '../../interfaces/interfaces';
 
 // Components
 import FindUser from '../../components/FindUser/FindUser';
+import UsersList from '../../components/UsersList/UsersList';
 
 // Default row date calculation
 const TOMMOROW = new Date();
@@ -38,6 +44,21 @@ const CreateDraw = () => {
 	const dispatch = useDispatch();
 	const userId = useSelector((state: StateInterface) => state.userId);
 	const theme = useTheme();
+
+	const [participants, setParticipants] = useState<UsersListType>([]);
+
+	const handleAddParticipant = (participant: User) => {
+		setParticipants((prev: UsersListType) => [...prev, participant]);
+	};
+
+	const handleRemoveParticipant = (removedParticipant: User) => {
+		setParticipants((prev: UsersListType) =>
+			prev.filter(
+				participant => participant._id !== removedParticipant._id
+			)
+		);
+	};
+
 	// Validation
 	const {
 		handleSubmit,
@@ -152,7 +173,22 @@ const CreateDraw = () => {
 						minDate={TOMMOROW}
 					/>
 				</MuiPickersUtilsProvider>
-				<FindUser />
+				<FindUser
+					handleAddUserToDraw={handleAddParticipant}
+					removedFromResults={participants}
+				/>
+				{participants.length > 0 && (
+					<>
+						<Typography variant="h6" component="h6">
+							Lista uczestników
+						</Typography>
+						<UsersList
+							listType="removingUsers"
+							usersList={participants}
+							handleUserClicked={handleRemoveParticipant}
+						/>
+					</>
+				)}
 				<Button
 					type="submit"
 					color="primary"
