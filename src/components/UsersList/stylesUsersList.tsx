@@ -1,23 +1,41 @@
-import { styled } from '@material-ui/core/styles';
-import { List } from '@material-ui/core';
+import React from "react";
+import { styled } from "@material-ui/core/styles";
+import { List, ListProps, Theme } from "@material-ui/core";
 
-export const UsersList = styled(List)(({ theme }) => ({
-	'& li': {
-		'&:hover': {
-			background: theme.palette.primary.main,
-			color: theme.palette.primary.contrastText,
+// Types
+import { UsersListTypesType } from "../../interfaces/interfaces";
 
-			'& .MuiListItemText-secondary': {
-				color: theme.palette.primary.contrastText,
-				opacity: 0.8,
-			},
-			'& .MuiListItemSecondaryAction-root': {
-				color: theme.palette.primary.contrastText,
-			},
-		},
-		'& .MuiListItemSecondaryAction-root': {
-			color: theme.palette.primary.light,
-			pointerEvents: 'none',
-		},
-	},
-}));
+interface UsersListProps {
+    listType: UsersListTypesType;
+}
+
+export const UsersList = styled(
+    ({
+        listType,
+        ...other
+    }: UsersListProps & Omit<ListProps, keyof UsersListProps>) => (
+        <List {...other} />
+    )
+)(({ theme, listType }: {theme: Theme, listType: UsersListTypesType}) => {
+    const listColor = listType === "addingUsers" ? theme.palette.primary : theme.palette.secondary;
+    return {
+        "& li": {
+            "&:hover": {
+                background: listColor.main,
+                color: listColor.contrastText,
+
+                "& .MuiListItemText-secondary": {
+                    color: listColor.contrastText,
+                    opacity: 0.8
+                },
+                "& .MuiListItemSecondaryAction-root": {
+                    color: listColor.contrastText
+                }
+            },
+            "& .MuiListItemSecondaryAction-root": {
+                color: listColor.light,
+                pointerEvents: "none"
+            }
+        }
+    };
+});
