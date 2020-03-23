@@ -5,6 +5,7 @@ export interface DrawInterface {
     date: Date | string;
     creatorsId: string;
     participantsIds: string[];
+    results?: User;
 }
 
 export interface StateInterface {

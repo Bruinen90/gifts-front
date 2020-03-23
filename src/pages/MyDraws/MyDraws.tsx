@@ -31,14 +31,28 @@ const MyDraws = () => {
 			</Typography>
 			<List>
 				{usersDraws &&
-					usersDraws.map((draw: DrawInterface) => (
-						<DrawRow
-							title={draw.title}
-							date={draw.date as Date}
-							_id={draw._id}
-							key={draw._id}
-						/>
-					))}
+					usersDraws.map((draw: DrawInterface) => {
+                        if(draw.results) {
+                            return (
+                                <DrawRow
+                                    title={draw.title}
+                                    date={draw.date as Date}
+                                    _id={draw._id}
+                                    key={draw._id}
+                                    results={draw.results}
+                                />
+                            );
+                        } else {
+                            return (
+                                <DrawRow
+                                    title={draw.title}
+                                    date={draw.date as Date}
+                                    _id={draw._id}
+                                    key={draw._id}
+                                />
+                            );
+                        }
+					})}
 			</List>
 		</PageWrapper>
 	);

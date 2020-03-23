@@ -147,7 +147,11 @@ function* watchAutoLoginUser() {
 function* fetchUserDrawsList() {
     if (axios.defaults.headers.common["Authorization"]) {
         const graphqlQuery = {
-            query: `{userDraws {drawsList{_id title date price participants {_id username}}}}`
+            query: `{
+                userDraws {
+                    drawsList{ _id title date price participants {_id username} results {_id username email}}
+                }
+            }`
         };
         try {
             const response = yield axios.post("graphql", graphqlQuery);

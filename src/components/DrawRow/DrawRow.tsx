@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 // Redux
-import * as actionTypes from '../../store/actions/actionTypes';
 import { useDispatch } from 'react-redux';
 
 // Date-fns
@@ -9,6 +8,7 @@ import { format } from 'date-fns';
 
 // Mui
 import {
+	Typography,
 	Paper,
 	ListItem,
 	ListItemText,
@@ -28,13 +28,17 @@ import {
 // Icons
 import { MoreVert, AddCircle, Edit, Delete } from '@material-ui/icons';
 
+// Types
+import { User } from '../../interfaces/interfaces';
+
 interface DrawRowProps {
 	title: string;
 	date: Date;
 	_id: String | undefined;
+	results?: User;
 }
 
-const DrawRow = ({ title, date, _id }: DrawRowProps) => {
+const DrawRow = ({ title, date, _id, results }: DrawRowProps) => {
 	const dispatch = useDispatch();
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -70,6 +74,7 @@ const DrawRow = ({ title, date, _id }: DrawRowProps) => {
 						primary={title}
 						secondary={format(date, 'dd/MM/yyy')}
 					/>
+					<Typography>{results && results.username}</Typography>
 					<ListItemSecondaryAction>
 						<div>
 							<IconButton
