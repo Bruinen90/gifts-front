@@ -5,17 +5,16 @@ import { useDispatch } from 'react-redux';
 
 // Date-fns
 import { format } from 'date-fns';
+import plLocale from 'date-fns/locale/pl';
 
 // Mui
 import {
+	Grid,
 	Typography,
-	Paper,
-	ListItem,
-	ListItemText,
-	ListItemSecondaryAction,
 	IconButton,
 	Menu,
 	MenuItem,
+	ListItemText,
 	ListItemIcon,
 	Dialog,
 	DialogTitle,
@@ -23,10 +22,25 @@ import {
 	DialogContentText,
 	DialogActions,
 	Button,
+	Card,
+	CardHeader,
+	CardActions,
+	CardContent,
+	List,
+	ListItem,
 } from '@material-ui/core';
 
 // Icons
-import { MoreVert, AddCircle, Edit, Delete } from '@material-ui/icons';
+import {
+	MoreVert,
+	AddCircle,
+	Edit,
+	Delete,
+	ExitToApp,
+	Event,
+    People,
+    VpnKey
+} from '@material-ui/icons';
 
 // Types
 import { User } from '../../interfaces/interfaces';
@@ -36,9 +50,20 @@ interface DrawRowProps {
 	date: Date;
 	_id: String | undefined;
 	results?: User;
+	participants: [User];
+	creator: User;
+	adminMode: boolean;
 }
 
-const DrawRow = ({ title, date, _id, results }: DrawRowProps) => {
+const DrawRow = ({
+	title,
+	date,
+	_id,
+	results,
+	creator,
+	adminMode,
+	participants,
+}: DrawRowProps) => {
 	const dispatch = useDispatch();
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -67,22 +92,18 @@ const DrawRow = ({ title, date, _id, results }: DrawRowProps) => {
 	};
 
 	return (
-		<>
-			<Paper>
-				<ListItem key={123}>
-					<ListItemText
-						primary={title}
-						secondary={format(date, 'dd/MM/yyy')}
-					/>
-					<Typography>{results && results.username}</Typography>
-					<ListItemSecondaryAction>
+		<Grid item xs={12} lg={6}>
+			<Card>
+				<CardHeader
+					title={title}
+					action={
 						<div>
 							<IconButton
 								edge="end"
 								aria-label="dodaj uczetników/edytuj/usuń losowanie"
 								onClick={handleOpenMenu}
 							>
-								<MoreVert />
+								<MoreVert fontSize="large" />
 							</IconButton>
 							<Menu
 								id="simple-menu"
@@ -117,9 +138,61 @@ const DrawRow = ({ title, date, _id, results }: DrawRowProps) => {
 								</MenuItem>
 							</Menu>
 						</div>
-					</ListItemSecondaryAction>
-				</ListItem>
-			</Paper>
+					}
+				/>
+				<CardContent>
+					<List>
+						<ListItem>
+							<ListItemIcon>
+								<Event />
+							</ListItemIcon>
+							<ListItemText
+								primary={format(date, 'd MMMM yyyy', {
+									locale: plLocale,
+								})}
+								secondary="data losowania"
+							/>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<People />
+							</ListItemIcon>
+							<ListItemText
+								primary={participants.length}
+								secondary="liczba uczestników"
+							/>
+						</ListItem>
+                        <ListItem>
+							<ListItemIcon>
+								<VpnKey />
+							</ListItemIcon>
+							<ListItemText
+								primary={creator.username}
+								secondary="administrator"
+							/>
+						</ListItem>
+					</List>
+				</CardContent>
+				<CardActions>
+					{adminMode ? (
+						<>
+							<IconButton color="primary">
+								<Edit />
+							</IconButton>
+							<IconButton
+								color="secondary"
+								onClick={handleToggleConfirmationDialog}
+							>
+								<Delete />
+							</IconButton>
+						</>
+					) : (
+						<IconButton color="secondary">
+							<ExitToApp />
+						</IconButton>
+					)}
+				</CardActions>
+			</Card>
 			{/* Delete draw confirmation box */}
 			<Dialog
 				open={confirmationDialogOpened}
@@ -147,7 +220,7 @@ const DrawRow = ({ title, date, _id, results }: DrawRowProps) => {
 					</Button>
 				</DialogActions>
 			</Dialog>
-		</>
+		</Grid>
 	);
 };
 export default DrawRow;
