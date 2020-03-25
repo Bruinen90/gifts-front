@@ -1,13 +1,14 @@
-import { User } from "./interfaces";
+import { User } from './interfaces';
 
 export interface WishInput {
 	title: string;
 	link: string;
 	description: string;
-	price: number;
-	creator: User;
+	price: number | string;
 }
 
 export interface Wish extends WishInput {
 	_id: string;
+	creator: string;
+	price: number;
 }

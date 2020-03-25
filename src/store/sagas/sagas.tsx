@@ -4,6 +4,7 @@ import axios from 'axios';
 
 // Interfaces
 import { DrawInterface, LoginDataInterface } from '../../interfaces/interfaces';
+import { WishInput } from '../../interfaces/WishTypes';
 
 function* loginUser(action: { type: string; payload: LoginDataInterface }) {
 	const { payload } = action;
@@ -90,6 +91,42 @@ function* watchCreateDraw() {
 	yield takeEvery('CREATE_DRAW_WATCHER', createDraw);
 }
 
+function* createWish(action: { type: string; payload: WishInput }) {
+	console.log('SAGA: ', action.payload);
+	const { title, description, link, price } = action.payload;
+	const graphqlQuery = {
+		query: `
+            mutation CreateNewWish($title: String!, $description: String, $link: String, $price: Int!) {
+                createWish(wishInput:
+                    {
+                        title: $title,
+                        description: $description,
+                        link: $link,
+                        price: $price,
+                    }
+                )
+                {_id}
+            }
+        `,
+		variables: {
+			title: title,
+			description: description,
+			link: link,
+			price: price,
+		},
+	};
+	try {
+		const response = yield axios.post('graphql', graphqlQuery);
+		console.log(response);
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+function* watchCreateWish() {
+	yield takeEvery('CREATE_WISH_WATCHER', createWish);
+}
+
 function* deleteDraw(action: { type: string; payload: { drawId: string } }) {
 	const graphqlQuery = {
 		query: `
@@ -173,7 +210,7 @@ function* fetchUserDrawsList() {
 				payload: { drawsList: drawsList },
 			});
 		} catch (err) {
-			console.log(err.response);
+			console.log(err.response ? err.response : err);
 		}
 	}
 }
@@ -190,5 +227,6 @@ export default function* rootSaga() {
 		watchUserLogout(),
 		watchAutoLoginUser(),
 		watchFetchUserDrawsList(),
+		watchCreateWish(),
 	]);
 }
