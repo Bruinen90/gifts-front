@@ -16,6 +16,7 @@ import CreateDraw from './pages/CreateDraw/CreateDraw';
 import MyDraws from './pages/MyDraws/MyDraws';
 import Wishlist from './pages/Wishlist/Wishlist';
 import Friends from './pages/Friends/Friends';
+import CreateWish from './pages/CreateWish/CreateWish';
 
 axios.defaults.baseURL = 'http://localhost:8080/';
 
@@ -39,6 +40,7 @@ const App = () => {
 					<Route path="/rejestracja" component={Signup} />
 					<Route path="/nowe-losowanie" component={CreateDraw} />
 					<Route path="/moje-losowania" component={MyDraws} />
+					<Route path="/nowe-zyczenie" component={CreateWish} />
 					<Route path="/lista-zyczen" component={Wishlist} />
 					<Route path="/znajomi" component={Friends} />
 					<Route path="/" component={Home} />
