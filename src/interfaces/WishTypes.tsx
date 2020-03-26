@@ -12,3 +12,8 @@ export interface Wish extends WishInput {
 	creator: string;
 	price: number;
 }
+
+export interface WishesListProps {
+	wishesList: Wish[];
+	viewMode: 'creator' | 'guest'
+}

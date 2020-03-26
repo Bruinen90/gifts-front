@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -12,6 +13,7 @@ import * as Styled from './stylesCreateWish';
 import { WishInput } from '../../interfaces/WishTypes';
 
 const CreateWish: React.FC = () => {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	// Validation
 	const { handleSubmit, register, errors, triggerValidation } = useForm({
@@ -45,6 +47,7 @@ const CreateWish: React.FC = () => {
 				price: parseInt(clearedFormData.price as string),
 			},
 		});
+		history.push('/lista-zyczen')
 	};
 	return (
 		<>
