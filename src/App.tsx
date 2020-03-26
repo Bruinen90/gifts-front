@@ -27,6 +27,7 @@ const App = () => {
 		if (token) {
 			dispatch({ type: 'USER_AUTOLOGIN_WATCHER' });
 			dispatch({ type: 'FETCH_USER_DRAWS_LIST_WATCHER' });
+			dispatch({ type: 'FETCH_USER_WISHES_WATCHER' });
 		}
 	}, [dispatch]);
 	return (

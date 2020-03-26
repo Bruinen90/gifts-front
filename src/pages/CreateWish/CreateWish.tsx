@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory} from 'react-router';
+import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -33,6 +33,12 @@ const CreateWish: React.FC = () => {
 
 	// Submiting
 	const onSubmit = (formData: any) => {
+		console.log(formData.link.startsWith('http'));
+		// Correct not full links
+		if (formData.link && !formData.link.startsWith('http')) {
+			formData.link = '//' + formData.link;
+			console.log('Link wihout http found, correcting');
+		}
 		// Remove blank fields
 		Object.keys(formData).forEach(key => {
 			if (formData[key] === '') {
@@ -47,7 +53,7 @@ const CreateWish: React.FC = () => {
 				price: parseInt(clearedFormData.price as string),
 			},
 		});
-		history.push('/lista-zyczen')
+		history.push('/lista-zyczen');
 	};
 	return (
 		<>

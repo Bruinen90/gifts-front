@@ -33,8 +33,8 @@ export interface BasicUser {
 export interface User extends BasicUser {
     _id: string;
     password?: string;
-    draws?: String[];
-    wishes?: String[];
+    draws?: string[];
+    wishes?: string[];
 }
 
 export type SearchState =
