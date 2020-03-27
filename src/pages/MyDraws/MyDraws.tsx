@@ -22,11 +22,9 @@ const MyDraws = () => {
     const [
         usersDraws,
         userId,
-        lastDeletedDraw
     ] = useSelector((state: StateInterface) => [
         state.usersDraws,
         state.userId,
-        state.lastDeletedDraw
     ]);
     const dispatch = useDispatch();
 
@@ -53,7 +51,7 @@ const MyDraws = () => {
                 message: `Poprawnie utworzono losowanie ${locState.newDrawTitle}`
             });
         }
-    }, []);
+    }, [location.state]);
 
     // Delete draw
     const dispatchDeleteDraw = (drawId: string, drawTitle: string) => {
