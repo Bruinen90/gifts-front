@@ -18,6 +18,7 @@ export interface StateInterface {
     usersDraws: DrawInterface[];
     usersWishes?: Wish[];
     loginError?: string;
+    lastDeletedDraw?: string;
 }
 
 export interface LoginDataInterface {

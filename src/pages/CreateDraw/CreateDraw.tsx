@@ -1,222 +1,225 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 
 //Styles
-import * as Styled from './stylesCreateDraw';
+import * as Styled from "./stylesCreateDraw";
 
 // MUI
 import {
-	Typography,
-	TextField,
-	InputAdornment,
-	Button,
-} from '@material-ui/core';
+    Typography,
+    TextField,
+    InputAdornment,
+    Button
+} from "@material-ui/core";
 
 // import PageWrapper from '../../components/PageWrapper/PageWrapper';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from "@material-ui/core/styles";
 
 // Date picker
 import {
-	MuiPickersUtilsProvider,
-	KeyboardDatePicker,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import plLocale from 'date-fns/locale/pl';
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import plLocale from "date-fns/locale/pl";
 
 // Types
 import {
-	DrawInterface,
-	StateInterface,
-	UsersListType,
-	User,
-} from '../../interfaces/interfaces';
+    DrawInterface,
+    StateInterface,
+    UsersListType,
+    User
+} from "../../interfaces/interfaces";
 
 // Components
-import FindUser from '../../components/FindUser/FindUser';
-import UsersList from '../../components/UsersList/UsersList';
+import FindUser from "../../components/FindUser/FindUser";
+import UsersList from "../../components/UsersList/UsersList";
 
 // Default row date calculation
 const TOMMOROW = new Date();
-TOMMOROW.setDate(TOMMOROW.getDate() + 7);
+TOMMOROW.setDate(TOMMOROW.getDate() + 1);
 
 const CreateDraw = () => {
-	const theme = useTheme();
-	const dispatch = useDispatch();
-	const loggedUser: User = useSelector((state: StateInterface) => ({
-		_id: state.userId!,
-		username: state.username!,
-		email: state.email!,
-	}));
-	const [participants, setParticipants] = useState<UsersListType>(
-		loggedUser._id ? [loggedUser] : []
-	);
+    const theme = useTheme();
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const loggedUser: User = useSelector((state: StateInterface) => ({
+        _id: state.userId!,
+        username: state.username!,
+        email: state.email!
+    }));
+    const [participants, setParticipants] = useState<UsersListType>(
+        loggedUser._id ? [loggedUser] : []
+    );
 
-	const handleAddParticipant = (participant: User) => {
-		setParticipants((prev: UsersListType) => [...prev, participant]);
-	};
+    const handleAddParticipant = (participant: User) => {
+        setParticipants((prev: UsersListType) => [...prev, participant]);
+    };
 
-	const handleRemoveParticipant = (removedParticipant: User) => {
-		setParticipants((prev: UsersListType) =>
-			prev.filter(
-				participant => participant._id !== removedParticipant._id
-			)
-		);
-	};
+    const handleRemoveParticipant = (removedParticipant: User) => {
+        setParticipants((prev: UsersListType) =>
+            prev.filter(
+                participant => participant._id !== removedParticipant._id
+            )
+        );
+    };
 
-	// Default add logged in user to new draw when component mounts and _id if fetched from DB
-	const loggedUserId = loggedUser._id;
-	useEffect(() => {
-		if (loggedUserId && participants.length === 0) {
-			setParticipants([loggedUser]);
-		}
-	}, [loggedUser, loggedUserId, participants.length]);
+    // Default add logged in user to new draw when component mounts and _id if fetched from DB
+    const loggedUserId = loggedUser._id;
+    useEffect(() => {
+        if (loggedUserId && participants.length === 0) {
+            setParticipants([loggedUser]);
+        }
+    }, [loggedUser, loggedUserId, participants.length]);
 
-	// Validation
-	const {
-		handleSubmit,
-		register,
-		errors,
-		triggerValidation,
-		setValue,
-		watch,
-	} = useForm({
-		defaultValues: {
-			title: '',
-			price: '',
-			date: TOMMOROW,
-		},
-	});
+    // Validation
+    const {
+        handleSubmit,
+        register,
+        errors,
+        triggerValidation,
+        setValue,
+        watch
+    } = useForm({
+        defaultValues: {
+            title: "",
+            price: "",
+            date: TOMMOROW
+        }
+    });
 
-	const { date } = watch();
+    const { date } = watch();
 
-	const onSubmit = (formData: any) => {
-		const participantsIds = (participants as User[]).map(
-			participant => participant._id
-		);
-		const payload: DrawInterface = {
-			...formData,
-			price: parseInt(formData.price),
-			creator: loggedUser,
-			participants: participantsIds,
-		};
-		dispatch({ type: 'CREATE_DRAW_WATCHER', payload: payload });
-	};
+    const onSubmit = (formData: any) => {
+        const participantsIds = (participants as User[]).map(
+            participant => participant._id
+        );
+        const payload: DrawInterface = {
+            ...formData,
+            price: parseInt(formData.price),
+            creator: loggedUser,
+            participants: participantsIds
+        };
+        dispatch({ type: "CREATE_DRAW_WATCHER", payload: payload });
+        history.push("/moje-losowania", { newDrawTitle: formData.title });
+    };
 
-	const handleTriggerValidation = async (
-		event: React.FocusEvent<HTMLInputElement>
-	) => {
-		triggerValidation(event.target.getAttribute('name')!);
-	};
+    const handleTriggerValidation = async (
+        event: React.FocusEvent<HTMLInputElement>
+    ) => {
+        triggerValidation(event.target.getAttribute("name")!);
+    };
 
-	// Register datepicker in validate hook
-	useEffect(() => {
-		register(
-			{ name: 'date', type: 'text' },
-			{
-				validate: {
-					inTheFuture: (value: Date) => {
-						if (!value) {
-							return false;
-						}
-						const now = new Date();
-						return value.getTime() > now.getTime();
-					},
-				},
-			}
-		);
-	}, [register]);
+    // Register datepicker in validate hook
+    useEffect(() => {
+        register(
+            { name: "date", type: "text" },
+            {
+                validate: {
+                    inTheFuture: (value: Date) => {
+                        if (!value) {
+                            return false;
+                        }
+                        const now = new Date();
+                        return value.getTime() > now.getTime();
+                    }
+                }
+            }
+        );
+    }, [register]);
 
-	const handleDateChange = (date: any) => {
-		setValue('date', date);
-		triggerValidation('date');
-	};
+    const handleDateChange = (date: any) => {
+        setValue("date", date);
+        triggerValidation("date");
+    };
 
-	return (
-		// Custom wrapper breaks react-hook-form lib, gotta check on that
-		<>
-			<Typography variant="h4" component="h2" align="center">
-				Utwórz losowanie
-			</Typography>
-			<Styled.MyForm onSubmit={handleSubmit(onSubmit)}>
-				<TextField
-					error={errors.hasOwnProperty('title')}
-					helperText={
-						errors.title &&
-						'Tytuł losowania powinen zawierać co najmniej 3 znaki'
-					}
-					label="Nazwa losowania"
-					margin="normal"
-					inputRef={register({ required: true, minLength: 3 })}
-					name="title"
-					onBlur={handleTriggerValidation}
-				/>
-				<TextField
-					error={errors.hasOwnProperty('price')}
-					helperText={
-						errors.price && 'Podaj maksymalną cenę prezentu'
-					}
-					type="number"
-					label="Maksymalna cena prezentu"
-					margin="normal"
-					inputRef={register({ required: true })}
-					name="price"
-					onBlur={handleTriggerValidation}
-					InputProps={{
-						endAdornment: (
-							<InputAdornment position="end">zł</InputAdornment>
-						),
-					}}
-				/>
-				<MuiPickersUtilsProvider utils={DateFnsUtils} locale={plLocale}>
-					<KeyboardDatePicker
-						disableToolbar
-						variant="inline"
-						format="dd/MM/yyyy"
-						margin="normal"
-						id="date-picker-inline"
-						label="Data losowania"
-						value={date}
-						onChange={handleDateChange}
-						KeyboardButtonProps={{
-							'aria-label': 'wybierz datę',
-						}}
-						name="date"
-						error={errors.hasOwnProperty('date')}
-						helperText={
-							errors.date &&
-							'Losowanie nie może odbyć się w przeszłości'
-						}
-						autoOk={true}
-						minDate={TOMMOROW}
-					/>
-				</MuiPickersUtilsProvider>
-				<FindUser
-					handleAddUserToDraw={handleAddParticipant}
-					removedFromResults={participants}
-				/>
-				{participants.length > 0 && (
-					<>
-						<Typography variant="h6" component="h6">
-							Lista uczestników
-						</Typography>
-						<UsersList
-							listType="removingUsers"
-							usersList={participants}
-							handleUserClicked={handleRemoveParticipant}
-						/>
-					</>
-				)}
-				<Button
-					type="submit"
-					color="primary"
-					variant="contained"
-					style={{ marginTop: theme.spacing(2) }}
-				>
-					Utwórz losowanie
-				</Button>
-			</Styled.MyForm>
-		</>
-	);
+    return (
+        // Custom wrapper breaks react-hook-form lib, gotta check on that
+        <>
+            <Typography variant="h4" component="h2" align="center">
+                Utwórz losowanie
+            </Typography>
+            <Styled.MyForm onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                    error={errors.hasOwnProperty("title")}
+                    helperText={
+                        errors.title &&
+                        "Tytuł losowania powinen zawierać co najmniej 3 znaki"
+                    }
+                    label="Nazwa losowania"
+                    margin="normal"
+                    inputRef={register({ required: true, minLength: 3 })}
+                    name="title"
+                    onBlur={handleTriggerValidation}
+                />
+                <TextField
+                    error={errors.hasOwnProperty("price")}
+                    helperText={
+                        errors.price && "Podaj maksymalną cenę prezentu"
+                    }
+                    type="number"
+                    label="Maksymalna cena prezentu"
+                    margin="normal"
+                    inputRef={register({ required: true })}
+                    name="price"
+                    onBlur={handleTriggerValidation}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">zł</InputAdornment>
+                        )
+                    }}
+                />
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={plLocale}>
+                    <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        format="dd/MM/yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Data losowania"
+                        value={date}
+                        onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                            "aria-label": "wybierz datę"
+                        }}
+                        name="date"
+                        error={errors.hasOwnProperty("date")}
+                        helperText={
+                            errors.date &&
+                            "Losowanie nie może odbyć się w przeszłości"
+                        }
+                        autoOk={true}
+                        minDate={TOMMOROW}
+                    />
+                </MuiPickersUtilsProvider>
+                <FindUser
+                    handleAddUserToDraw={handleAddParticipant}
+                    removedFromResults={participants}
+                />
+                {participants.length > 0 && (
+                    <>
+                        <Typography variant="h6" component="h6">
+                            Lista uczestników
+                        </Typography>
+                        <UsersList
+                            listType="removingUsers"
+                            usersList={participants}
+                            handleUserClicked={handleRemoveParticipant}
+                        />
+                    </>
+                )}
+                <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    style={{ marginTop: theme.spacing(2) }}
+                >
+                    Utwórz losowanie
+                </Button>
+            </Styled.MyForm>
+        </>
+    );
 };
 export default CreateDraw;
