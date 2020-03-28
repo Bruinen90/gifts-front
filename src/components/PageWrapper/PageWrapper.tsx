@@ -9,14 +9,9 @@ import * as Styled from './stylesPageWrapper';
 
 const PageWrapper: React.FC = ({ children }) => {
 	const theme = useTheme();
-	const withPaper = useMediaQuery(theme.breakpoints.up('sm'));
 	return (
 		<Styled.MyContainer>
-			{withPaper ? (
-				<Styled.MyPaper>{children}</Styled.MyPaper>
-			) : (
-				<>{children}</>
-			)}
+			<Styled.MyPaper>{children}</Styled.MyPaper>
 		</Styled.MyContainer>
 	);
 };

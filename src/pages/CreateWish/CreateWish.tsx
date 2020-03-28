@@ -1,5 +1,5 @@
-import React from 'react';
-import { useHistory } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -10,13 +10,20 @@ import { Typography, TextField, Button } from '@material-ui/core';
 import * as Styled from './stylesCreateWish';
 
 // Types
-import { WishInput } from '../../interfaces/WishTypes';
+import { Wish, WishInput } from '../../interfaces/WishTypes';
 
 const CreateWish: React.FC = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const location = useLocation();
 	// Validation
-	const { handleSubmit, register, errors, triggerValidation } = useForm({
+	const {
+		handleSubmit,
+		register,
+		errors,
+		triggerValidation,
+		setValue,
+	} = useForm({
 		defaultValues: {
 			title: '',
 			description: '',
@@ -31,13 +38,30 @@ const CreateWish: React.FC = () => {
 		triggerValidation(event.target.getAttribute('name')!);
 	};
 
+	// Edit mode
+	const [originalId, setOriginalID] = useState<string | null>();
+	useEffect(() => {
+		if (location) {
+			if (location.state) {
+				const locState = location.state as { originalData: Wish };
+				const originalData = locState.originalData;
+				(Object.keys(originalData) as Array<keyof Wish>).forEach(
+					key => {
+						if (key !== '_id' && originalData[key]) {
+							setValue(key, originalData[key]);
+						}
+					}
+				);
+				setOriginalID(originalData._id);
+			}
+		}
+	}, [location, location.state, setValue]);
+
 	// Submiting
 	const onSubmit = (formData: any) => {
-		console.log(formData.link.startsWith('http'));
 		// Correct not full links
 		if (formData.link && !formData.link.startsWith('http')) {
 			formData.link = '//' + formData.link;
-			console.log('Link wihout http found, correcting');
 		}
 		// Remove blank fields
 		Object.keys(formData).forEach(key => {
@@ -46,6 +70,9 @@ const CreateWish: React.FC = () => {
 			}
 		});
 		const clearedFormData: WishInput = formData;
+		if (originalId) {
+			clearedFormData._id = originalId;
+		}
 		dispatch({
 			type: 'CREATE_WISH_WATCHER',
 			payload: {

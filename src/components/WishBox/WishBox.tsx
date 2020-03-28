@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router';
 
 // MUI
 import {
@@ -31,58 +32,68 @@ interface WishBoxProps {
 	deleteWish: (_: React.MouseEvent) => void;
 }
 
-const WishBox: React.FC<WishBoxProps> = ({ wish, view, deleteWish }) => (
-	<Card key={wish._id} style={{ margin: '1rem 0', padding: '1rem' }}>
-		<CardHeader title={wish.title} />
-		<CardContent>
-			<List disablePadding>
-				<ListItem>
-					<ListItemIcon>
-						<MonetizationOn />
-					</ListItemIcon>
-					<ListItemText
-						primary={wish.price + ' zł'}
-						secondary="Orientacyjna cena"
-					/>
-				</ListItem>
-				{wish.link && (
-					<ListItem button component="a" href={wish.link}>
-						<ListItemIcon>
-							<Link />
-						</ListItemIcon>
-						<ListItemText primary="Zobacz specyfikację lub zdjęcie" />
-					</ListItem>
-				)}
-				{wish.description && (
+const WishBox: React.FC<WishBoxProps> = ({ wish, view, deleteWish }) => {
+	const history = useHistory();
+	const handleNavigateToEdit = () => {
+		history.push('/edytuj-zyczenie', { originalData: wish });
+	};
+	return (
+		<Card key={wish._id} style={{ margin: '1rem 0', padding: '1rem' }}>
+			<CardHeader title={wish.title} />
+			<CardContent>
+				<List disablePadding>
 					<ListItem>
 						<ListItemIcon>
-							<Description />
+							<MonetizationOn />
 						</ListItemIcon>
-						<ListItemText>{wish.description}</ListItemText>
+						<ListItemText
+							primary={wish.price + ' zł'}
+							secondary="Orientacyjna cena"
+						/>
 					</ListItem>
+					{wish.link && (
+						<ListItem button component="a" href={wish.link}>
+							<ListItemIcon>
+								<Link />
+							</ListItemIcon>
+							<ListItemText primary="Zobacz specyfikację lub zdjęcie" />
+						</ListItem>
+					)}
+					{wish.description && (
+						<ListItem>
+							<ListItemIcon>
+								<Description />
+							</ListItemIcon>
+							<ListItemText>{wish.description}</ListItemText>
+						</ListItem>
+					)}
+				</List>
+			</CardContent>
+			<CardActions>
+				{view === 'full' ? (
+					<>
+						<Button
+							color="secondary"
+							startIcon={<Delete />}
+							onClick={deleteWish}
+						>
+							Usuń
+						</Button>
+						<Button
+							color="primary"
+							startIcon={<Edit />}
+							onClick={handleNavigateToEdit}
+						>
+							Edytuj
+						</Button>
+					</>
+				) : (
+					<Button color="primary" startIcon={<Check />}>
+						Kupię to
+					</Button>
 				)}
-			</List>
-		</CardContent>
-		<CardActions>
-			{view === 'full' ? (
-				<>
-					<Button
-						color="secondary"
-						startIcon={<Delete />}
-						onClick={deleteWish}
-					>
-						Usuń
-					</Button>
-					<Button color="primary" startIcon={<Edit />}>
-						Edytuj
-					</Button>
-				</>
-			) : (
-				<Button color="primary" startIcon={<Check />}>
-					Kupię to
-				</Button>
-			)}
-		</CardActions>
-	</Card>
-);
+			</CardActions>
+		</Card>
+	);
+};
 export default WishBox;

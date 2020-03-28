@@ -98,7 +98,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 	};
 
 	const handleEditDraw = () => {
-		history.push('/nowe-losowanie', {
+		history.push('/edytuj-losowanie', {
 			editing: true,
 			originalData: {
 				_id: _id,
@@ -132,15 +132,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 									open={Boolean(anchorEl)}
 									onClose={handleClose}
 								>
-									<MenuItem onClick={handleClose}>
-										<ListItemIcon>
-											<AddCircle />
-										</ListItemIcon>
-										<ListItemText>
-											Dodaj użytkowników
-										</ListItemText>
-									</MenuItem>
-									<MenuItem onClick={handleClose}>
+									<MenuItem onClick={handleEditDraw}>
 										<ListItemIcon>
 											<Edit />
 										</ListItemIcon>

@@ -8,13 +8,13 @@ import * as Styled from './stylesCreateDraw';
 
 // MUI
 import {
+	Paper,
 	Typography,
 	TextField,
 	InputAdornment,
 	Button,
+	Box,
 } from '@material-ui/core';
-
-// import PageWrapper from '../../components/PageWrapper/PageWrapper';
 import { useTheme } from '@material-ui/core/styles';
 
 // Date picker
@@ -36,6 +36,7 @@ import {
 // Components
 import FindUser from '../../components/FindUser/FindUser';
 import UsersList from '../../components/UsersList/UsersList';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
 
 interface CreateDrawLocationState {
 	edit: boolean;
@@ -52,7 +53,7 @@ interface CreateDrawLocationState {
 const TOMMOROW = new Date();
 TOMMOROW.setDate(TOMMOROW.getDate() + 1);
 
-const CreateDraw = () => {
+const CreateDraw: React.FC = () => {
 	const theme = useTheme();
 	const history = useHistory();
 	const location = useLocation();
@@ -97,6 +98,7 @@ const CreateDraw = () => {
 		triggerValidation,
 		setValue,
 		watch,
+		reset,
 	} = useForm({
 		defaultValues: {
 			title: '',
@@ -108,32 +110,41 @@ const CreateDraw = () => {
 	});
 
 	// Logic for edit mode
+	const [originalId, setOriginalID] = useState<string | null>();
 	useEffect(() => {
 		if (location) {
-			if (location.state) {
+			if (!location.state) {
+				// New draw - clear form
+				reset();
+				setParticipants([]);
+			} else {
 				const locState = location.state as CreateDrawLocationState;
 				const originalData = locState.originalData;
 				setValue('title', originalData.title);
 				setValue('price', originalData.price.toString());
 				setParticipants(originalData.participants);
+				setOriginalID(originalData._id);
 			}
 		}
-	}, [location, location.state, setValue]);
+	}, [location, reset, setValue]);
 
 	const { date } = watch();
 
 	const onSubmit = (formData: any) => {
-		const participantsIds = (participants as User[]).map(
-			participant => participant._id
-		);
 		const payload: DrawInterface = {
 			...formData,
 			price: parseInt(formData.price),
 			creator: loggedUser,
-			participants: participantsIds,
+			participants: participants,
 		};
+		if (originalId) {
+			payload._id = originalId;
+		}
 		dispatch({ type: 'CREATE_DRAW_WATCHER', payload: payload });
-		history.push('/moje-losowania', { newDrawTitle: formData.title });
+		history.push('/moje-losowania', {
+			drawTitle: formData.title,
+			edit: originalId !== undefined,
+		});
 	};
 
 	const handleTriggerValidation = async (
@@ -165,9 +176,13 @@ const CreateDraw = () => {
 		triggerValidation('date');
 	};
 
+	const handleCancelChanges = () => {
+		history.push('/moje-losowania');
+	};
+
 	return (
 		// Custom wrapper breaks react-hook-form lib, gotta check on that
-		<>
+		<PageWrapper>
 			<Typography variant="h4" component="h2" align="center">
 				Utwórz losowanie
 			</Typography>
@@ -183,6 +198,7 @@ const CreateDraw = () => {
 					inputRef={register({ required: true, minLength: 3 })}
 					name="title"
 					onBlur={handleTriggerValidation}
+					autoComplete="off"
 				/>
 				<TextField
 					error={errors.hasOwnProperty('price')}
@@ -200,6 +216,7 @@ const CreateDraw = () => {
 							<InputAdornment position="end">zł</InputAdornment>
 						),
 					}}
+					autoComplete="off"
 				/>
 				<MuiPickersUtilsProvider utils={DateFnsUtils} locale={plLocale}>
 					<KeyboardDatePicker
@@ -240,16 +257,24 @@ const CreateDraw = () => {
 						/>
 					</>
 				)}
-				<Button
-					type="submit"
-					color="primary"
-					variant="contained"
+				<Box
+					display="flex"
+					justifyContent="space-around"
 					style={{ marginTop: theme.spacing(2) }}
 				>
-					Utwórz losowanie
-				</Button>
+					<Button type="submit" color="primary" variant="contained">
+						{originalId ? 'Zapisz zmiany' : 'Utwórz losowanie'}
+					</Button>
+					<Button
+						onClick={handleCancelChanges}
+						color="secondary"
+						variant="contained"
+					>
+						Anuluj
+					</Button>
+				</Box>
 			</Styled.MyForm>
-		</>
+		</PageWrapper>
 	);
 };
 export default CreateDraw;

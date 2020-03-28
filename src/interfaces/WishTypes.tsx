@@ -5,6 +5,7 @@ export interface WishInput {
 	link: string;
 	description: string;
 	price: number | string;
+	_id?: string;
 }
 
 export interface Wish extends WishInput {
@@ -15,5 +16,5 @@ export interface Wish extends WishInput {
 
 export interface WishesListProps {
 	wishesList: Wish[];
-	viewMode: 'creator' | 'guest'
+	viewMode: 'creator' | 'guest';
 }

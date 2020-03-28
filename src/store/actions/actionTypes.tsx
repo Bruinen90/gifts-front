@@ -8,3 +8,5 @@ export const CREATE_WISH = 'CREATE_WISH';
 export const SET_USER_WISHES = 'SET_USER_WISHES';
 export const DELETE_WISH = 'DELETE_WISH';
 export const EXIT_DRAW = "EXIT_DRAW";
+export const UPDATE_DRAW = "UPDATE_DRAW";
+export const UPDATE_WISH = "UPDATE_WISH";

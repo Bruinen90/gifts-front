@@ -40,8 +40,10 @@ const App = () => {
 					<Route path="/logowanie" component={Login} />
 					<Route path="/rejestracja" component={Signup} />
 					<Route path="/nowe-losowanie" component={CreateDraw} />
+					<Route path="/edytuj-losowanie" component={CreateDraw} />
 					<Route path="/moje-losowania" component={MyDraws} />
 					<Route path="/nowe-zyczenie" component={CreateWish} />
+					<Route path="/edytuj-zyczenie" component={CreateWish} />
 					<Route path="/lista-zyczen" component={Wishlist} />
 					<Route path="/znajomi" component={Friends} />
 					<Route path="/" component={Home} />

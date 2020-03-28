@@ -6,7 +6,7 @@ export interface DrawInterface {
     price: number;
     date: Date | string;
     creator: User;
-    participants?: string[] | User[];
+    participants?: User[];
     results?: User;
 }
 
