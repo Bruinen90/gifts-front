@@ -248,7 +248,6 @@ function* watchFetchUserDrawsList() {
 
 function* fetchUserWishes(action: { type: any; payload?: { userId: string } }) {
 	if (axios.defaults.headers.common['Authorization']) {
-		console.log('Fetching logged user wishes');
 		const graphqlQuery = {
 			query: `
                 {userWishes {_id title link description price }}
@@ -322,6 +321,32 @@ function* watchExitDraw() {
 	yield takeEvery('EXIT_DRAW_WATCHER', exitDraw);
 }
 
+function* reserveWish(action: {
+	type: string;
+	payload: { drawId: string; wishId: string };
+}) {
+	console.log('SAGA: ', action.payload);
+	try {
+		const graphqlQuery = {
+			query: `
+                mutation {
+                    setReserved(reservation: {drawId: "${
+						action.payload.drawId
+					}", wishId: "${action.payload.wishId}", reserved: ${true}})
+                    {success}}
+            `,
+		};
+		const response = yield axios.post('graphql', graphqlQuery);
+		console.log('respose: ', response);
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+function* watchReserveDraw() {
+	yield takeEvery('RESERVE_WISH_WATCHER', reserveWish);
+}
+
 export default function* rootSaga() {
 	yield all([
 		watchLoginUser(),
@@ -334,5 +359,6 @@ export default function* rootSaga() {
 		watchFetchUserWishes(),
 		watchDeleteWish(),
 		watchExitDraw(),
+		watchReserveDraw(),
 	]);
 }

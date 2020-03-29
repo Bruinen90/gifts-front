@@ -8,7 +8,6 @@ import * as Styled from './stylesCreateDraw';
 
 // MUI
 import {
-	Paper,
 	Typography,
 	TextField,
 	InputAdornment,

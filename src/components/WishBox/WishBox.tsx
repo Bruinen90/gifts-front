@@ -30,12 +30,22 @@ interface WishBoxProps {
 	wish: Wish;
 	view: 'full' | 'simple';
 	deleteWish: (_: React.MouseEvent) => void;
+	reserveWish: (wishId: string) => void;
 }
 
-const WishBox: React.FC<WishBoxProps> = ({ wish, view, deleteWish }) => {
+const WishBox: React.FC<WishBoxProps> = ({
+	wish,
+	view,
+	deleteWish,
+	reserveWish,
+}) => {
 	const history = useHistory();
 	const handleNavigateToEdit = () => {
 		history.push('/edytuj-zyczenie', { originalData: wish });
+	};
+
+	const handleReserveWish = () => {
+		reserveWish(wish._id);
 	};
 	return (
 		<Card key={wish._id} style={{ margin: '1rem 0', padding: '1rem' }}>
@@ -88,7 +98,11 @@ const WishBox: React.FC<WishBoxProps> = ({ wish, view, deleteWish }) => {
 						</Button>
 					</>
 				) : (
-					<Button color="primary" startIcon={<Check />}>
+					<Button
+						color="primary"
+						startIcon={<Check />}
+						onClick={handleReserveWish}
+					>
 						Kupię to
 					</Button>
 				)}

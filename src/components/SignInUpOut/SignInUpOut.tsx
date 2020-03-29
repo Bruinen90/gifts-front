@@ -1,6 +1,5 @@
 import React from 'react';
 import { StateInterface } from '../../interfaces/interfaces';
-import * as actionTypes from '../../store/actions/actionTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 

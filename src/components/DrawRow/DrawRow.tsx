@@ -30,7 +30,6 @@ import {
 // Icons
 import {
 	MoreVert,
-	AddCircle,
 	Edit,
 	Delete,
 	ExitToApp,
@@ -47,7 +46,7 @@ import DrawResults from '../DrawResults/DrawResults';
 interface DrawRowProps {
 	date: Date;
 	title: string;
-	_id: String | undefined;
+	_id: string | undefined;
 	results?: User;
 	participants: [User];
 	creator: User;
@@ -204,6 +203,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 								<DrawResults
 									_id={results._id}
 									username={results.username}
+									drawId={_id!}
 								/>
 							</Grid>
 						)}

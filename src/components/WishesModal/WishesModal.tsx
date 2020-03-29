@@ -17,6 +17,7 @@ interface WishesModalProps {
 	_id: string;
 	opened: boolean;
 	toggle: () => void;
+	reserveWish?: (wishId: string) => void;
 }
 
 const WishesModal: React.FC<WishesModalProps> = ({
@@ -24,6 +25,7 @@ const WishesModal: React.FC<WishesModalProps> = ({
 	_id,
 	opened,
 	toggle,
+	reserveWish,
 }) => {
 	const [loading, setLoading] = useState(false);
 	const [wishesList, setWishesList] = useState<Wish[]>();
@@ -53,7 +55,11 @@ const WishesModal: React.FC<WishesModalProps> = ({
 			{loading ? (
 				<CircularProgress />
 			) : wishesList ? (
-				<WishesList wishesList={wishesList} viewMode="guest" />
+				<WishesList
+					wishesList={wishesList}
+					viewMode="guest"
+					reserveWish={reserveWish}
+				/>
 			) : (
 				<Typography>
 					Wystąpił błąd serwera, spróbuj ponownie za jakiś czas

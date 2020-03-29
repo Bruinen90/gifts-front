@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+// MUI
 import {
 	Card,
 	CardHeader,
@@ -15,13 +18,23 @@ import WishesModal from '../WishesModal/WishesModal';
 interface DrawResultsProps {
 	_id: string;
 	username: string;
+	drawId: string;
 }
 
-const DrawResults: React.FC<DrawResultsProps> = ({ _id, username }) => {
+const DrawResults: React.FC<DrawResultsProps> = ({ _id, username, drawId }) => {
+	const dispatch = useDispatch();
 	const [wishesDialogOpened, setWishesDialogOpened] = useState(false);
 
 	const handleToggleWishesDialog = () => {
 		setWishesDialogOpened(prev => !prev);
+	};
+
+	const handleSetWishAsReserved = (wishId: string) => {
+		console.log('reserving wish: ', wishId);
+		dispatch({
+			type: 'RESERVE_WISH_WATCHER',
+			payload: { drawId: drawId, wishId: wishId },
+		});
 	};
 	return (
 		<>
@@ -67,10 +80,11 @@ const DrawResults: React.FC<DrawResultsProps> = ({ _id, username }) => {
 			</Card>
 			{wishesDialogOpened && (
 				<WishesModal
-                    username={username}
-                    _id={_id}
+					username={username}
+					_id={_id}
 					opened={wishesDialogOpened}
 					toggle={handleToggleWishesDialog}
+					reserveWish={wishId => handleSetWishAsReserved(wishId)}
 				/>
 			)}
 		</>

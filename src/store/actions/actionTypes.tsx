@@ -10,3 +10,4 @@ export const DELETE_WISH = 'DELETE_WISH';
 export const EXIT_DRAW = "EXIT_DRAW";
 export const UPDATE_DRAW = "UPDATE_DRAW";
 export const UPDATE_WISH = "UPDATE_WISH";
+export const RESERVE_WISH = "RESERVE_WISH"
