@@ -40,14 +40,14 @@ import {
 } from '@material-ui/icons';
 
 // Types
-import { User } from '../../interfaces/interfaces';
+import { User, DrawResultsInterface } from '../../interfaces/interfaces';
 import DrawResults from '../DrawResults/DrawResults';
 
 interface DrawRowProps {
 	date: Date;
 	title: string;
 	_id: string | undefined;
-	results?: User;
+	results?: DrawResultsInterface;
 	participants: [User];
 	creator: User;
 	adminMode: boolean;
@@ -204,6 +204,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 									_id={results._id}
 									username={results.username}
 									drawId={_id!}
+									gift={results.gift}
 								/>
 							</Grid>
 						)}

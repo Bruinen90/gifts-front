@@ -10,7 +10,7 @@ import { List } from '@material-ui/core';
 // Components
 import WishBox from '../WishBox/WishBox';
 
-const WishesList: React.FC<WishesListProps> = ({ wishesList, viewMode, reserveWish }) => {
+const WishesList: React.FC<WishesListProps> = ({ wishesList, viewMode, setReservedStatus }) => {
 	const dispatch = useDispatch();
 	const handleDeleteWish = (wishId: string) => {
 		dispatch({ type: 'DELETE_WISH_WATCHER', payload: { wishId: wishId } });
@@ -22,8 +22,8 @@ const WishesList: React.FC<WishesListProps> = ({ wishesList, viewMode, reserveWi
 					wish={wish}
 					key={wish._id}
 					view={viewMode === 'creator' ? 'full' : 'simple'}
-					deleteWish={_ => handleDeleteWish(wish._id)}
-					reserveWish={reserveWish}
+                    deleteWish={_ => handleDeleteWish(wish._id)}
+                    setReservedStatus={setReservedStatus}
 				/>
 			))}
 		</List>

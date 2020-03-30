@@ -15,13 +15,23 @@ import {
 // Components
 import WishesModal from '../WishesModal/WishesModal';
 
+// Types
+import { Wish } from '../../interfaces/WishTypes';
+import { ReservationStatusSetterType } from '../../interfaces/Reservations';
+
 interface DrawResultsProps {
 	_id: string;
 	username: string;
 	drawId: string;
+	gift?: Wish;
 }
 
-const DrawResults: React.FC<DrawResultsProps> = ({ _id, username, drawId }) => {
+const DrawResults: React.FC<DrawResultsProps> = ({
+	_id,
+	username,
+	drawId,
+	gift,
+}) => {
 	const dispatch = useDispatch();
 	const [wishesDialogOpened, setWishesDialogOpened] = useState(false);
 
@@ -29,11 +39,13 @@ const DrawResults: React.FC<DrawResultsProps> = ({ _id, username, drawId }) => {
 		setWishesDialogOpened(prev => !prev);
 	};
 
-	const handleSetWishAsReserved = (wishId: string) => {
-		console.log('reserving wish: ', wishId);
+	const handleSetReservationStatus: ReservationStatusSetterType = ({
+		wishId,
+		reserved,
+	}) => {
 		dispatch({
 			type: 'RESERVE_WISH_WATCHER',
-			payload: { drawId: drawId, wishId: wishId },
+			payload: { drawId: drawId, wishId: wishId, reserved: reserved },
 		});
 	};
 	return (
@@ -66,6 +78,18 @@ const DrawResults: React.FC<DrawResultsProps> = ({ _id, username, drawId }) => {
 						>
 							{username}
 						</Typography>
+						{gift && (
+							<>
+								<Typography
+									color="textSecondary"
+									variant="overline"
+									component="div"
+								>
+									Zadeklarowałeś, że kupisz:
+								</Typography>
+								<Typography>{gift.title}</Typography>
+							</>
+						)}
 					</Box>
 				</CardContent>
 				<CardActions>
@@ -84,7 +108,7 @@ const DrawResults: React.FC<DrawResultsProps> = ({ _id, username, drawId }) => {
 					_id={_id}
 					opened={wishesDialogOpened}
 					toggle={handleToggleWishesDialog}
-					reserveWish={wishId => handleSetWishAsReserved(wishId)}
+					setReservedStatus={(payload)=>handleSetReservationStatus(payload)}
 				/>
 			)}
 		</>

@@ -12,12 +12,13 @@ import {
 // Types
 import { Wish } from '../../interfaces/WishTypes';
 import WishesList from '../WishesList/WishesList';
+import { ReservationStatusSetterType } from '../../interfaces/Reservations';
 interface WishesModalProps {
 	username: string;
 	_id: string;
 	opened: boolean;
-	toggle: () => void;
-	reserveWish?: (wishId: string) => void;
+    toggle: () => void;
+    setReservedStatus: ReservationStatusSetterType;
 }
 
 const WishesModal: React.FC<WishesModalProps> = ({
@@ -25,7 +26,7 @@ const WishesModal: React.FC<WishesModalProps> = ({
 	_id,
 	opened,
 	toggle,
-	reserveWish,
+    setReservedStatus
 }) => {
 	const [loading, setLoading] = useState(false);
 	const [wishesList, setWishesList] = useState<Wish[]>();
@@ -35,7 +36,7 @@ const WishesModal: React.FC<WishesModalProps> = ({
 				setLoading(true);
 				const graphqlQuery = {
 					query: `
-                        {userWishes(userId: "${_id}") {_id title link description price }}
+                        {userWishes(userId: "${_id}") {_id title link description price buyer reserved }}
                         `,
 				};
 				const response = await axios.post('graphql', graphqlQuery);
@@ -57,8 +58,8 @@ const WishesModal: React.FC<WishesModalProps> = ({
 			) : wishesList ? (
 				<WishesList
 					wishesList={wishesList}
-					viewMode="guest"
-					reserveWish={reserveWish}
+                    viewMode="guest"
+                    setReservedStatus={setReservedStatus}
 				/>
 			) : (
 				<Typography>

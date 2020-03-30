@@ -117,7 +117,7 @@ const reducer = (
 						return updatedWish;
 					}
 				}),
-			};
+            };
 	}
 	return state;
 };
