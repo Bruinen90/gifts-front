@@ -1,21 +1,22 @@
-import { User } from './interfaces';
+import { User } from "./interfaces";
 
 export interface WishInput {
-	title: string;
-	link: string;
-	description: string;
-	price: number | string;
-	_id?: string;
+    title: string;
+    link: string;
+    description: string;
+    price: number | string;
+    _id?: string;
 }
 
 export interface Wish extends WishInput {
-	_id: string;
-	creator: string;
-	price: number;
+    _id: string;
+    creator: string;
+    price: number;
+    buyer?: string;
 }
 
 export interface WishesListProps {
-	wishesList: Wish[];
-    viewMode: 'creator' | 'guest';
+    wishesList: Wish[];
+    viewMode: "creator" | "guest";
     reserveWish?: any;
 }
