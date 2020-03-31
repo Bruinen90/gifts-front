@@ -8,10 +8,10 @@ export const theme = createMuiTheme({
 		secondary: {
 			main: '#e53935',
 		},
-    },
-    typography: {
-        h4: {
-            marginBottom: '2rem',
-        }
-    }
+	},
+	typography: {
+		h4: {
+			marginBottom: '2rem',
+		},
+	},
 });
