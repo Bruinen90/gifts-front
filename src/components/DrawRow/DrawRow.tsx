@@ -204,7 +204,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 									_id={results._id}
 									username={results.username}
 									drawId={_id!}
-									gift={results.gift}
+									gifts={results.gifts}
 								/>
 							</Grid>
 						)}
