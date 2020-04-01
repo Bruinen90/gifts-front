@@ -35,15 +35,15 @@ const reducer = (
 				loginError: action.payload.message,
 			};
 		case actionTypes.USER_LOGOUT:
-			console.log('LOGGING OUT...');
 			const loggedOutState = { ...state };
 			delete loggedOutState.username;
 			delete loggedOutState.email;
 			delete loggedOutState.token;
 			delete loggedOutState.userId;
+			delete loggedOutState.usersDraws;
+			delete loggedOutState.usersWishes;
 			return { ...loggedOutState, usersDraws: [] };
 		case actionTypes.CREATE_DRAW:
-			console.log('CREATING A DRAW', action.payload);
 			const newDraw: DrawInterface = action.payload;
 			return {
 				...state,
@@ -52,7 +52,6 @@ const reducer = (
 					: [newDraw],
 			};
 		case actionTypes.DELETE_DRAW:
-			console.log('DELETING DRAW', action.payload);
 			return {
 				...state,
 				usersDraws: [

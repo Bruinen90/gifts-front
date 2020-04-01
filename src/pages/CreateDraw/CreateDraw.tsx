@@ -116,6 +116,7 @@ const CreateDraw: React.FC = () => {
 				// New draw - clear form
 				reset();
 				setParticipants([]);
+				setOriginalID(null);
 			} else {
 				const locState = location.state as CreateDrawLocationState;
 				const originalData = locState.originalData;
@@ -142,7 +143,7 @@ const CreateDraw: React.FC = () => {
 		dispatch({ type: 'CREATE_DRAW_WATCHER', payload: payload });
 		history.push('/moje-losowania', {
 			drawTitle: formData.title,
-			edit: originalId !== undefined,
+			edit: originalId && true,
 		});
 	};
 
@@ -183,7 +184,7 @@ const CreateDraw: React.FC = () => {
 		// Custom wrapper breaks react-hook-form lib, gotta check on that
 		<PageWrapper>
 			<Typography variant="h4" component="h2" align="center">
-				Utwórz losowanie
+				{originalId ? 'Edytuj ' : 'Utwórz '} losowanie
 			</Typography>
 			<Styled.MyForm onSubmit={handleSubmit(onSubmit)}>
 				<TextField

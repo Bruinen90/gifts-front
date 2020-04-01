@@ -233,7 +233,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 							<Button
 								startIcon={<ExitToApp />}
 								color="secondary"
-								onClick={handleExitDraw}
+								onClick={handleToggleConfirmationDialog}
 							>
 								Wypisz się
 							</Button>
@@ -247,13 +247,16 @@ const DrawRow: React.FC<DrawRowProps> = ({
 				onClose={handleToggleConfirmationDialog}
 			>
 				<DialogTitle id="alert-dialog-slide-title">
-					Czy na pewno chcesz usunąć losowanie?
+					Czy na pewno chcesz {adminMode ? 'usunąć ' : 'opuścić '}
+					losowanie?
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-slide-description">
-						Po usunięciu losowanie nie będzie możliwości jego
+						{adminMode
+							? `Po usunięciu losowanie nie będzie możliwości jego
 						przywrócenia, wszystkie związane z nim ustawienia oraz
-						informacjie zostaną bezpowrotnie utracone
+						informacjie zostaną bezpowrotnie utracone`
+							: `Po opuszczeniu losowania nie ma innej możliwości powrotu niż dodanie użytkownika przez jego administratora`}
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
@@ -263,8 +266,11 @@ const DrawRow: React.FC<DrawRowProps> = ({
 					>
 						Anuluj
 					</Button>
-					<Button onClick={handleDeleteDraw} color="secondary">
-						Usuń
+					<Button
+						onClick={adminMode ? handleDeleteDraw : handleExitDraw}
+						color="secondary"
+					>
+						{adminMode ? 'Usuń losowanie' : 'Opuść losowanie'}
 					</Button>
 				</DialogActions>
 			</Dialog>

@@ -85,7 +85,7 @@ const CreateWish: React.FC = () => {
 	return (
 		<>
 			<Typography variant="h4" component="h2" align="center">
-				Utwórz życzenie
+				{originalId ? 'Edytuj ' : 'Utwórz '} życzenie
 			</Typography>
 			<Styled.MyForm onSubmit={handleSubmit(onSubmit)}>
 				<TextField

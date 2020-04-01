@@ -1,7 +1,10 @@
 import React from 'react';
-import { StateInterface } from '../../interfaces/interfaces';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
+
+// Types
+import { StateInterface } from '../../interfaces/interfaces';
 
 // MUI
 import {
@@ -12,12 +15,14 @@ import {
 	Typography,
 } from '@material-ui/core';
 
-const SignInUpOut = () => {
+const SignInUpOut: React.FC = () => {
 	const dispatch = useDispatch();
 	const username = useSelector((state: StateInterface) => state.username);
+	const history = useHistory();
 
 	const handleLogout = () => {
 		dispatch({ type: 'USER_LOGOUT_WATCHER' });
+		history.push('/');
 	};
 	return (
 		<Hidden smDown>
