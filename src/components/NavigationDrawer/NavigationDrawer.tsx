@@ -26,7 +26,7 @@ const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 flexDirection="column"
                 justifyContent="space-between"
                 height="100%"
-                style={{ minWidth: "40vw" }}
+                style={{ minWidth: "280px" }}
             >
                 <NavigationList
                     hideDrawer={toggleNavigationDrawer}

@@ -27,7 +27,7 @@ const SignInUpOut: React.FC<SignInUpOutProps> = ({ username }) => {
     return (
         <Hidden smDown>
             {username ? (
-                <Box display="flex" alignItems="flex-end">
+                <Box display="flex" alignItems="flex-end" marginLeft="3rem">
                     <Box marginRight={2}>
                         <Typography>Witaj {username}</Typography>
                     </Box>

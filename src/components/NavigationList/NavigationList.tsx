@@ -1,7 +1,7 @@
 import React from "react";
 
 // MUI
-import { Drawer, List, Box, Button } from "@material-ui/core";
+import { List } from "@material-ui/core";
 import {
     AddCircle,
     CardGiftcard,
@@ -49,6 +49,7 @@ const NavigationList: React.FC<NavigationListProps> = ({
     view,
     userLoggedIn
 }) => {
+
     const listItems = userLoggedIn ? USER_ITEMS_LIST : GUEST_ITEMS_LIST;
     return (
         <List style={{ display: view === "horizontal" ? "flex" : "default" }}>

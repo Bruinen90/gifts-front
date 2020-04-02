@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import { StateInterface } from "../../interfaces/interfaces";
 
 // MUI
-import { AppBar, Box, IconButton } from "@material-ui/core";
+import { AppBar, Box, IconButton, Theme } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 //Styles
 import * as Styled from "./stylesNavBar";
@@ -15,8 +16,13 @@ import * as Styled from "./stylesNavBar";
 import NavigationDrawer from "../NavigationDrawer/NavigationDrawer";
 import SignInUpOut from "../SignInUpOut/SignInUpOut";
 import NavigationList from "../NavigationList/NavigationList";
+import LogoBox from "../LogoBox/LogoBox";
 
 const NavBar = () => {
+    const minMediumScreen = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.up("md")
+    );
+
     const username = useSelector((state: StateInterface) => state.username);
 
     const [navOpened, setNavOpened] = useState(false);
@@ -26,24 +32,32 @@ const NavBar = () => {
     return (
         <AppBar position="sticky">
             <Styled.ToolbarCont>
-                <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    onClick={handleToggleDrawer}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <NavigationDrawer
-                    opened={navOpened}
-                    toggleNavigationDrawer={handleToggleDrawer}
-                    userLoggedIn={username !== undefined}
-                />
+                {!minMediumScreen ? (
+                    <>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={handleToggleDrawer}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <NavigationDrawer
+                            opened={navOpened}
+                            toggleNavigationDrawer={handleToggleDrawer}
+                            userLoggedIn={username !== undefined}
+                        />
+                    </>
+                ) : (
+                    <LogoBox />
+                )}
                 <Box display="flex" alignItems="center">
-                    <NavigationList
-                        view="horizontal"
-                        userLoggedIn={username !== undefined}
-                    />
+                    {minMediumScreen && (
+                        <NavigationList
+                            view="horizontal"
+                            userLoggedIn={username !== undefined}
+                        />
+                    )}
                     <SignInUpOut username={username} />
                 </Box>
             </Styled.ToolbarCont>
