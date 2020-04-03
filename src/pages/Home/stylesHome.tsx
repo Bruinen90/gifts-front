@@ -5,6 +5,7 @@ import { Container, Typography, Box } from "@material-ui/core";
 export const MainContainer = styled(Container)({
     backgroundColor: "#333",
     minHeight: "calc(100vh - 64px)",
+    padding: "10vh 0",
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
