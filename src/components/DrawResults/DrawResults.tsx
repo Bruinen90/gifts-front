@@ -14,18 +14,20 @@ import {
 
 // Components
 import WishesModal from '../WishesModal/WishesModal';
+import GiftBox from '../GiftBox/GiftBox';
 
 // Types
 import { StateInterface } from '../../interfaces/interfaces';
 import { Wish } from '../../interfaces/WishTypes';
 import { ReservationStatusSetterType } from '../../interfaces/Reservations';
-import GiftBox from '../GiftBox/GiftBox';
+import { DrawStatusType } from '../../interfaces/Draw';
 
 interface DrawResultsProps {
 	_id: string;
 	username: string;
 	drawId: string;
 	gifts?: Wish[];
+	drawStatus: DrawStatusType;
 }
 
 const DrawResults: React.FC<DrawResultsProps> = ({
@@ -33,6 +35,7 @@ const DrawResults: React.FC<DrawResultsProps> = ({
 	username,
 	drawId,
 	gifts,
+	drawStatus,
 }) => {
 	const dispatch = useDispatch();
 	const wishesList = useSelector(
@@ -45,8 +48,8 @@ const DrawResults: React.FC<DrawResultsProps> = ({
 			type: 'FETCH_USER_WISHES_WATCHER',
 			payload: { userId: _id, drawId: drawId },
 		});
-    }, [_id, dispatch, drawId]);
-    
+	}, [_id, dispatch, drawId]);
+
 	const [wishesDialogOpened, setWishesDialogOpened] = useState(false);
 
 	const handleToggleWishesDialog = () => {
@@ -96,40 +99,59 @@ const DrawResults: React.FC<DrawResultsProps> = ({
 						>
 							{username}
 						</Typography>
-						{gifts && (
-							<>
+						{drawStatus !== 'archived' &&
+							(gifts && gifts.length > 0 ? (
+								<>
+									<Typography
+										color="textSecondary"
+										variant="overline"
+										component="div"
+									>
+										Zadeklarowałeś, że kupisz:
+									</Typography>
+									{gifts.map(gift => (
+										<GiftBox
+											key={gift._id}
+											_id={gift._id}
+											title={gift.title}
+											description={gift.description}
+											price={gift.price}
+											link={gift.link}
+											cancelReservation={payload =>
+												handleCancelReservation(payload)
+											}
+										/>
+									))}
+								</>
+							) : (
 								<Typography
-									color="textSecondary"
 									variant="overline"
 									component="div"
+									color="secondary"
 								>
-									Zadeklarowałeś, że kupisz:
+									Zadeklaruj co kupisz!
 								</Typography>
-								{gifts.map(gift => (
-									<GiftBox
-										key={gift._id}
-										_id={gift._id}
-										title={gift.title}
-										description={gift.description}
-										price={gift.price}
-										link={gift.link}
-										cancelReservation={payload =>
-											handleCancelReservation(payload)
-										}
-									/>
-								))}
-							</>
-						)}
+							))}
 					</Box>
 				</CardContent>
 				<CardActions>
-					<Button
-						color="primary"
-						style={{ margin: 'auto' }}
-						onClick={handleToggleWishesDialog}
-					>
-						Zobacz listę życzeń
-					</Button>
+					{drawStatus === 'archived' ? (
+						<Typography
+							color="secondary"
+							style={{ margin: 'auto' }}
+							variant="button"
+						>
+							Losowanie archiwalne
+						</Typography>
+					) : (
+						<Button
+							color="primary"
+							style={{ margin: 'auto' }}
+							onClick={handleToggleWishesDialog}
+						>
+							Zobacz listę życzeń
+						</Button>
+					)}
 				</CardActions>
 			</Card>
 			{wishesList && wishesDialogOpened && (
@@ -140,7 +162,7 @@ const DrawResults: React.FC<DrawResultsProps> = ({
 					setReservedStatus={payload =>
 						handleSetReservationStatus(payload)
 					}
-                    wishesList={wishesList}
+					wishesList={wishesList}
 				/>
 			)}
 		</>

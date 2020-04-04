@@ -84,6 +84,22 @@ const MyDraws: React.FC = () => {
 	// Run draw
 	const dispatchRunDraw = (drawId: string, drawTitle: string) => {
 		dispatch({ type: 'RUN_DRAW_WATCHER', payload: { drawId: drawId } });
+		setSnackbar({
+			opened: true,
+			message: `Losowanie ${drawTitle} odbyło się poprawnie`,
+		});
+	};
+
+	// Archive draw
+	const dispatchArchiveDraw = (drawId: string, drawTitle: string) => {
+		dispatch({
+			type: 'ARCHIVE_DRAW_WATCHER',
+			payload: { drawId: drawId },
+		});
+		setSnackbar({
+			opened: true,
+			message: `Oznaczono losowanie ${drawTitle} jako archiwalne`,
+		});
 	};
 	return (
 		<>
@@ -111,6 +127,8 @@ const MyDraws: React.FC = () => {
 										deleteDraw={dispatchDeleteDraw}
 										exitDraw={dispatchExitDraw}
 										runDraw={dispatchRunDraw}
+										archiveDraw={dispatchArchiveDraw}
+										status={draw.status}
 									/>
 								);
 							} else {
@@ -129,6 +147,8 @@ const MyDraws: React.FC = () => {
 										deleteDraw={dispatchDeleteDraw}
 										exitDraw={dispatchExitDraw}
 										runDraw={dispatchRunDraw}
+										archiveDraw={dispatchArchiveDraw}
+										status={draw.status}
 									/>
 								);
 							}

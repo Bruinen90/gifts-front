@@ -219,7 +219,7 @@ function* fetchUserDrawsList() {
 		const graphqlQuery = {
 			query: `{
                 userDraws {
-                    drawsList{ _id title date price participants {_id username email} results {_id username email gifts {_id title price link description}} creator {_id username email} }
+                    drawsList{ _id title date price participants {_id username email} results {_id username email gifts {_id title price link description}} creator {_id username email} status}
                 }
             }`,
 		};
@@ -373,7 +373,6 @@ function* watchReserveDraw() {
 }
 
 function* runDraw(action: { type: string; payload: { drawId: string } }) {
-	console.log('SAGA RUNS DRAW, ', action.payload);
 	const { drawId } = action.payload;
 	const graphqlQuery = {
 		query: `
@@ -391,6 +390,20 @@ function* runDraw(action: { type: string; payload: { drawId: string } }) {
 	});
 }
 
+function* archiveDraw(action: { type: string; payload: { drawId: string } }) {
+	const { drawId } = action.payload;
+	const graphqlQuery = {
+		query: `mutation{archiveDraw(drawId: "${drawId}") {success}}`,
+	};
+	const response = yield axios.post('graphql', graphqlQuery);
+	if (response.data.data.archiveDraw.success) {
+		yield put({
+			type: actionTypes.SET_DRAW_ARCHIVED,
+			payload: { drawId: drawId },
+		});
+	}
+}
+
 export default function* rootSaga() {
 	yield all([
 		watchLoginUser(),
@@ -405,5 +418,6 @@ export default function* rootSaga() {
 		watchExitDraw(),
 		watchReserveDraw(),
 		yield takeLatest('RUN_DRAW_WATCHER', runDraw),
+		yield takeLatest('ARCHIVE_DRAW_WATCHER', archiveDraw),
 	]);
 }

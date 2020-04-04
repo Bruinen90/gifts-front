@@ -42,6 +42,7 @@ import {
 // Types
 import { User, DrawResultsInterface } from '../../interfaces/interfaces';
 import DrawResults from '../DrawResults/DrawResults';
+import { DrawStatusType } from '../../interfaces/Draw';
 
 type DrawFunction = (drawId: string, drawTitle: string) => void;
 
@@ -57,6 +58,8 @@ interface DrawRowProps {
 	deleteDraw: DrawFunction;
 	exitDraw: DrawFunction;
 	runDraw: DrawFunction;
+	archiveDraw: DrawFunction;
+	status: DrawStatusType;
 }
 
 const DrawRow: React.FC<DrawRowProps> = ({
@@ -71,6 +74,8 @@ const DrawRow: React.FC<DrawRowProps> = ({
 	deleteDraw,
 	exitDraw,
 	runDraw,
+	archiveDraw,
+	status,
 }) => {
 	const history = useHistory();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -87,16 +92,22 @@ const DrawRow: React.FC<DrawRowProps> = ({
 
 	interface ConfirmationDialogInterface {
 		opened: boolean;
-		title?: string;
-		description?: string;
-		acceptText?: string;
-		cancelText?: string;
+		title: string;
+		description: string;
+		acceptText: string;
+		cancelText: string;
 		confirmFunction?: DrawFunction;
 	}
 
 	const [confirmationDialog, setConfirmationDialog] = useState<
 		ConfirmationDialogInterface
-	>({ opened: false });
+	>({
+		opened: false,
+		title: 'Czy na pewno chcesz wykonać wybraną akcję?',
+		description: 'Może to doprowadzić do nieodwracalnych skutków',
+		acceptText: 'Akceptuj',
+		cancelText: 'Anuluj',
+	});
 
 	const openConfirmationDialog = ({
 		title,
@@ -123,6 +134,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 
 	const handleCloseConfirmationDialog = () => {
 		setConfirmationDialog({
+			...confirmationDialog,
 			opened: false,
 		});
 	};
@@ -173,6 +185,21 @@ const DrawRow: React.FC<DrawRowProps> = ({
 		});
 	};
 
+	const handleArchiveDraw = () => {
+		const confirmed = () => {
+			archiveDraw(_id!, title);
+			handleCloseConfirmationDialog();
+		};
+		openConfirmationDialog({
+			title: 'Czy na pewno chcesz oznaczyć losowanie jako archiwalne?',
+			description:
+				'Zaleca się oznaczenie losowania jako archwialnego dopiero po rozdaniu prezentów. Losowania archiwalne są widoczne dla uczestników, ale nie ma możliwości sprawdzania listy życzeń ani oznaczania deklaracji zakupu.',
+			acceptText: 'Oznacz losowanie jako archiwalne',
+			cancelText: 'Anuluj',
+			confirmFunction: confirmed,
+		});
+	};
+
 	const handleEditDraw = () => {
 		history.push('/edytuj-losowanie', {
 			editing: true,
@@ -188,11 +215,17 @@ const DrawRow: React.FC<DrawRowProps> = ({
 
 	return (
 		<Grid item xs={12} lg={6}>
-			<Card>
+			<Card
+				style={{
+					height: '100%',
+					opacity: status === 'archived' ? 0.5 : 1,
+				}}
+			>
 				<CardHeader
 					title={title}
 					action={
-						adminMode && (
+						adminMode &&
+						!results && (
 							<div>
 								<IconButton
 									edge="end"
@@ -280,14 +313,22 @@ const DrawRow: React.FC<DrawRowProps> = ({
 									username={results.username}
 									drawId={_id!}
 									gifts={results.gifts}
+									drawStatus={status}
 								/>
 							</Grid>
 						)}
 					</Grid>
 				</CardContent>
-				{!results && (
+				{status !== 'archived' && (
 					<CardActions>
-						{adminMode ? (
+						{results ? (
+							<Button
+								onClick={handleArchiveDraw}
+								color="secondary"
+							>
+								Archiwizuj
+							</Button>
+						) : adminMode ? (
 							<>
 								<Button
 									onClick={handleRunDraw}

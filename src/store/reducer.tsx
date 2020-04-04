@@ -204,6 +204,19 @@ const reducer = (
 					return draw;
 				}),
 			};
+		case actionTypes.SET_DRAW_ARCHIVED:
+			return {
+				...state,
+				usersDraws: [...state.usersDraws].map(draw => {
+					if (draw._id === action.payload.drawId) {
+						return {
+							...draw,
+							status: 'archived',
+						};
+					}
+					return draw;
+				}),
+			};
 	}
 	return state;
 };

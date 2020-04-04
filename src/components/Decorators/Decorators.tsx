@@ -12,17 +12,17 @@ const PLUS_CORDS = [
 	{ left: 10, top: 15 },
 	{ left: 30, top: 80 },
 	{ left: 5, top: 50 },
-	{ left: 65, top: 15 },
+	{ left: 25, top: 85 },
 	{ left: 90, top: 95 },
 	{ left: 75, top: 12 },
 	{ left: 55, top: 5 },
 	{ left: 62, top: 54 },
-	{ left: 84, top: 71 },
+	{ left: 84, top: 51 },
 	{ left: 41, top: 88 },
 ];
 const STAR_CORDS = [
 	{ left: 15, top: 7 },
-	{ left: 60, top: 40 },
+	{ left: 77, top: 40 },
 	{ left: 10, top: 25 },
 	{ left: 32, top: 30 },
 	{ left: 45, top: 5 },
@@ -41,7 +41,7 @@ const CIRCLE_CORDS = [
 	{ left: 63, top: 90 },
 	{ left: 72, top: 85 },
 	{ left: 83, top: 71 },
-	{ left: 9, top: 16 },
+	{ left: 9, top: 86 },
 	{ left: 98, top: 30 },
 ];
 
