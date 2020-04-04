@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
+	Typography,
 	TextField,
 	FormControl,
 	InputLabel,
@@ -21,6 +22,7 @@ import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 //Styles
 import * as Styled from './stylesLogin';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
 
 interface FormFields {
 	user: string;
@@ -66,7 +68,8 @@ const Login = () => {
 	}, [errorMessage, history, userId]);
 
 	return (
-		<Styled.Wrapper>
+		<PageWrapper maxWidth="600px">
+			<Typography variant="h1" align="center">Logowanie</Typography>
 			<Styled.LoginForm onSubmit={handleLogin}>
 				<TextField
 					label="Login/email"
@@ -117,7 +120,7 @@ const Login = () => {
 					</Button>
 				</Box>
 			</Styled.LoginForm>
-		</Styled.Wrapper>
+		</PageWrapper>
 	);
 };
 export default Login;

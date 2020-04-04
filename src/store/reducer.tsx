@@ -190,6 +190,20 @@ const reducer = (
 					};
 				}),
 			};
+		case actionTypes.SET_CREATOR_RESULTS:
+			const { drawId, results } = action.payload;
+			return {
+				...state,
+				usersDraws: [...state.usersDraws].map(draw => {
+					if (draw._id === drawId) {
+						return {
+							...draw,
+							results: results,
+						};
+					}
+					return draw;
+				}),
+			};
 	}
 	return state;
 };

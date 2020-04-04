@@ -80,6 +80,11 @@ const MyDraws: React.FC = () => {
 			message: `Opuszczono losowanie ${drawTitle}`,
 		});
 	};
+
+	// Run draw
+	const dispatchRunDraw = (drawId: string, drawTitle: string) => {
+		dispatch({ type: 'RUN_DRAW_WATCHER', payload: { drawId: drawId } });
+	};
 	return (
 		<>
 			<PageWrapper>
@@ -105,6 +110,7 @@ const MyDraws: React.FC = () => {
 										price={draw.price}
 										deleteDraw={dispatchDeleteDraw}
 										exitDraw={dispatchExitDraw}
+										runDraw={dispatchRunDraw}
 									/>
 								);
 							} else {
@@ -122,6 +128,7 @@ const MyDraws: React.FC = () => {
 										price={draw.price}
 										deleteDraw={dispatchDeleteDraw}
 										exitDraw={dispatchExitDraw}
+										runDraw={dispatchRunDraw}
 									/>
 								);
 							}

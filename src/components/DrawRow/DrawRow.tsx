@@ -43,6 +43,8 @@ import {
 import { User, DrawResultsInterface } from '../../interfaces/interfaces';
 import DrawResults from '../DrawResults/DrawResults';
 
+type DrawFunction = (drawId: string, drawTitle: string) => void;
+
 interface DrawRowProps {
 	date: Date;
 	title: string;
@@ -52,8 +54,9 @@ interface DrawRowProps {
 	creator: User;
 	adminMode: boolean;
 	price: number;
-	deleteDraw: (drawId: string, drawTitle: string) => void;
-	exitDraw: (drawId: string, drawTitle: string) => void;
+	deleteDraw: DrawFunction;
+	exitDraw: DrawFunction;
+	runDraw: DrawFunction;
 }
 
 const DrawRow: React.FC<DrawRowProps> = ({
@@ -67,12 +70,10 @@ const DrawRow: React.FC<DrawRowProps> = ({
 	participants,
 	deleteDraw,
 	exitDraw,
+	runDraw,
 }) => {
 	const history = useHistory();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const [confirmationDialogOpened, setConfirmationDialogOpened] = useState(
-		false
-	);
 
 	const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -82,18 +83,94 @@ const DrawRow: React.FC<DrawRowProps> = ({
 		setAnchorEl(null);
 	};
 
-	const handleToggleConfirmationDialog = () => {
-		setConfirmationDialogOpened(prev => !prev);
+	type DrawFunction = (event: React.MouseEvent<HTMLElement>) => void;
+
+	interface ConfirmationDialogInterface {
+		opened: boolean;
+		title?: string;
+		description?: string;
+		acceptText?: string;
+		cancelText?: string;
+		confirmFunction?: DrawFunction;
+	}
+
+	const [confirmationDialog, setConfirmationDialog] = useState<
+		ConfirmationDialogInterface
+	>({ opened: false });
+
+	const openConfirmationDialog = ({
+		title,
+		description,
+		confirmFunction,
+		acceptText,
+		cancelText,
+	}: {
+		title: string;
+		description: string;
+		cancelText: string;
+		acceptText: string;
+		confirmFunction: DrawFunction;
+	}) => {
+		setConfirmationDialog({
+			opened: true,
+			title: title,
+			description: description,
+			confirmFunction: confirmFunction,
+			cancelText: cancelText,
+			acceptText: acceptText,
+		});
+	};
+
+	const handleCloseConfirmationDialog = () => {
+		setConfirmationDialog({
+			opened: false,
+		});
 	};
 
 	const handleDeleteDraw = () => {
-		deleteDraw(_id as string, title);
-		handleToggleConfirmationDialog();
+		const confirmed = () => {
+			deleteDraw(_id as string, title);
+			handleCloseConfirmationDialog();
+		};
+
+		openConfirmationDialog({
+			title: 'Czy na pewno chcesz usunąć losowanie?',
+			description:
+				'Po usunięciu losowanie nie będzie możliwości jego przywrócenia, wszystkie związane z nim ustawienia oraz informacjie zostaną bezpowrotnie utracone',
+			acceptText: 'Usuń',
+			cancelText: 'Anuluj',
+			confirmFunction: confirmed,
+		});
 	};
 
 	const handleExitDraw = () => {
-		exitDraw(_id as string, title);
-		// handleToggleConfirmationDialog();
+		const confirmed = () => {
+			exitDraw(_id as string, title);
+			handleCloseConfirmationDialog();
+		};
+		openConfirmationDialog({
+			title: 'Czy na pewno chcesz opuścić losowanie?',
+			description:
+				'Po opuszczeniu losowania nie ma możliwości powrotu innej niż dodanie użytkownika ponownie przez twórcę losowania',
+			acceptText: 'Opuść losowanie',
+			cancelText: 'Anuluj',
+			confirmFunction: confirmed,
+		});
+	};
+
+	const handleRunDraw = () => {
+		const confirmed = () => {
+			runDraw(_id!, title);
+			handleCloseConfirmationDialog();
+		};
+		openConfirmationDialog({
+			title: 'Czy na pewno chcesz przeprowadzić losowanie teraz?',
+			description:
+				'Po przeprowadzeniu losowanie wszyscy jego uczestnicy poznają jego wyniki i nie będzie możliwości jego edycji, w tym dodania kolejnych uczestników',
+			acceptText: 'Przeprowadź losowanie teraz',
+			cancelText: 'Anuluj',
+			confirmFunction: confirmed,
+		});
 	};
 
 	const handleEditDraw = () => {
@@ -139,9 +216,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 											Edytuj losowanie
 										</ListItemText>
 									</MenuItem>
-									<MenuItem
-										onClick={handleToggleConfirmationDialog}
-									>
+									<MenuItem onClick={handleDeleteDraw}>
 										<ListItemIcon>
 											<Delete />
 										</ListItemIcon>
@@ -215,6 +290,13 @@ const DrawRow: React.FC<DrawRowProps> = ({
 						{adminMode ? (
 							<>
 								<Button
+									onClick={handleRunDraw}
+									variant="contained"
+									color="primary"
+								>
+									Losuj teraz
+								</Button>
+								<Button
 									startIcon={<Edit />}
 									color="primary"
 									onClick={handleEditDraw}
@@ -224,7 +306,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 								<Button
 									startIcon={<Delete />}
 									color="secondary"
-									onClick={handleToggleConfirmationDialog}
+									onClick={handleDeleteDraw}
 								>
 									Usuń
 								</Button>
@@ -233,7 +315,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 							<Button
 								startIcon={<ExitToApp />}
 								color="secondary"
-								onClick={handleToggleConfirmationDialog}
+								onClick={handleExitDraw}
 							>
 								Wypisz się
 							</Button>
@@ -243,34 +325,29 @@ const DrawRow: React.FC<DrawRowProps> = ({
 			</Card>
 			{/* Delete draw confirmation box */}
 			<Dialog
-				open={confirmationDialogOpened}
-				onClose={handleToggleConfirmationDialog}
+				open={confirmationDialog.opened}
+				onClose={handleCloseConfirmationDialog}
 			>
 				<DialogTitle id="alert-dialog-slide-title">
-					Czy na pewno chcesz {adminMode ? 'usunąć ' : 'opuścić '}
-					losowanie?
+					{confirmationDialog.title}
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-slide-description">
-						{adminMode
-							? `Po usunięciu losowanie nie będzie możliwości jego
-						przywrócenia, wszystkie związane z nim ustawienia oraz
-						informacjie zostaną bezpowrotnie utracone`
-							: `Po opuszczeniu losowania nie ma innej możliwości powrotu niż dodanie użytkownika przez jego administratora`}
+						{confirmationDialog.description}
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button
-						onClick={handleToggleConfirmationDialog}
+						onClick={confirmationDialog.confirmFunction!}
 						color="primary"
 					>
-						Anuluj
+						{confirmationDialog.acceptText}
 					</Button>
 					<Button
-						onClick={adminMode ? handleDeleteDraw : handleExitDraw}
+						onClick={handleCloseConfirmationDialog}
 						color="secondary"
 					>
-						{adminMode ? 'Usuń losowanie' : 'Opuść losowanie'}
+						{confirmationDialog.cancelText!}
 					</Button>
 				</DialogActions>
 			</Dialog>

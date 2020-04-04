@@ -3,9 +3,14 @@ import React from 'react';
 //Styles
 import * as Styled from './stylesPageWrapper';
 
-const PageWrapper: React.FC = ({ children }) => {
+interface PageWrapperProps {
+	children: any;
+	maxWidth?: string;
+}
+
+const PageWrapper: React.FC<PageWrapperProps> = ({ children, maxWidth }) => {
 	return (
-		<Styled.MyContainer>
+		<Styled.MyContainer style={{ maxWidth: maxWidth }}>
 			<Styled.MyPaper>{children}</Styled.MyPaper>
 		</Styled.MyContainer>
 	);

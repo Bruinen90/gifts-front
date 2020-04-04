@@ -14,6 +14,7 @@ import {
 	Box,
 	FormHelperText,
 	Snackbar,
+	Typography,
 } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
@@ -22,6 +23,7 @@ import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 //Styles
 import * as Styled from './stylesSignup';
+import PageWrapper from '../../components/PageWrapper/PageWrapper';
 
 interface FormInput {
 	value: string;
@@ -211,7 +213,8 @@ const Signup = () => {
 		return <MuiAlert elevation={6} variant="filled" {...props} />;
 	};
 	return (
-		<Styled.Wrapper>
+		<PageWrapper maxWidth="600px">
+			<Typography variant="h1">Utwórz konto</Typography>
 			<Styled.SignupForm onSubmit={handleSubmitForm}>
 				<TextField
 					label="Nazwa użytkownika"
@@ -370,7 +373,7 @@ const Signup = () => {
 					{signupEffect.message}
 				</Alert>
 			</Snackbar>
-		</Styled.Wrapper>
+		</PageWrapper>
 	);
 };
 export default Signup;
