@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 // Styles
@@ -28,8 +28,7 @@ const FindUser = ({
 	const [searchState, setSearchState] = useState<SearchState>('too-short');
 	const [searchBoxOutput, setSearchBoxOutput] = useState<any>();
 
-	let typingTimeout: number;
-	const onStopTyping = async () => {
+	const onStopTyping = useCallback(async () => {
 		if (searchPhrase.length < 3) {
 			setSearchState('too-short');
 		} else {
@@ -59,7 +58,8 @@ const FindUser = ({
 				setSearchState('error');
 			}
 		}
-	};
+	}, [removedFromResults, searchPhrase]);
+
 	useEffect(() => {
 		if (searchResults.length === 0) {
 			setSearchState('no-results');
@@ -67,10 +67,11 @@ const FindUser = ({
 	}, [searchResults]);
 
 	useEffect(() => {
+		let typingTimeout = 0;
 		window.clearTimeout(typingTimeout);
-		typingTimeout = window.setTimeout(onStopTyping, 500);
+		typingTimeout = window.setTimeout(onStopTyping, 350);
 		return () => window.clearTimeout(typingTimeout);
-	}, [searchPhrase]);
+	}, [onStopTyping, searchPhrase]);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchPhrase(event.target.value);
@@ -134,8 +135,8 @@ const FindUser = ({
 			<TextField
 				label="Nazwa użytkownika lub email"
 				onChange={handleInputChange}
-                value={searchPhrase}
-                // Chrome ignores "off" so "nope" :-)
+				value={searchPhrase}
+				// Chrome ignores "off" so "nope" :-)
 				autoComplete="nope"
 			/>
 			{/* Search results box */}

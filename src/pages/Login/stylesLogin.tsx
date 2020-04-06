@@ -1,4 +1,4 @@
-import { styled, Paper } from '@material-ui/core';
+import { styled } from '@material-ui/core';
 
 export const LoginForm = styled('form')({
 	display: 'flex',

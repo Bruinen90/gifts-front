@@ -19,7 +19,7 @@ const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
     userLoggedIn
 }) => {
     return (
-        <Drawer anchor="left" open={opened} onClose={toggleNavigationDrawer}>
+        <Drawer anchor="right" open={opened} onClose={toggleNavigationDrawer}>
             <Box
                 paddingY="30px"
                 display="flex"

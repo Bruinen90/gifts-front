@@ -14,6 +14,14 @@ import { Decorators } from '../../components/Decorators/Decorators';
 import { Guide } from '../Guide/Guide';
 
 const Home = () => {
+	const guideRef = React.createRef<HTMLDivElement>();
+	const handleScrollToGuide = () => {
+		const scrollPos =
+			guideRef!.current!.getBoundingClientRect().top +
+			window.pageYOffset -
+			56; //-56px for navbar
+		window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+	};
 	return (
 		<>
 			<Styled.MainContainer component="main">
@@ -29,13 +37,19 @@ const Home = () => {
 						konieczności szukania pomysłów na podarunki dla całej
 						rodziny.
 					</Styled.DescriptionBox>
-					<Button variant="contained" size="large" color="secondary">
+					<Button
+						variant="contained"
+						size="large"
+						color="secondary"
+						style={{ position: 'relative', zIndex: 1 }}
+						onClick={handleScrollToGuide}
+					>
 						Zacznij teraz
 					</Button>
 				</Styled.MyBox>
 				<Decorators />
 			</Styled.MainContainer>
-			<Guide />
+			<Guide ref={guideRef} />
 		</>
 	);
 };

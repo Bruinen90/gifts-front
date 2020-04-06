@@ -43,10 +43,6 @@ function* loginUser(action: { type: string; payload: LoginDataInterface }) {
 	}
 }
 
-function* watchLoginUser() {
-	yield takeLatest('LOGIN_USER_WATCHER', loginUser);
-}
-
 function* createDraw(action: { type: string; payload: DrawInterface }) {
 	const { _id, title, date, price, creator, participants } = action.payload;
 	const graphqlQuery = {
@@ -94,10 +90,6 @@ function* createDraw(action: { type: string; payload: DrawInterface }) {
 	} catch (error) {
 		console.log(error);
 	}
-}
-
-function* watchCreateDraw() {
-	yield takeEvery('CREATE_DRAW_WATCHER', createDraw);
 }
 
 function* createWish(action: { type: string; payload: WishInput }) {
@@ -151,10 +143,6 @@ function* createWish(action: { type: string; payload: WishInput }) {
 	}
 }
 
-function* watchCreateWish() {
-	yield takeEvery('CREATE_WISH_WATCHER', createWish);
-}
-
 function* deleteDraw(action: { type: string; payload: { drawId: string } }) {
 	const graphqlQuery = {
 		query: `
@@ -178,17 +166,9 @@ function* deleteDraw(action: { type: string; payload: { drawId: string } }) {
 	}
 }
 
-function* watchDeleteDraw() {
-	yield takeEvery('DELETE_DRAW_WATCHER', deleteDraw);
-}
-
 function* logoutUser() {
 	localStorage.clear();
 	yield put({ type: actionTypes.USER_LOGOUT });
-}
-
-function* watchUserLogout() {
-	yield takeEvery('USER_LOGOUT_WATCHER', logoutUser);
 }
 
 function* autoLoginUser(action: { type: string }) {
@@ -208,10 +188,6 @@ function* autoLoginUser(action: { type: string }) {
 			},
 		});
 	}
-}
-
-function* watchAutoLoginUser() {
-	yield takeEvery('USER_AUTOLOGIN_WATCHER', autoLoginUser);
 }
 
 function* fetchUserDrawsList() {
@@ -241,10 +217,6 @@ function* fetchUserDrawsList() {
 			console.log(err.response ? err.response : err);
 		}
 	}
-}
-
-function* watchFetchUserDrawsList() {
-	yield takeLatest('FETCH_USER_DRAWS_LIST_WATCHER', fetchUserDrawsList);
 }
 
 function* fetchUserWishes(action?: {
@@ -282,10 +254,6 @@ function* fetchUserWishes(action?: {
 	}
 }
 
-function* watchFetchUserWishes() {
-	yield takeLatest('FETCH_USER_WISHES_WATCHER', fetchUserWishes);
-}
-
 function* deleteWish(action: { type: string; payload: { wishId: string } }) {
 	const graphqlQuery = {
 		query: `
@@ -308,10 +276,6 @@ function* deleteWish(action: { type: string; payload: { wishId: string } }) {
 	} catch (err) {
 		console.log(err);
 	}
-}
-
-function* watchDeleteWish() {
-	yield takeEvery('DELETE_WISH_WATCHER', deleteWish);
 }
 
 function* exitDraw(action: { type: string; payload: { drawId: string } }) {
@@ -338,10 +302,6 @@ function* exitDraw(action: { type: string; payload: { drawId: string } }) {
 	}
 }
 
-function* watchExitDraw() {
-	yield takeEvery('EXIT_DRAW_WATCHER', exitDraw);
-}
-
 function* reserveWish(action: {
 	type: string;
 	payload: { drawId: string; wishId: string; reserved: boolean };
@@ -366,10 +326,6 @@ function* reserveWish(action: {
 	} catch (err) {
 		console.log(err);
 	}
-}
-
-function* watchReserveDraw() {
-	yield takeEvery('RESERVE_WISH_WATCHER', reserveWish);
 }
 
 function* runDraw(action: { type: string; payload: { drawId: string } }) {
@@ -406,17 +362,17 @@ function* archiveDraw(action: { type: string; payload: { drawId: string } }) {
 
 export default function* rootSaga() {
 	yield all([
-		watchLoginUser(),
-		watchCreateDraw(),
-		watchDeleteDraw(),
-		watchUserLogout(),
-		watchAutoLoginUser(),
-		watchFetchUserDrawsList(),
-		watchCreateWish(),
-		watchFetchUserWishes(),
-		watchDeleteWish(),
-		watchExitDraw(),
-		watchReserveDraw(),
+		yield takeLatest('LOGIN_USER_WATCHER', loginUser),
+		yield takeEvery('CREATE_DRAW_WATCHER', createDraw),
+		yield takeEvery('DELETE_DRAW_WATCHER', deleteDraw),
+		yield takeEvery('USER_LOGOUT_WATCHER', logoutUser),
+		yield takeEvery('USER_AUTOLOGIN_WATCHER', autoLoginUser),
+		yield takeLatest('FETCH_USER_DRAWS_LIST_WATCHER', fetchUserDrawsList),
+		yield takeEvery('CREATE_WISH_WATCHER', createWish),
+		yield takeLatest('FETCH_USER_WISHES_WATCHER', fetchUserWishes),
+		yield takeEvery('DELETE_WISH_WATCHER', deleteWish),
+		yield takeEvery('EXIT_DRAW_WATCHER', exitDraw),
+		yield takeEvery('RESERVE_WISH_WATCHER', reserveWish),
 		yield takeLatest('RUN_DRAW_WATCHER', runDraw),
 		yield takeLatest('ARCHIVE_DRAW_WATCHER', archiveDraw),
 	]);

@@ -29,11 +29,11 @@ const STAR_CORDS = [
 	{ left: 33, top: 90 },
 	{ left: 20, top: 65 },
 	{ left: 31, top: 51 },
-	{ left: 99, top: 66 },
+	{ left: 97, top: 66 },
 	{ left: 82, top: 10 },
 ];
 const CIRCLE_CORDS = [
-    { left: 15, top: 57 },
+	{ left: 15, top: 57 },
 	{ left: 26, top: 40 },
 	{ left: 31, top: 35 },
 	{ left: 43, top: 20 },
@@ -42,7 +42,7 @@ const CIRCLE_CORDS = [
 	{ left: 72, top: 85 },
 	{ left: 83, top: 71 },
 	{ left: 9, top: 86 },
-	{ left: 98, top: 30 },
+	{ left: 94, top: 30 },
 ];
 
 const DECORATORS_ARR = [
@@ -68,6 +68,7 @@ const output = DECORATORS_ARR.map(decorator => {
 				src={decorator.image}
 				left={decorator.cords[i].left}
 				top={decorator.cords[i].top}
+				key={decorator.cords[i].top.toString() + decorator.cords[i].left}
 			/>
 		);
 	}

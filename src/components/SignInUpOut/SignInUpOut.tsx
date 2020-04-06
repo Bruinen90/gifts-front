@@ -25,7 +25,7 @@ const SignInUpOut: React.FC<SignInUpOutProps> = ({ username }) => {
         history.push("/");
     };
     return (
-        <Hidden smDown>
+        <Hidden mdDown>
             {username ? (
                 <Box display="flex" alignItems="flex-end" marginLeft="3rem">
                     <Box marginRight={2}>
