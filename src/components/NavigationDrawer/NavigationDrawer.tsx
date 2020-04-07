@@ -6,6 +6,7 @@ import { Drawer, Box, Button } from "@material-ui/core";
 
 // Components
 import NavigationList from "../NavigationList/NavigationList";
+import SignInUpOut from "../SignInUpOut/SignInUpOut";
 
 interface NavigationDrawerProps {
     opened: boolean;
@@ -16,7 +17,7 @@ interface NavigationDrawerProps {
 const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
     opened,
     toggleNavigationDrawer,
-    userLoggedIn
+    userLoggedIn,
 }) => {
     return (
         <Drawer anchor="right" open={opened} onClose={toggleNavigationDrawer}>
@@ -33,33 +34,11 @@ const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                     view="modal"
                     userLoggedIn={userLoggedIn}
                 />
-                <Box
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="space-between"
-                    height="90px"
-                    width="80%"
-                    margin="0 auto"
-                >
-                    <Button
-                        component={RouterLink}
-                        to="/logowanie"
-                        color="secondary"
-                        variant="contained"
-                        onClick={toggleNavigationDrawer}
-                    >
-                        Zaloguj się
-                    </Button>
-                    <Button
-                        component={RouterLink}
-                        to="/rejestracja"
-                        color="secondary"
-                        variant="contained"
-                        onClick={toggleNavigationDrawer}
-                    >
-                        Utwórz konto
-                    </Button>
-                </Box>
+                <SignInUpOut
+                    variant="vertical"
+                    username={undefined}
+                    closeDrawer={toggleNavigationDrawer}
+                />
             </Box>
         </Drawer>
     );
