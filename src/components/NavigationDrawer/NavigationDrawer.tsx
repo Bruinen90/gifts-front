@@ -1,8 +1,7 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
 
 // MUI
-import { Drawer, Box, Button } from "@material-ui/core";
+import { Drawer, Box } from "@material-ui/core";
 
 // Components
 import NavigationList from "../NavigationList/NavigationList";

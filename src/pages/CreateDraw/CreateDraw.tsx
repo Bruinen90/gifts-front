@@ -242,8 +242,9 @@ const CreateDraw: React.FC = () => {
 					/>
 				</MuiPickersUtilsProvider>
 				<FindUser
-					handleAddUserToDraw={handleAddParticipant}
+					handleUserClicked={handleAddParticipant}
 					removedFromResults={participants}
+					header="Dodaj uczestników"
 				/>
 				{participants.length > 0 && (
 					<>
