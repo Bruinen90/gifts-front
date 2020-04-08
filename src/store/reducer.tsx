@@ -3,6 +3,7 @@ import { DrawInterface, StateInterface } from '../interfaces/interfaces';
 
 // Types
 import { Wish } from '../interfaces/WishTypes';
+import {User} from '../interfaces/interfaces';
 
 interface actionInterface {
 	type: string;
@@ -216,6 +217,23 @@ const reducer = (
 					}
 					return draw;
 				}),
+			};
+		case actionTypes.SEND_INVITATION:
+            
+			const newInvitation = {
+				_id: action.payload._id as string,
+				sender: {
+					_id: state.userId,
+					username: state.username,
+					email: state.email,
+				} as User,
+				receiver: action.payload.receiver as User,
+			};
+			return {
+				...state,
+				invitations: state.invitations
+					? [...state.invitations, newInvitation]
+					: [newInvitation],
 			};
 	}
 	return state;

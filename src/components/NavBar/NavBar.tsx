@@ -53,7 +53,7 @@ const NavBar = () => {
                             <NavigationDrawer
                                 opened={navOpened}
                                 toggleNavigationDrawer={handleToggleDrawer}
-                                userLoggedIn={username !== undefined}
+                                username={username}
                             />
                         </>
                     )}

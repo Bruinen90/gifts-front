@@ -1,9 +1,14 @@
 import * as actionTypes from '../actions/actionTypes';
+import * as watcherTypes from '../actions/watcherTypes';
 import { put, takeEvery, takeLatest, all } from 'redux-saga/effects';
 import axios from 'axios';
 
 // Interfaces
-import { DrawInterface, LoginDataInterface } from '../../interfaces/interfaces';
+import {
+	DrawInterface,
+	LoginDataInterface,
+	User,
+} from '../../interfaces/interfaces';
 import { WishInput } from '../../interfaces/WishTypes';
 
 function* loginUser(action: { type: string; payload: LoginDataInterface }) {
@@ -360,6 +365,17 @@ function* archiveDraw(action: { type: string; payload: { drawId: string } }) {
 	}
 }
 
+function* sendInvitation(action: {
+	type: string;
+	payload: { invitedUser: User };
+}) {
+	const _id = 'mockSomeIdFromDB';
+	yield put({
+		type: actionTypes.SEND_INVITATION,
+		payload: { receiver: action.payload.invitedUser, _id: _id },
+	});
+}
+
 export default function* rootSaga() {
 	yield all([
 		yield takeLatest('LOGIN_USER_WATCHER', loginUser),
@@ -375,5 +391,6 @@ export default function* rootSaga() {
 		yield takeEvery('RESERVE_WISH_WATCHER', reserveWish),
 		yield takeLatest('RUN_DRAW_WATCHER', runDraw),
 		yield takeLatest('ARCHIVE_DRAW_WATCHER', archiveDraw),
+		yield takeLatest(watcherTypes.WATCH_SEND_INVITATION, sendInvitation),
 	]);
 }
