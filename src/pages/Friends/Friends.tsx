@@ -25,6 +25,12 @@ export const Friends: React.FC = () => {
 
 	const findUserRef = React.createRef<HTMLInputElement>();
 
+	const loggedUser: User = useSelector((state: StateInterface) => ({
+		_id: state.userId!,
+		username: state.username!,
+		email: state.email!,
+	}));
+
 	const handleSendInvitation = (user: User) => {
 		console.log(user);
 		dispatch({
@@ -72,7 +78,11 @@ export const Friends: React.FC = () => {
 				</Typography>
 				<FindUser
 					handleUserClicked={handleSendInvitation}
-					removedFromResults={friendsList}
+					removedFromResults={
+						friendsList
+							? [...friendsList, loggedUser]
+							: [loggedUser]
+					}
 					ref={findUserRef}
 				/>
 			</CenteredCard>

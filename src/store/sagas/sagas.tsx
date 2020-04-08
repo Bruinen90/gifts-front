@@ -369,11 +369,25 @@ function* sendInvitation(action: {
 	type: string;
 	payload: { invitedUser: User };
 }) {
-	const _id = 'mockSomeIdFromDB';
-	yield put({
-		type: actionTypes.SEND_INVITATION,
-		payload: { receiver: action.payload.invitedUser, _id: _id },
-	});
+	console.log(action.payload.invitedUser._id);
+	const graphqlQuery = {
+		query: `
+            mutation{sendInvitation(receiverId: "${action.payload.invitedUser._id}") {_id}}
+        `,
+	};
+	const response = yield axios.post('graphql', graphqlQuery);
+	if (response.data.data && response.data.data.sendInvitation) {
+		const invitationId = response.data.data.sendInvitation._id;
+		yield put({
+			type: actionTypes.SEND_INVITATION,
+			payload: {
+				receiver: action.payload.invitedUser,
+				_id: invitationId,
+			},
+		});
+	} else {
+		// Error handler goes here
+	}
 }
 
 export default function* rootSaga() {
