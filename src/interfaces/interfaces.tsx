@@ -30,7 +30,10 @@ export interface StateInterface {
 	loginError?: string;
 	lastDeletedDraw?: string;
 	friends?: User[];
-	invitations?: InvitationInterface[];
+	invitations?: {
+		received?: InvitationInterface[],
+		sent?: InvitationInterface[]
+	};
 }
 
 export interface LoginDataInterface {
