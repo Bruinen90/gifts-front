@@ -38,12 +38,15 @@ const reducer = (
       };
     case actionTypes.USER_LOGOUT:
       const loggedOutState = { ...state };
+      // Better set default state - change in refactor
       delete loggedOutState.username;
       delete loggedOutState.email;
       delete loggedOutState.token;
       delete loggedOutState.userId;
       delete loggedOutState.usersDraws;
       delete loggedOutState.usersWishes;
+      delete loggedOutState.invitations;
+      delete loggedOutState.friends;
       return { ...loggedOutState, usersDraws: [] };
     case actionTypes.CREATE_DRAW:
       const newDraw: DrawInterface = action.payload;
@@ -239,7 +242,6 @@ const reducer = (
         received: ReceivedInvitation[];
         sent: SentInvitation[];
       };
-      console.log(responseInvitations);
       let receivedInvitations;
       if (responseInvitations.received) {
         receivedInvitations = responseInvitations.received.map(
