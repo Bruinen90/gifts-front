@@ -1,139 +1,150 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import * as watcherTypes from '../../store/actions/watcherTypes';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 
 // Components
-import PageWrapper from '../../components/PageWrapper/PageWrapper';
-import { FriendBox } from '../../components/FriendBox/FriendBox';
-import { CenteredCard } from '../../components/CenteredCard/CenteredCard';
-import FindUser from '../../components/FindUser/FindUser';
+import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import { FriendBox } from "../../components/FriendBox/FriendBox";
+import { CenteredCard } from "../../components/CenteredCard/CenteredCard";
+import FindUser from "../../components/FindUser/FindUser";
 
 // MUI
-import { Box, Typography, Button, List } from '@material-ui/core';
+import { Box, Typography, Button, List } from "@material-ui/core";
 
 // Types
-import { StateInterface, User } from '../../interfaces/interfaces';
+import { StateInterface, User } from "../../interfaces/interfaces";
 
 // Images
-import Subscriptions from '../../img/subscripions.svg';
-import { Search } from '@material-ui/icons';
-import InvitationBox from '../../components/InvitationBox/InvitationBox';
+import Subscriptions from "../../img/subscripions.svg";
+import { Search } from "@material-ui/icons";
+import InvitationBox from "../../components/InvitationBox/InvitationBox";
 
 export const Friends: React.FC = () => {
-	const dispatch = useDispatch();
-	const friendsList = useSelector((state: StateInterface) => state.friends);
+  const dispatch = useDispatch();
+  const friendsList = useSelector((state: StateInterface) => state.friends);
+  const invitations = useSelector((state: StateInterface) => state.invitations);
 
-	const findUserRef = React.createRef<HTMLInputElement>();
+  const findUserRef = React.createRef<HTMLInputElement>();
 
-	const loggedUser: User = useSelector((state: StateInterface) => ({
-		_id: state.userId!,
-		username: state.username!,
-		email: state.email!,
-	}));
+  const loggedUser: User = useSelector((state: StateInterface) => ({
+    _id: state.userId!,
+    username: state.username!,
+    email: state.email!,
+  }));
 
-	const handleSendInvitation = (user: User) => {
-		console.log(user);
-		dispatch({
-			type: watcherTypes.WATCH_SEND_INVITATION,
-			payload: { invitedUser: user },
-		});
-	};
+  const handleSendInvitation = (user: User) => {
+    console.log(user);
+    dispatch({
+      type: watcherTypes.WATCH_SEND_INVITATION,
+      payload: { invitedUser: user },
+    });
+  };
 
-	const handleClickedSearchForFriends = () => {
-		console.log('searching in');
-		findUserRef!.current!.focus();
-		findUserRef!.current!.scrollIntoView({
-			behavior: 'smooth',
-			inline: 'center',
-		});
-	};
+  const handleClickedSearchForFriends = () => {
+    console.log("searching in");
+    findUserRef!.current!.focus();
+    findUserRef!.current!.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+    });
+  };
 
-	return (
-		<PageWrapper>
-			<Typography variant="h2" align="center">
-				Znajomi
-			</Typography>
-			<CenteredCard>
-				<Typography variant="h4" align="center">
-					Zaproszenia
-				</Typography>
-				<List>
-					<InvitationBox
-						_id="124"
-						username="Helenka"
-						email="helenka@gmail.com"
-						invited={true}
-					/>
-					<InvitationBox
-						_id="124"
-						username="Helenka"
-						email="helenka@gmail.com"
-						invited={false}
-					/>
-				</List>
-			</CenteredCard>
-			<CenteredCard padding={6}>
-				<Typography variant="h4" align="center">
-					Zaproś znajomych
-				</Typography>
-				<FindUser
-					handleUserClicked={handleSendInvitation}
-					removedFromResults={
-						friendsList
-							? [...friendsList, loggedUser]
-							: [loggedUser]
-					}
-					ref={findUserRef}
-				/>
-			</CenteredCard>
-			<CenteredCard>
-				<Typography variant="h4" align="center">
-					Twoi znajomi
-				</Typography>
-				<Box
-					textAlign="center"
-					display="flex"
-					flexDirection="column"
-					alignItems="center"
-					margin="2rem auto"
-				>
-					{friendsList && friendsList.length > 0 ? (
-						<List>
-							{friendsList.map(friend => (
-								<FriendBox
-									_id={friend._id}
-									username={friend.username}
-									email={friend.email}
-								/>
-							))}
-						</List>
-					) : (
-						<>
-							<Typography style={{ opacity: '0.5' }}>
-								Nie masz jeszcze żadnych znajomych
-							</Typography>
-							<img
-								alt=""
-								src={Subscriptions}
-								style={{
-									width: '20%',
-									maxWidth: '180px',
-									opacity: '0.5',
-									margin: '2rem',
-								}}
-							/>
-							<Button
-								variant="contained"
-								color="primary"
-								startIcon={<Search />}
-								onClick={handleClickedSearchForFriends}
-							>
-								Szukaj znajomych
-							</Button>
-						</>
-					)}
-				</Box>
-			</CenteredCard>
-		</PageWrapper>
-	);
+  return (
+    <PageWrapper>
+      <Typography variant="h2" align="center">
+        Znajomi
+      </Typography>
+      <CenteredCard>
+        <Typography variant="h4" align="center">
+          Zaproszenia
+        </Typography>
+        {invitations && invitations.received && (
+          <List>
+            {invitations.received.map((invitation) => (
+              <InvitationBox
+                key={invitation._id}
+                _id={invitation._id}
+                username={invitation.sender.username}
+                email={invitation.sender.email!}
+                invited={true}
+              />
+            ))}
+          </List>
+        )}
+        {invitations && invitations.sent && (
+          <List>
+            {invitations.sent.map((invitation) => (
+              <InvitationBox
+                key={invitation._id}
+                _id={invitation._id}
+                username={invitation.receiver.username}
+                email={invitation.receiver.email!}
+                invited={false}
+              />
+            ))}
+          </List>
+        )}
+      </CenteredCard>
+      <CenteredCard padding={6}>
+        <Typography variant="h4" align="center">
+          Zaproś znajomych
+        </Typography>
+        <FindUser
+          handleUserClicked={handleSendInvitation}
+          removedFromResults={
+            friendsList ? [...friendsList, loggedUser] : [loggedUser]
+          }
+          ref={findUserRef}
+        />
+      </CenteredCard>
+      <CenteredCard>
+        <Typography variant="h4" align="center">
+          Twoi znajomi
+        </Typography>
+        <Box
+          textAlign="center"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          margin="2rem auto"
+        >
+          {friendsList && friendsList.length > 0 ? (
+            <List>
+              {friendsList.map((friend) => (
+                <FriendBox
+                  _id={friend._id}
+                  username={friend.username}
+                  email={friend.email}
+                />
+              ))}
+            </List>
+          ) : (
+            <>
+              <Typography style={{ opacity: "0.5" }}>
+                Nie masz jeszcze żadnych znajomych
+              </Typography>
+              <img
+                alt=""
+                src={Subscriptions}
+                style={{
+                  width: "20%",
+                  maxWidth: "180px",
+                  opacity: "0.5",
+                  margin: "2rem",
+                }}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<Search />}
+                onClick={handleClickedSearchForFriends}
+              >
+                Szukaj znajomych
+              </Button>
+            </>
+          )}
+        </Box>
+      </CenteredCard>
+    </PageWrapper>
+  );
 };
