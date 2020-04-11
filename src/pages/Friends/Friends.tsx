@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as watcherTypes from "../../store/actions/watcherTypes";
 
@@ -69,10 +69,6 @@ export const Friends: React.FC = () => {
         }
     }
 
-    useEffect(() => {
-        console.log("rerender");
-    });
-
     return (
         <PageWrapper>
             <Typography variant="h2" align="center">
@@ -80,7 +76,7 @@ export const Friends: React.FC = () => {
             </Typography>
             {invitations &&
                 ((invitations.received && invitations.received.length > 0) ||
-                    (invitations.sent && invitations.sent.length < 0)) && (
+                    (invitations.sent && invitations.sent.length > 0)) && (
                     <CenteredCard>
                         <Typography variant="h4" align="center">
                             Zaproszenia
