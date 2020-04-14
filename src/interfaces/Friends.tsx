@@ -1,5 +1,6 @@
 // Types
 import { User } from "./interfaces";
+import { Wish } from "./WishTypes";
 
 export interface InvitationInterface {
     _id: string;
@@ -18,7 +19,7 @@ export interface ReceivedInvitation {
         _id: string;
         username: string;
         email: string;
-    }
+    };
 }
 
 export interface SentInvitation {
@@ -32,5 +33,10 @@ export interface SentInvitation {
         _id: string;
         username: string;
         email: string;
-    }
+    };
 }
+
+export type OtherUsersWishes = {
+    userId: string;
+    wishesList: Wish[];
+}[];
