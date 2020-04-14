@@ -2,7 +2,7 @@ import React from 'react';
 
 // MUI
 import { List } from '@material-ui/core';
-import { AddCircle, CardGiftcard, HelpOutline, People } from '@material-ui/icons';
+import { AddCircle, CardGiftcard, HelpOutline, People, ShoppingCart } from '@material-ui/icons';
 import ListIcon from '@material-ui/icons/List';
 
 // Components
@@ -34,7 +34,12 @@ const USER_ITEMS_LIST = [
 		target: '/moi-znajomi',
 		icon: <People color="inherit" />,
 		text: 'Moi znajomi',
-	},
+    },
+    {
+        target: '/lista-zakupow',
+        icon: <ShoppingCart color="inherit"/>,
+        text: 'Lista zakupów',
+    }
 ];
 
 const GUEST_ITEMS_LIST = [

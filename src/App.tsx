@@ -18,6 +18,7 @@ import MyDraws from './pages/MyDraws/MyDraws';
 import Wishlist from './pages/Wishlist/Wishlist';
 import CreateWish from './pages/CreateWish/CreateWish';
 import { Friends } from './pages/Friends/Friends';
+import {ShoppingList} from './pages/ShoppingList/ShoppingList';
 
 axios.defaults.baseURL = 'http://localhost:8080/';
 
@@ -49,6 +50,7 @@ const App = () => {
 					<Route path="/edytuj-zyczenie" component={CreateWish} />
 					<Route path="/lista-zyczen" component={Wishlist} />
 					<Route path="/moi-znajomi" component={Friends} />
+                    <Route path="/lista-zakupow" component={ShoppingList} />
 					<Route path="/" component={Home} />
 				</Switch>
 				{/* End off app */}
