@@ -1,7 +1,7 @@
 import { User } from './interfaces';
 import { ReservationStatusSetterType } from './Reservations';
 
-export type WishViewTypes = 'full' | 'simple' | 'withDrawData'
+export type WishViewTypes = 'full' | 'simple' | 'withDrawData';
 
 export interface WishInput {
 	title: string;
@@ -13,7 +13,7 @@ export interface WishInput {
 
 export interface Wish extends WishInput {
 	_id: string;
-	creator: string;
+	creator: string | User;
 	price: number;
 	buyer?: string;
 	reserved?: boolean;
@@ -23,7 +23,7 @@ export interface Wish extends WishInput {
 export interface WishesListProps {
 	wishesList: Wish[];
 	viewMode: 'creator' | 'guest';
-	setReservedStatus?: ReservationStatusSetterType
+	setReservedStatus?: ReservationStatusSetterType;
 }
 
 export interface WishBoxProps {

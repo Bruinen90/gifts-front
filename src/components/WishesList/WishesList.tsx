@@ -19,7 +19,7 @@ const WishesList: React.FC<WishesListProps> = ({ wishesList, viewMode, setReserv
 		<List style={{ maxWidth: '600px', margin: 'auto' }}>
 			{wishesList.map(wish => (
 				<WishBox
-					wish={wish}
+                    wish={wish}
 					key={wish._id}
 					view={viewMode === 'creator' ? 'full' : 'simple'}
                     deleteWish={_ => handleDeleteWish(wish._id)}

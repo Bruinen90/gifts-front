@@ -316,7 +316,7 @@ function* reserveWish(action: {
     type: string;
     payload: {
         drawId?: string;
-        userId: string;
+        creatorId: string;
         wishId: string;
         reserved: boolean;
     };

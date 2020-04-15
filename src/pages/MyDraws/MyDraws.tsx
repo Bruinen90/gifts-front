@@ -137,7 +137,7 @@ const MyDraws: React.FC = () => {
                                         gifts={shoppingList?.filter(
                                             (listItem) =>
                                                 listItem.forDraw &&
-                                                listItem.forDraw == draw._id
+                                                listItem.forDraw === draw._id
                                         )}
                                     />
                                 );
