@@ -35,6 +35,7 @@ export interface StateInterface {
         received?: InvitationInterface[];
         sent?: InvitationInterface[];
     };
+    shoppingList?: Wish[];
 }
 
 export interface LoginDataInterface {

@@ -33,7 +33,7 @@ import { ReservationStatusSetterType } from '../../interfaces/Reservations';
 interface WishBoxProps {
 	wish: Wish;
 	view: 'full' | 'simple';
-	deleteWish: (_: React.MouseEvent) => void;
+	deleteWish?: (_: React.MouseEvent) => void;
 	setReservedStatus: ReservationStatusSetterType | undefined;
 }
 

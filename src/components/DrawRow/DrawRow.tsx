@@ -43,6 +43,7 @@ import {
 import { User, DrawResultsInterface } from '../../interfaces/interfaces';
 import DrawResults from '../DrawResults/DrawResults';
 import { DrawStatusType } from '../../interfaces/Draw';
+import {Wish} from '../../interfaces/WishTypes';
 
 type DrawFunction = (drawId: string, drawTitle: string) => void;
 
@@ -51,6 +52,7 @@ interface DrawRowProps {
 	title: string;
 	_id: string | undefined;
 	results?: DrawResultsInterface;
+	gifts?: Wish[];
 	participants: [User];
 	creator: User;
 	adminMode: boolean;
@@ -67,6 +69,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 	date,
 	_id,
 	results,
+	gifts,
 	creator,
 	adminMode,
 	price,
@@ -312,7 +315,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
 									_id={results._id}
 									username={results.username}
 									drawId={_id!}
-									gifts={results.gifts}
+									gifts={gifts}
 									drawStatus={status}
 								/>
 							</Grid>
