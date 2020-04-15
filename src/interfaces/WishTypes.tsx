@@ -1,6 +1,8 @@
 import { User } from './interfaces';
 import { ReservationStatusSetterType } from './Reservations';
 
+export type WishViewTypes = 'full' | 'simple' | 'withDrawData'
+
 export interface WishInput {
 	title: string;
 	link: string;
@@ -22,4 +24,11 @@ export interface WishesListProps {
 	wishesList: Wish[];
 	viewMode: 'creator' | 'guest';
 	setReservedStatus?: ReservationStatusSetterType
+}
+
+export interface WishBoxProps {
+	wish: Wish;
+	view: WishViewTypes;
+	deleteWish?: (_: React.MouseEvent) => void;
+	setReservedStatus: ReservationStatusSetterType | undefined;
 }

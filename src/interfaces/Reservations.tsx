@@ -1,7 +1,11 @@
+export type ReservationPayload = {
+  wishId: string;
+  reserved: boolean;
+  drawId?: string;
+};
+
 export type ReservationStatusSetterType = ({
-	wishId,
-	reserved,
-}: {
-	wishId: string;
-	reserved: boolean;
-}) => void;
+  wishId,
+  reserved,
+  drawId,
+}: ReservationPayload) => void;

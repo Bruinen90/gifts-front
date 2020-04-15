@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, RefObject } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 // Styles
