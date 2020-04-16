@@ -9,7 +9,7 @@ import {
     LoginDataInterface,
     User,
 } from "../../interfaces/interfaces";
-import { WishInput, Wish } from "../../interfaces/WishTypes";
+import { WishInput } from "../../interfaces/WishTypes";
 
 function* loginUser(action: { type: string; payload: LoginDataInterface }) {
     const { payload } = action;

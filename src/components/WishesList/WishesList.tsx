@@ -5,28 +5,39 @@ import { useDispatch } from 'react-redux';
 import { WishesListProps } from '../../interfaces/WishTypes';
 
 // MUI
-import { List } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 // Components
 import WishBox from '../WishBox/WishBox';
 
-const WishesList: React.FC<WishesListProps> = ({ wishesList, viewMode, setReservedStatus }) => {
+const WishesList: React.FC<WishesListProps> = ({
+	wishesList,
+	viewMode,
+	setReservedStatus,
+	inModal,
+}) => {
 	const dispatch = useDispatch();
 	const handleDeleteWish = (wishId: string) => {
 		dispatch({ type: 'DELETE_WISH_WATCHER', payload: { wishId: wishId } });
 	};
 	return (
-		<List style={{ maxWidth: '600px', margin: 'auto' }}>
+		<Grid
+			container
+			spacing={2}
+			style={{ width: '100%', maxWidth: '800px', margin: 'auto' }}
+		>
 			{wishesList.map(wish => (
 				<WishBox
-                    wish={wish}
+					wish={wish}
+					drawData={wish.drawData}
 					key={wish._id}
 					view={viewMode === 'creator' ? 'full' : 'simple'}
-                    deleteWish={_ => handleDeleteWish(wish._id)}
-                    setReservedStatus={setReservedStatus}
+					deleteWish={_ => handleDeleteWish(wish._id)}
+					setReservedStatus={setReservedStatus}
+					oneColumn={inModal}
 				/>
 			))}
-		</List>
+		</Grid>
 	);
 };
 

@@ -84,7 +84,8 @@ const WishesModal: React.FC<WishesModalProps> = ({
 				<WishesList
 					wishesList={wishesList}
 					viewMode="guest"
-					setReservedStatus={handleSetReservationStatus}
+                    setReservedStatus={handleSetReservationStatus}
+                    inModal={true}
 				/>
 			)}
 		</Dialog>
