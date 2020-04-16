@@ -18,6 +18,7 @@ export interface Wish extends WishInput {
     buyer?: string;
     reserved?: boolean;
     forDraw?: string;
+    imageUrl?: string;
 }
 
 export interface WishesListProps {

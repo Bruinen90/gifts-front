@@ -9,7 +9,7 @@ import {
     LoginDataInterface,
     User,
 } from "../../interfaces/interfaces";
-import { WishInput } from "../../interfaces/WishTypes";
+import { WishInput, Wish } from "../../interfaces/WishTypes";
 
 function* loginUser(action: { type: string; payload: LoginDataInterface }) {
     const { payload } = action;
@@ -116,7 +116,7 @@ function* createWish(action: { type: string; payload: WishInput }) {
                         _id: $_id,
                     }
                 )
-                {_id}
+                {_id imageUrl}
             }
         `,
         variables: {
@@ -129,18 +129,26 @@ function* createWish(action: { type: string; payload: WishInput }) {
     };
     try {
         const response = yield axios.post("graphql", graphqlQuery);
-        const newWishId = response.data.data.createWish._id;
+        const responseData = response.data.data.createWish;
+        const newWishId = responseData._id;
+        let newWishImgUrl = responseData.imageUrl;
+        let reducerPayload;
+        if (newWishImgUrl) {
+            reducerPayload = { ...action.payload, imageUrl: newWishImgUrl };
+        } else {
+            reducerPayload = action.payload;
+        }
         if (newWishId === _id) {
             yield put({
                 type: actionTypes.UPDATE_WISH,
-                payload: action.payload,
+                payload: reducerPayload,
             });
         } else {
             if (newWishId) {
                 yield put({
                     type: actionTypes.CREATE_WISH,
                     payload: {
-                        ...action.payload,
+                        ...reducerPayload,
                         _id: newWishId,
                     },
                 });
@@ -237,7 +245,7 @@ function* fetchUserWishes(action?: {
     if (action && action.payload) {
         const graphqlQuery = {
             query: `
-                {userWishes(userId: "${action.payload.userId}") {_id title link description price buyer reserved }}
+                {userWishes(userId: "${action.payload.userId}") {_id title link imageUrl description price buyer reserved }}
                 `,
         };
         const response = yield axios.post("graphql", graphqlQuery);
@@ -253,7 +261,7 @@ function* fetchUserWishes(action?: {
     if (axios.defaults.headers.common["Authorization"]) {
         const graphqlQuery = {
             query: `
-                {userWishes {_id title link description price buyer reserved }}
+                {userWishes {_id title link imageUrl description price buyer reserved }}
                 `,
         };
         const response = yield axios.post("graphql", graphqlQuery);

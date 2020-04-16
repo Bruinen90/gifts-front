@@ -13,6 +13,7 @@ import {
     ListItemIcon,
     ListItemText,
     Button,
+    ListItemAvatar,
 } from "@material-ui/core";
 
 // Icons
@@ -68,12 +69,35 @@ const WishBox: React.FC<WishBoxProps> = ({
     const handleCancelReservation = () => {
         changeReservationStatus(false);
     };
-    console.log(wish.creator);
+    console.log(wish.imageUrl);
     return (
         <Card style={{ margin: "1rem 0", padding: "1rem" }}>
             <CardHeader title={wish.title} />
             <CardContent>
                 <List disablePadding>
+                    {wish.imageUrl && (
+                        <Card
+                            style={{
+                                width: "120px",
+                                height: "120px",
+                                margin: "1rem",
+                                borderRadius: "50%",
+                                overflow: "hidden",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <img
+                                src={wish.imageUrl}
+                                style={{
+                                    objectFit: "cover",
+                                    width: "100%",
+                                    height: "100%",
+                                }}
+                            />
+                        </Card>
+                    )}
                     <ListItem>
                         <ListItemIcon>
                             <MonetizationOn />
@@ -96,7 +120,9 @@ const WishBox: React.FC<WishBoxProps> = ({
                             <ListItemIcon>
                                 <Description />
                             </ListItemIcon>
-                            <ListItemText>{wish.description}</ListItemText>
+                            <ListItemText style={{ whiteSpace: "pre-wrap", maxHeight: "200px", overflow: 'auto' }}>
+                                {wish.description}
+                            </ListItemText>
                         </ListItem>
                     )}
                     {drawData && (
@@ -107,7 +133,8 @@ const WishBox: React.FC<WishBoxProps> = ({
                             <ListItemText>{drawData.title} </ListItemText>
                         </ListItem>
                     )}
-                    {(drawData || (wish.creator && typeof wish.creator !== "string")) && (
+                    {(drawData ||
+                        (wish.creator && typeof wish.creator !== "string")) && (
                         <ListItem>
                             <ListItemIcon>
                                 <Person />
