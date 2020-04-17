@@ -3,7 +3,7 @@ import { styled } from "@material-ui/core/styles";
 import { List, ListProps, Theme } from "@material-ui/core";
 
 // Types
-import { UsersListTypesType } from "../../interfaces/interfaces";
+import { UsersListTypesType } from "../../types/User";
 
 interface UsersListProps {
     listType: UsersListTypesType;

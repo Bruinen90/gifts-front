@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // Types
-import { WishesListProps } from '../../interfaces/WishTypes';
+import { WishesListProps } from '../../types/WishTypes';
 
 // MUI
 import { Grid } from '@material-ui/core';

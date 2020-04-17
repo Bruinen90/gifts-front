@@ -18,7 +18,7 @@ const USER_ITEMS_LIST = [
 	{
 		target: '/nowe-losowanie',
 		icon: <AddCircle color="inherit" />,
-		text: 'Stwórz nowe losowanie',
+		text: 'Nowe losowanie',
 	},
 	{
 		target: '/moje-losowania',
@@ -33,7 +33,7 @@ const USER_ITEMS_LIST = [
 	{
 		target: '/moi-znajomi',
 		icon: <People color="inherit" />,
-		text: 'Moi znajomi',
+		text: 'Znajomi',
     },
     {
         target: '/lista-zakupow',

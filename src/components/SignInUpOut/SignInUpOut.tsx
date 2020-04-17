@@ -46,7 +46,7 @@ const SignInUpOut: React.FC<SignInUpOutProps> = ({ username, variant, closeDrawe
         history.push("/");
     };
     return username ? (
-        <Box display="flex" alignItems="flex-end" marginLeft="3rem">
+        <Box display="flex" alignItems="flex-end" marginLeft="2rem">
             <Box marginRight={2}>
                 <Typography>Witaj {username}</Typography>
             </Box>

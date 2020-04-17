@@ -1,14 +1,15 @@
 import * as actionTypes from './actions/actionTypes';
-import { DrawInterface, StateInterface } from '../interfaces/interfaces';
 
 // Types
-import { Wish } from '../interfaces/WishTypes';
+import { StateInterface } from '../types/State';
+import { DrawInterface } from '../types/Draw';
+import { Wish } from '../types/WishTypes';
 import {
 	ReceivedInvitation,
 	SentInvitation,
 	OtherUsersWishes,
-} from '../interfaces/Friends';
-import { User } from '../interfaces/interfaces';
+} from '../types/Friends';
+import { User } from '../types/User';
 
 interface actionInterface {
 	type: string;

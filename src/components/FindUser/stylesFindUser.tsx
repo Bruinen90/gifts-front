@@ -6,7 +6,7 @@ import { Box, BoxProps } from '@material-ui/core';
 import {
 	SearchResultsBoxProps,
 	SearchState,
-} from '../../interfaces/interfaces';
+} from '../../types/User';
 
 export const SearchResultsBox = styled(
 	({

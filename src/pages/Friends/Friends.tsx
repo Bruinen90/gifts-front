@@ -12,7 +12,8 @@ import FindUser from "../../components/FindUser/FindUser";
 import { Box, Typography, Button, List } from "@material-ui/core";
 
 // Types
-import { StateInterface, User } from "../../interfaces/interfaces";
+import { StateInterface } from "../../types/State";
+import { User } from "../../types/User";
 
 // Images
 import Subscriptions from "../../img/subscripions.svg";

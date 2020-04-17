@@ -5,13 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dialog, DialogTitle } from '@material-ui/core';
 
 // Types
-import { StateInterface } from '../../interfaces/interfaces';
+import { StateInterface } from '../../types/State';
 import WishesList from '../WishesList/WishesList';
 import {
 	ReservationStatusSetterType,
 	ReservationPayload,
-} from '../../interfaces/Reservations';
-import { Wish } from '../../interfaces/WishTypes';
+} from '../../types/Reservations';
+import { Wish } from '../../types/WishTypes';
 interface WishesModalProps {
 	userId: string;
 	drawId?: string;

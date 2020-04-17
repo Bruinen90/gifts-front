@@ -15,7 +15,7 @@ import {
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { StateInterface } from '../../interfaces/interfaces';
+import { StateInterface } from '../../types/State';
 
 // Icons
 import { Visibility, VisibilityOff } from '@material-ui/icons';

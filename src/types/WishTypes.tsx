@@ -1,4 +1,5 @@
-import { User, DrawInterface } from './interfaces';
+import { User } from './User';
+import { DrawInterface } from './Draw';
 import { ReservationStatusSetterType } from './Reservations';
 
 export type WishViewTypes = 'full' | 'simple' | 'withDrawData';

@@ -10,7 +10,7 @@ import { Typography, TextField, Button } from '@material-ui/core';
 import * as Styled from './stylesCreateWish';
 
 // Types
-import { Wish, WishInput } from '../../interfaces/WishTypes';
+import { Wish, WishInput } from '../../types/WishTypes';
 
 const CreateWish: React.FC = () => {
 	const history = useHistory();

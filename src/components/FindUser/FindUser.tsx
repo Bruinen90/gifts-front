@@ -11,12 +11,12 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-
-// Icons
 import { Search } from "@material-ui/icons";
 
 // Types
-import { User, SearchState, UsersListType } from "../../interfaces/interfaces";
+import { User, SearchState, UsersListType } from "../../types/User";
+
+// Components
 import UsersList from "../UsersList/UsersList";
 
 interface FindUserProps {

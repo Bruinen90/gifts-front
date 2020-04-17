@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // MUI
 import {
@@ -17,8 +17,8 @@ import WishesModal from '../WishesModal/WishesModal';
 import GiftBox from '../GiftBox/GiftBox';
 
 // Types
-import { Wish } from '../../interfaces/WishTypes';
-import { DrawStatusType } from '../../interfaces/Draw';
+import { Wish } from '../../types/WishTypes';
+import { DrawStatusType } from '../../types/Draw';
 
 interface DrawResultsProps {
 	_id: string;

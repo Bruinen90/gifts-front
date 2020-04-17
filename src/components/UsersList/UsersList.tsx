@@ -16,7 +16,7 @@ import {
     UsersListType,
     User,
     UsersListTypesType
-} from "../../interfaces/interfaces";
+} from "../../types/User";
 
 // Styles
 import * as Styled from "./stylesUsersList";

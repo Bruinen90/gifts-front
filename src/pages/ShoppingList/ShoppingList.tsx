@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // MUI
@@ -8,12 +8,11 @@ import { Typography } from '@material-ui/core';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 
 // Types
-import { StateInterface } from '../../interfaces/interfaces';
-import WishBox from '../../components/WishBox/WishBox';
+import { StateInterface } from '../../types/State';
 import {
 	ReservationStatusSetterType,
 	ReservationPayload,
-} from '../../interfaces/Reservations';
+} from '../../types/Reservations';
 import WishesList from '../../components/WishesList/WishesList';
 
 export const ShoppingList: React.FC = () => {
@@ -23,10 +22,6 @@ export const ShoppingList: React.FC = () => {
 		state.shoppingList,
 		state.usersDraws,
 	]);
-
-	// useEffect(() => {
-	// 	// console.log(shoppingList);
-	// }, [shoppingList]);
 
 	const handleSetReservationStatus: ReservationStatusSetterType = ({
 		wishId,
@@ -66,25 +61,6 @@ export const ShoppingList: React.FC = () => {
 			</Typography>
 			{shoppingList && shoppingList.length > 0 && 
             <WishesList wishesList={populatedShoppingList!} viewMode="guest" setReservedStatus={handleSetReservationStatus} />}
-			{/* {shoppingList &&
-				shoppingList.length > 0 &&
-				shoppingList.map(item => {
-					let drawData;
-					if (item.forDraw) {
-						drawData = drawsData.find(
-							draw => draw._id === item.forDraw
-						);
-					}
-					return (
-						<WishBox
-							key={item._id}
-							view="simple"
-							wish={item}
-							setReservedStatus={handleSetReservationStatus}
-							drawData={drawData}
-						/>
-					);
-				})} */}
 		</PageWrapper>
 	);
 };

@@ -4,12 +4,9 @@ import { put, takeEvery, takeLatest, all } from "redux-saga/effects";
 import axios from "axios";
 
 // Interfaces
-import {
-    DrawInterface,
-    LoginDataInterface,
-    User,
-} from "../../interfaces/interfaces";
-import { WishInput } from "../../interfaces/WishTypes";
+import { DrawInterface} from '../../types/Draw';
+import { User, LoginDataInterface } from '../../types/User';
+import { WishInput } from "../../types/WishTypes";
 
 function* loginUser(action: { type: string; payload: LoginDataInterface }) {
     const { payload } = action;
@@ -499,7 +496,7 @@ function* cancelFriendship(action: {
 
 function* fetchShoppingList() {
     const grapghqlQuery = {
-        query: `{getShoppingList {_id title link description price forDraw creator {_id username email}}}`,
+        query: `{getShoppingList {_id title link imageUrl description price forDraw creator {_id username email}}}`,
     };
     try {
         const response = yield axios.post("graphql", grapghqlQuery);

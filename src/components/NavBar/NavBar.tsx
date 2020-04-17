@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 // Types
-import { StateInterface } from "../../interfaces/interfaces";
+import { StateInterface } from "../../types/State";
 
 // MUI
 import { AppBar, Box, IconButton, Theme, Hidden } from "@material-ui/core";

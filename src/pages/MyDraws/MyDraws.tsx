@@ -11,11 +11,9 @@ import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import DrawRow from "../../components/DrawRow/DrawRow";
 
 // Interfaces
-import {
-    DrawInterface,
-    StateInterface,
-    User,
-} from "../../interfaces/interfaces";
+import { StateInterface } from "../../types/State";
+import { DrawInterface } from "../../types/Draw";
+import { User } from "../../types/User";
 
 const MyDraws: React.FC = () => {
     const location = useLocation();

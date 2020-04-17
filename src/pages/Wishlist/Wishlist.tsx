@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 
 // Types
-import { StateInterface } from '../../interfaces/interfaces';
+import { StateInterface } from '../../types/State';
 
 // MUI
 import { Box, Typography, Button, SvgIcon } from '@material-ui/core';
