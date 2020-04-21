@@ -8,7 +8,7 @@ import { Typography } from '@material-ui/core';
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
 
 // Types
-import { StateInterface } from '../../types/State';
+import { State } from '../../types/State';
 import {
 	ReservationStatusSetterType,
 	ReservationPayload,
@@ -18,9 +18,9 @@ import WishesList from '../../components/WishesList/WishesList';
 export const ShoppingList: React.FC = () => {
 	const dispatch = useDispatch();
 
-	const [shoppingList, drawsData] = useSelector((state: StateInterface) => [
-		state.shoppingList,
-		state.usersDraws,
+	const [shoppingList, drawsData] = useSelector((state: State) => [
+		state.wish.shoppingList,
+		state.draw.usersDraws,
 	]);
 
 	const handleSetReservationStatus: ReservationStatusSetterType = ({

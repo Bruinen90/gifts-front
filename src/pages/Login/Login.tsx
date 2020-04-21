@@ -15,7 +15,7 @@ import {
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { StateInterface } from '../../types/State';
+import { State } from '../../types/State';
 
 // Icons
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -32,9 +32,9 @@ interface FormFields {
 const Login = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const [errorMessage, userId] = useSelector((state: StateInterface) => [
-		state.loginError,
-		state.userId,
+	const [errorMessage, userId] = useSelector((state: State) => [
+		state.auth.loginError,
+		state.auth._id,
 	]);
 
 	const [formData, setFormData] = useState<FormFields>({
@@ -69,7 +69,9 @@ const Login = () => {
 
 	return (
 		<PageWrapper maxWidth="600px">
-			<Typography variant="h1" align="center">Logowanie</Typography>
+			<Typography variant="h1" align="center">
+				Logowanie
+			</Typography>
 			<Styled.LoginForm onSubmit={handleLogin}>
 				<TextField
 					label="Login/email"

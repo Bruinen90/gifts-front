@@ -1,19 +1,15 @@
-import * as actionTypes from "../actions/actionTypes";
+import * as actionTypes from '../actions/actionTypes';
 
-import { Action, FriendsState } from "../../types/State";
-import {User} from '../../types/User';
-import {ReceivedInvitation, SentInvitation } from '../../types/Friends';
+import { Action, FriendsState } from '../../types/State';
+import { User } from '../../types/User';
+import { ReceivedInvitation, SentInvitation } from '../../types/Friends';
 
-export default (state: FriendsState, action: Action) => {
-    switch(action.type) {
-        case actionTypes.SEND_INVITATION:
+export default (state: FriendsState = {}, action: Action) => {
+	switch (action.type) {
+		case actionTypes.SEND_INVITATION:
 			const newInvitation = {
 				_id: action.payload._id as string,
-				sender: {
-					_id: state.userId,
-					username: state.username,
-					email: state.email,
-				} as User,
+				sender: action.payload.loggedUser,
 				receiver: action.payload.receiver as User,
 			};
 			return {
@@ -33,17 +29,14 @@ export default (state: FriendsState, action: Action) => {
 			const responseInvitations = action.payload as {
 				received: ReceivedInvitation[];
 				sent: SentInvitation[];
+				loggedUser: User;
 			};
 			let receivedInvitations;
 			if (responseInvitations.received) {
 				receivedInvitations = responseInvitations.received.map(
 					invitation => ({
 						...invitation,
-						receiver: {
-							_id: state.userId!,
-							username: state.username!,
-							email: state.email!,
-						},
+						receiver: responseInvitations.loggedUser,
 					})
 				);
 			}
@@ -51,11 +44,7 @@ export default (state: FriendsState, action: Action) => {
 			if (responseInvitations.sent) {
 				sentInvitations = responseInvitations.sent.map(invitation => ({
 					...invitation,
-					sender: {
-						_id: state.userId!,
-						username: state.username!,
-						email: state.email!,
-					},
+					sender: responseInvitations.loggedUser,
 				}));
 			}
 			return {
@@ -67,6 +56,7 @@ export default (state: FriendsState, action: Action) => {
 			};
 		case actionTypes.SET_INVITATION_DECISION:
 			const { invitationId, decision } = action.payload;
+			console.log(action.payload);
 			const oldState = { ...state };
 			if (decision === 'accept') {
 				const newFriend = state.invitations!.received!.find(
@@ -77,6 +67,7 @@ export default (state: FriendsState, action: Action) => {
 					: (oldState.friends = [newFriend]);
 			}
 			if (decision === 'cancel') {
+				console.log('canceling invitation');
 				oldState.invitations!.sent = oldState.invitations!.sent!.filter(
 					invitation => invitation._id !== invitationId
 				);
@@ -98,5 +89,7 @@ export default (state: FriendsState, action: Action) => {
 					friend => friend._id !== action.payload.friendId
 				),
 			};
-    }
-}
+		default:
+			return state;
+	}
+};

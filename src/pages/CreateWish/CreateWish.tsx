@@ -60,7 +60,11 @@ const CreateWish: React.FC = () => {
 	// Submiting
 	const onSubmit = (formData: any) => {
 		// Correct not full links
-		if (formData.link && !formData.link.startsWith('http')) {
+		if (
+			formData.link &&
+			!formData.link.startsWith('http') &&
+			!formData.link.startsWith('//')
+		) {
 			formData.link = '//' + formData.link;
 		}
 		// Remove blank fields

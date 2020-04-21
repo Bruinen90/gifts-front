@@ -30,7 +30,7 @@ import {
     Person,
 } from "@material-ui/icons";
 // Types
-import { StateInterface } from "../../types/State";
+import { State } from "../../types/State";
 import { User } from "../../types/User";
 import { WishBoxProps } from "../../types/WishTypes";
 import { ReservationPayload } from "../../types/Reservations";
@@ -44,7 +44,7 @@ const WishBox: React.FC<WishBoxProps> = ({
     oneColumn,
 }) => {
     const history = useHistory();
-    const loggedUserId = useSelector((state: StateInterface) => state.userId);
+    const loggedUserId = useSelector((state: State) => state.auth._id);
     const handleNavigateToEdit = () => {
         history.push("/edytuj-zyczenie", { originalData: wish });
     };
@@ -72,7 +72,6 @@ const WishBox: React.FC<WishBoxProps> = ({
     const handleCancelReservation = () => {
         changeReservationStatus(false);
     };
-    console.log(wish);
     return (
         <Grid item xs={12} sm={oneColumn ? 12 : 6} style={{ width: "100%" }}>
             <Card

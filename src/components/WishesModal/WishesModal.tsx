@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dialog, DialogTitle } from '@material-ui/core';
 
 // Types
-import { StateInterface } from '../../types/State';
+import { State } from '../../types/State';
 import WishesList from '../WishesList/WishesList';
 import {
 	ReservationStatusSetterType,
@@ -29,14 +29,15 @@ const WishesModal: React.FC<WishesModalProps> = ({
 }) => {
 	const dispatch = useDispatch();
 	const [wishesList, setWishesList] = useState<Wish[]>();
-	const fetchedWishesList = useSelector((state: StateInterface) => {
+	const fetchedWishesList = useSelector((state: State) => {
+		const { othersWishes } = state.wish;
 		if (
-			state.othersWishes &&
-			state.othersWishes.find(
+			othersWishes &&
+			othersWishes.find(
 				userWishesList => userWishesList.userId === userId
 			)
 		) {
-			return state.othersWishes.find(
+			return othersWishes.find(
 				userWishesList => userWishesList.userId === userId
 			)!.wishesList;
 		} else {
@@ -84,8 +85,8 @@ const WishesModal: React.FC<WishesModalProps> = ({
 				<WishesList
 					wishesList={wishesList}
 					viewMode="guest"
-                    setReservedStatus={handleSetReservationStatus}
-                    inModal={true}
+					setReservedStatus={handleSetReservationStatus}
+					inModal={true}
 				/>
 			)}
 		</Dialog>

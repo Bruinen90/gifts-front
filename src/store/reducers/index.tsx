@@ -1,13 +1,13 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-import authReducer from "./authReducer";
-import drawReducer from "./drawReducer";
-import wishReducer from "./wishReducer";
-import friendsReducer from "./friendsReducer";
+import auth from './authReducer';
+import draw from './drawReducer';
+import wish from './wishReducer';
+import friends from './friendsReducer';
 
 export default combineReducers({
-    authReducer,
-    drawReducer,
-    wishReducer,
-    friendsReducer,
+	auth,
+	draw,
+	wish,
+	friends,
 });

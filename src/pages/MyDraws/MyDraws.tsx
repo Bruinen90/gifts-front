@@ -11,7 +11,7 @@ import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import DrawRow from "../../components/DrawRow/DrawRow";
 
 // Interfaces
-import { StateInterface } from "../../types/State";
+import { State } from "../../types/State";
 import { DrawInterface } from "../../types/Draw";
 import { User } from "../../types/User";
 
@@ -21,10 +21,10 @@ const MyDraws: React.FC = () => {
         usersDraws,
         userId,
         shoppingList,
-    ] = useSelector((state: StateInterface) => [
-        state.usersDraws,
-        state.userId,
-        state.shoppingList,
+    ] = useSelector((state: State) => [
+        state.draw.usersDraws,
+        state.auth._id,
+        state.wish.shoppingList,
     ]);
     const dispatch = useDispatch();
 

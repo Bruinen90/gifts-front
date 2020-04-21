@@ -4,7 +4,7 @@ import { Action, WishState } from "../../types/State";
 import { Wish } from "../../types/WishTypes";
 import { OtherUsersWishes } from "../../types/Friends";
 
-export default (state: WishState, action: Action) => {
+export default (state: WishState = {}, action: Action) => {
     switch (action.type) {
         case actionTypes.CREATE_WISH:
             let usersWishes;
@@ -78,7 +78,7 @@ export default (state: WishState, action: Action) => {
             let updatedOtherUsersWishes: OtherUsersWishes | undefined;
             let addedGift: Wish | undefined = undefined;
             {
-                const { creatorId, wishId, reserved, drawId } = action.payload;
+                const { creatorId, wishId, reserved, drawId, loggedUser } = action.payload;
                 updatedOtherUsersWishes = state.othersWishes?.map(
                     (userWishesList) => {
                         if (userWishesList.userId === creatorId) {
@@ -88,7 +88,7 @@ export default (state: WishState, action: Action) => {
                                         addedGift = {
                                             ...wish,
                                             reserved: reserved,
-                                            buyer: state.userId,
+                                            buyer: loggedUser._id,
                                             creator: userWishesList.userId,
                                         };
                                         if (drawId) {
@@ -141,10 +141,12 @@ export default (state: WishState, action: Action) => {
                 shoppingList: action.payload.shoppingList.map(
                     (listItem: Wish) => ({
                         ...listItem,
-                        buyer: state.userId,
+                        buyer: action.payload.loggedUser._id,
                         reserved: true,
                     })
                 ),
             };
+        default:
+            return state;
     }
 };

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 
 // Types
-import { StateInterface } from '../../types/State';
+import { State } from '../../types/State';
 
 // MUI
 import { Box, Typography, Button, SvgIcon } from '@material-ui/core';
@@ -15,7 +15,7 @@ import PageWrapper from '../../components/PageWrapper/PageWrapper';
 const Wishlist: React.FC = () => {
 	const history = useHistory();
 	const usersWishes = useSelector(
-		(state: StateInterface) => state.usersWishes
+		(state: State) => state.wish.usersWishes
 	);
 
 	const navigateToUserWishes = () => {
