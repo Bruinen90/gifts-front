@@ -3,20 +3,34 @@ import { DrawInterface } from "./Draw";
 import { User } from "./User";
 import { Wish } from "./WishTypes";
 
-export interface StateInterface {
+export interface Action {
+    type: string;
+    payload?: any;
+}
+
+export interface AuthState {
     username?: string;
     email?: string;
-    userId?: string;
     token?: string;
+    userId?: string;
+    loginError?: string;
+}
+
+export interface DrawState {
     usersDraws: DrawInterface[];
+    lastDeletedDraw?: string;
+}
+
+export interface WishState {
     usersWishes?: Wish[];
     othersWishes?: OtherUsersWishes;
-    loginError?: string;
-    lastDeletedDraw?: string;
+    shoppingList?: Wish[];
+}
+
+export interface FriendsState {
     friends?: User[];
     invitations?: {
         received?: InvitationInterface[];
         sent?: InvitationInterface[];
     };
-    shoppingList?: Wish[];
 }
