@@ -78,7 +78,13 @@ export default (state: WishState = {}, action: Action) => {
             let updatedOtherUsersWishes: OtherUsersWishes | undefined;
             let addedGift: Wish | undefined = undefined;
             {
-                const { creatorId, wishId, reserved, drawId, loggedUser } = action.payload;
+                const {
+                    creatorId,
+                    wishId,
+                    reserved,
+                    drawId,
+                    loggedUser,
+                } = action.payload;
                 updatedOtherUsersWishes = state.othersWishes?.map(
                     (userWishesList) => {
                         if (userWishesList.userId === creatorId) {

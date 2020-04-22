@@ -15,6 +15,7 @@ import {
     ListItemText,
     Button,
     CardMedia,
+    Typography,
 } from "@material-ui/core";
 
 // Icons
@@ -28,6 +29,7 @@ import {
     LockOpen,
     Shuffle,
     Person,
+    Block,
 } from "@material-ui/icons";
 // Types
 import { State } from "../../types/State";
@@ -45,10 +47,23 @@ const WishBox: React.FC<WishBoxProps> = ({
 }) => {
     const history = useHistory();
     const loggedUserId = useSelector((state: State) => state.auth._id);
+
+    let reservedStatus:
+        | "not-reserved"
+        | "reserved-by-curr-user"
+        | "reserved-by-other-user" = "not-reserved";
+
+    if (wish.reserved) {
+        if (wish.buyer === loggedUserId) {
+            reservedStatus = "reserved-by-curr-user";
+        } else {
+            reservedStatus = "reserved-by-other-user";
+        }
+    }
+
     const handleNavigateToEdit = () => {
         history.push("/edytuj-zyczenie", { originalData: wish });
     };
-
     const changeReservationStatus = (newStatus: boolean) => {
         let creatorId = wish.creator;
         if (typeof creatorId !== "string") {
@@ -72,6 +87,7 @@ const WishBox: React.FC<WishBoxProps> = ({
     const handleCancelReservation = () => {
         changeReservationStatus(false);
     };
+
     return (
         <Grid item xs={12} sm={oneColumn ? 12 : 6} style={{ width: "100%" }}>
             <Card
@@ -79,6 +95,14 @@ const WishBox: React.FC<WishBoxProps> = ({
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
+                    opacity:
+                        reservedStatus === "reserved-by-other-user"
+                            ? "0.33"
+                            : "1",
+                    pointerEvents:
+                        reservedStatus === "reserved-by-other-user"
+                            ? "none"
+                            : "all",
                 }}
             >
                 {wish.imageUrl && (
@@ -165,13 +189,17 @@ const WishBox: React.FC<WishBoxProps> = ({
                                 Edytuj
                             </Button>
                         </>
-                    ) : wish.reserved && loggedUserId === wish.buyer ? (
+                    ) : reservedStatus === "reserved-by-curr-user" ? (
                         <Button
                             color="secondary"
                             startIcon={<LockOpen />}
                             onClick={handleCancelReservation}
                         >
                             Anuluj deklarację zakupu
+                        </Button>
+                    ) : wish.reserved ? (
+                        <Button disabled startIcon={<Block />}>
+                            Prezent zarezerwowany przez innego użytkownika
                         </Button>
                     ) : (
                         <Button
