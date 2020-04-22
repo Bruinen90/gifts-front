@@ -11,7 +11,7 @@ import reducer from './store/reducers';
 
 // Sagas
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from './store/sagas/sagas';
+import rootSaga from './store/sagas/rootSaga';
 
 const sagaMiddleWare = createSagaMiddleware();
 const composeEnhancers =

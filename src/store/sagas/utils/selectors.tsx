@@ -1,3 +1,3 @@
-import { State } from '../../types/State';
+import { State } from '../../../types/State';
 
 export const getLoggedUser = (state: State) => state.auth;
