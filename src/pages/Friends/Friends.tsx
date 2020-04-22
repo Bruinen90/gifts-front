@@ -114,7 +114,8 @@ export const Friends: React.FC = () => {
 				<FindUser
 					handleUserClicked={handleSendInvitation}
 					removedFromResults={unInvitable}
-					ref={findUserRef}
+                    ref={findUserRef}
+                    alreadyOnListError="Wszyscy znalezieni użytkownicy są już Twoimi znajomymi lub oczekują na akceptację"
 				/>
 			</CenteredCard>
 			<CenteredCard>

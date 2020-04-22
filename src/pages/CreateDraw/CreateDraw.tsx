@@ -240,6 +240,7 @@ const CreateDraw: React.FC = () => {
 					handleUserClicked={handleAddParticipant}
 					removedFromResults={participants}
 					header="Dodaj uczestników"
+					alreadyOnListError="Wszyscy znalezieni użytkownicy zostali już dodani do losowania"
 				/>
 				{participants.length > 0 && (
 					<>
