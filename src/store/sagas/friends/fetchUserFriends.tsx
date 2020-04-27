@@ -8,11 +8,21 @@ export function* fetchUserFriends() {
     };
     try {
         const response = yield axios.post("graphql", grapghqlQuery);
+        if(!response.data.data.getUserFriends) {
+            throw new Error();
+        }
         yield put({
             type: actionTypes.SET_USER_FRIENDS,
             payload: response.data.data.getUserFriends,
         });
     } catch (err) {
-        console.log(err);
+        yield put({
+            type: actionTypes.SET_ERROR,
+            payload: {
+                category: "friends",
+                message:
+                    "Wystąpił błąd podczas pobierania listy znajomych, spróbuj ponownie później",
+            },
+        });
     }
 }

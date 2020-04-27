@@ -19,8 +19,9 @@ import Wishlist from "./pages/Wishlist/Wishlist";
 import CreateWish from "./pages/CreateWish/CreateWish";
 import { Friends } from "./pages/Friends/Friends";
 import { ShoppingList } from "./pages/ShoppingList/ShoppingList";
+import { ErrorPrompt } from "./components/ErrorPrompt/ErrorPrompt";
 
-axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
+axios.defaults.baseURL = "http://bez-niespodzianek.herokuapp.com";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const App = () => {
                     <Route path="/lista-zakupow" component={ShoppingList} />
                     <Route path="/" component={Home} />
                 </Switch>
+                <ErrorPrompt />
                 {/* End off app */}
             </ThemeProvider>
         </BrowserRouter>

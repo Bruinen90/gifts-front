@@ -1,8 +1,11 @@
-import { put } from 'redux-saga/effects';
-import axios from 'axios';
-import * as actionTypes from '../../actions/actionTypes';
+import { put } from "redux-saga/effects";
+import axios from "axios";
+import * as actionTypes from "../../actions/actionTypes";
 
-export function* exitDraw(action: { type: string; payload: { drawId: string } }) {
+export function* exitDraw(action: {
+    type: string;
+    payload: { drawId: string };
+}) {
     const graphqlQuery = {
         query: `
             mutation {
@@ -19,9 +22,16 @@ export function* exitDraw(action: { type: string; payload: { drawId: string } })
                 payload: action.payload,
             });
         } else {
-            // There should be some auth error popup message - need to be done!
+            throw new Error();
         }
     } catch (err) {
-        console.log(err.response);
+        yield put({
+            type: actionTypes.SET_ERROR,
+            payload: {
+                category: "draws",
+                message:
+                    "Wystąpił błąd podczas próby wypisania sie z losowania, spróbuj ponownie później",
+            },
+        });
     }
 }

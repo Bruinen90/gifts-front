@@ -18,9 +18,16 @@ export function* deleteDraw(action: { type: string; payload: { drawId: string } 
                 payload: action.payload,
             });
         } else {
-            // There should be some auth error popup message - need to be done!
+            throw new Error;
         }
     } catch (err) {
-        console.log(err.response);
+        yield put({
+            type: actionTypes.SET_ERROR,
+            payload: {
+                category: "draws",
+                message:
+                    "Wystąpił błąd podczas usuwania losowania, spróbuj ponownie później",
+            },
+        });
     }
 }

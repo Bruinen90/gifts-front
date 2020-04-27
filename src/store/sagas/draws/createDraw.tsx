@@ -50,6 +50,13 @@ export function* createDraw(action: { type: string; payload: DrawInterface }) {
 			});
 		}
 	} catch (error) {
-		console.log(error);
+		yield put({
+            type: actionTypes.SET_ERROR,
+            payload: {
+                category: "draws",
+                message:
+                    "Wystąpił błąd podczas tworzenia losowania, spróbuj ponownie później",
+            },
+        });
 	}
 }

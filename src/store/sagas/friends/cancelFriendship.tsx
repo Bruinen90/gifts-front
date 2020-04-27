@@ -20,9 +20,16 @@ export function* cancelFriendship(action: {
                 payload: action.payload,
             });
         } else {
-            // Error handler goes here
+            throw new Error();
         }
     } catch (err) {
-        console.log(err);
+        yield put({
+            type: actionTypes.SET_ERROR,
+            payload: {
+                category: "friends",
+                message:
+                    "Wystąpił błąd podczas usuwania użytkownika z grona znajomych, spróbuj ponownie później",
+            },
+        });
     }
 }

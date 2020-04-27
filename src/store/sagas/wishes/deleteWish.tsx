@@ -19,9 +19,16 @@ export function* deleteWish(action: { type: string; payload: { wishId: string } 
                 payload: action.payload,
             });
         } else {
-            // There should be some auth error popup message - need to be done!
+            throw new Error();
         }
     } catch (err) {
-        console.log(err);
+        yield put({
+            type: actionTypes.SET_ERROR,
+            payload: {
+                category: "wishes",
+                message:
+                    "Wystąpił błąd podczas usuwania życzenia, spróbuj ponownie później",
+            },
+        });
     }
 }

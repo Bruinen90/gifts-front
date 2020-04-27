@@ -1,6 +1,6 @@
-import { put } from 'redux-saga/effects';
-import axios from 'axios';
-import * as actionTypes from '../../actions/actionTypes';
+import { put } from "redux-saga/effects";
+import axios from "axios";
+import * as actionTypes from "../../actions/actionTypes";
 
 export function* setInvitationResponse(action: {
     type: string;
@@ -14,7 +14,9 @@ export function* setInvitationResponse(action: {
     };
     try {
         const response = yield axios.post("graphql", graphqlQuery);
-        console.log(response);
+        if (!response.data.data) {
+            throw new Error();
+        }
         yield put({
             type: actionTypes.SET_INVITATION_DECISION,
             payload: {
@@ -22,5 +24,14 @@ export function* setInvitationResponse(action: {
                 decision: decision,
             },
         });
-    } catch (error) {}
+    } catch (error) {
+        yield put({
+            type: actionTypes.SET_ERROR,
+            payload: {
+                category: "friends",
+                message:
+                    "Wystąpił błąd podczas zmiany statusu znajomości, spróbuj ponownie później",
+            },
+        });
+    }
 }
