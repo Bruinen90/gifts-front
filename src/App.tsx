@@ -21,6 +21,7 @@ import { Friends } from "./pages/Friends/Friends";
 import { ShoppingList } from "./pages/ShoppingList/ShoppingList";
 import { ErrorPrompt } from "./components/ErrorPrompt/ErrorPrompt";
 import { ResetPassword } from "./pages/ResetPassword/ResetPassword";
+import { NewPassword } from "./pages/NewPassword/NewPassword";
 
 axios.defaults.baseURL = "http://localhost:8080";
 // axios.defaults.baseURL = "http://bez-niespodzianek.herokuapp.com/";
@@ -56,6 +57,7 @@ const App = () => {
                     <Route path="/moi-znajomi" component={Friends} />
                     <Route path="/lista-zakupow" component={ShoppingList} />
                     <Route path="/zresetuj-haslo" component={ResetPassword} />
+                    <Route path="/utworz-haslo" component={NewPassword} />
                     <Route path="/" component={Home} />
                 </Switch>
                 <ErrorPrompt />
