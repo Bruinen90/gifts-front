@@ -22,7 +22,8 @@ import { ShoppingList } from "./pages/ShoppingList/ShoppingList";
 import { ErrorPrompt } from "./components/ErrorPrompt/ErrorPrompt";
 import { ResetPassword } from "./pages/ResetPassword/ResetPassword";
 
-axios.defaults.baseURL = "http://bez-niespodzianek.herokuapp.com/";
+axios.defaults.baseURL = "http://localhost:8080";
+// axios.defaults.baseURL = "http://bez-niespodzianek.herokuapp.com/";
 
 const App = () => {
     const dispatch = useDispatch();

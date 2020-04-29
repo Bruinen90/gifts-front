@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 // Components
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
@@ -10,20 +11,40 @@ import { Typography, TextField, Button } from "@material-ui/core";
 export const ResetPassword: React.FC = () => {
     const { handleSubmit, register, errors } = useForm();
 
-    const onSubmit = (formData: any) => {
-        console.log(formData);
+    const onSubmit = async (formData: any) => {
+        const { email } = formData;
+        console.log("SENDING EMAIL TO: ", email);
+        const graphQLquery = {
+            query: `
+            mutation{sendResetPasswordEmail(email: "${email}") {success}}
+        `,
+        };
+        try {
+            const response = await axios.post("/graphql", graphQLquery);
+            console.log(response.data);
+        } catch (err) {
+            console.log(err);
+        }
     };
     return (
         <PageWrapper>
-            <Typography component="h1" align="center">
+            <Typography variant="h1" align="center">
                 Zresetuj hasło
             </Typography>
-            <Typography>
-                Jeśli zapomniałeś hasła możesz je zresetować, aby odzyskać
-                dostęp do swojego konta. Link otrzymasz na adres email podany
-                podczas rejestracji
-            </Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    maxWidth: "400px",
+                    margin: "2rem auto",
+                }}
+            >
+                <Typography>
+                    Jeśli zapomniałeś hasła możesz je zresetować, aby odzyskać
+                    dostęp do swojego konta. Link otrzymasz na adres email
+                    podany podczas rejestracji
+                </Typography>
                 <TextField
                     label="Twój adres email"
                     error={errors.hasOwnProperty("email")}
