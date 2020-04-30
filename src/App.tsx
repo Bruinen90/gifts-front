@@ -20,7 +20,7 @@ import CreateWish from "./pages/CreateWish/CreateWish";
 import { Friends } from "./pages/Friends/Friends";
 import { ShoppingList } from "./pages/ShoppingList/ShoppingList";
 
-axios.defaults.baseURL = "http://localhost:8080/";
+axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
 
 const App = () => {
     const dispatch = useDispatch();

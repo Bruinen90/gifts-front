@@ -108,7 +108,7 @@ const WishBox: React.FC<WishBoxProps> = ({
 				</Styled.ReservedOverlay>
 			)}
 			<Styled.WishCard
-				reserved={reservedStatus === 'reserved-by-other-user'}
+				reserved={reservedStatus === 'reserved-by-other-user' ? 1 : 0}
 			>
 				{wish.imageUrl && (
 					<CardMedia
