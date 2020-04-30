@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 // Components
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
@@ -11,28 +11,32 @@ import { Typography, TextField, Button } from "@material-ui/core";
 
 export const NewPassword: React.FC = () => {
     const location = useLocation();
+    const history = useHistory();
     const { handleSubmit, register, errors, getValues } = useForm();
 
     const onSubmit = async (formData: any) => {
         const { password } = formData;
         const email = location.search.slice(1);
         const token = location.hash.slice(1);
-        console.log("NEW PASSWORD: ", password);
-        console.log({ password, email, token });
         const graphQLquery = {
             query: `
-			mutation{setNewPassword(resetData: 
+			mutation{setNewPassword(newPasswordInput: 
 				{
 					password: "${password}",
 					email: "${email}",
 					token: "${token}"
 				}
-			) {success}}
+			) {success message}}
         `,
         };
         try {
             const response = await axios.post("/graphql", graphQLquery);
             console.log(response.data);
+            if (response.data.data.setNewPassword.success) {
+                history.push("/logowanie");
+            } else {
+                throw new Error(response.data.data);
+            }
         } catch (err) {
             console.log(err);
         }
