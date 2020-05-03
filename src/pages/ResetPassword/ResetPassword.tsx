@@ -15,7 +15,6 @@ export const ResetPassword: React.FC = () => {
 
 	const onSubmit = async (formData: any) => {
 		const { email } = formData;
-		console.log('SENDING EMAIL TO: ', email);
 		const graphQLquery = {
 			query: `
             mutation{sendResetPasswordEmail(email: "${email}") {success}}
@@ -23,7 +22,6 @@ export const ResetPassword: React.FC = () => {
 		};
 		try {
 			const response = await axios.post('/graphql', graphQLquery);
-			console.log(response);
 			if (response.data.data.sendResetPasswordEmail.success) {
 				history.push('/wyslano-link');
 			}

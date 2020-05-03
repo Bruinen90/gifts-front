@@ -25,7 +25,7 @@ import { NewPassword } from './pages/NewPassword/NewPassword';
 import { EmailSentConfirmation } from './pages/EmailSentConfirmation/EmailSentConfirmation';
 
 axios.defaults.baseURL = 'http://localhost:8080';
-// axios.defaults.baseURL = "http://bez-niespodzianek.herokuapp.com/";
+// axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
 
 const App = () => {
 	const dispatch = useDispatch();
