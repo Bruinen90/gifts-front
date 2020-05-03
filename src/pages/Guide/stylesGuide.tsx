@@ -2,11 +2,15 @@ import { styled } from '@material-ui/styles';
 import { Theme, Box, Grid } from '@material-ui/core';
 
 export const BoxCont = styled(Box)(({ theme }: { theme: Theme }) => ({
-    padding: theme.spacing(6),
+	padding: theme.spacing(6),
 	[theme.breakpoints.up('sm')]: {
 		maxWidth: '1440px',
 		margin: 'auto',
 		padding: theme.spacing(12),
+	},
+	[theme.breakpoints.up('lg')]: {
+		// To compensate translateY(200px) of some elements
+		marginBottom: '200px',
 	},
 }));
 
@@ -20,7 +24,7 @@ export const GuideBox = styled(Grid)(({ theme }: { theme: Theme }) => ({
 
 export const GuideImgContainter = styled('div')(
 	({ theme }: { theme: Theme }) => ({
-        textAlign: 'center',
+		textAlign: 'center',
 		[theme.breakpoints.up('sm')]: {
 			height: '350px',
 			display: 'flex',

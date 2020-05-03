@@ -25,8 +25,11 @@ import { NewPassword } from './pages/NewPassword/NewPassword';
 import { EmailSentConfirmation } from './pages/EmailSentConfirmation/EmailSentConfirmation';
 import Footer from './components/Footer/Footer';
 
+// Styles
+import * as Styled from './stylesApp';
+
 // axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
+axios.defaults.baseURL = 'https://bez-niespodzianek.herokuapp.com/';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -47,27 +50,35 @@ const App = () => {
 			<ThemeProvider theme={theme}>
 				{/* App goes here */}
 				<NavBar />
-				<Switch>
-					<Route path="/logowanie" component={Login} />
-					<Route path="/rejestracja" component={Signup} />
-					<Route path="/nowe-losowanie" component={CreateDraw} />
-					<Route path="/edytuj-losowanie" component={CreateDraw} />
-					<Route path="/moje-losowania" component={MyDraws} />
-					<Route path="/nowe-zyczenie" component={CreateWish} />
-					<Route path="/edytuj-zyczenie" component={CreateWish} />
-					<Route path="/lista-zyczen" component={Wishlist} />
-					<Route path="/moi-znajomi" component={Friends} />
-					<Route path="/lista-zakupow" component={ShoppingList} />
-					<Route path="/zresetuj-haslo" component={ResetPassword} />
-					<Route path="/utworz-haslo" component={NewPassword} />
-					<Route
-						path="/wyslano-link"
-						component={EmailSentConfirmation}
-					/>
-					<Route path="/" component={Home} />
-				</Switch>
-				<ErrorPrompt />
-                <Footer />
+				<Styled.GlobalWrapper>
+					<Switch>
+						<Route path="/logowanie" component={Login} />
+						<Route path="/rejestracja" component={Signup} />
+						<Route path="/nowe-losowanie" component={CreateDraw} />
+						<Route
+							path="/edytuj-losowanie"
+							component={CreateDraw}
+						/>
+						<Route path="/moje-losowania" component={MyDraws} />
+						<Route path="/nowe-zyczenie" component={CreateWish} />
+						<Route path="/edytuj-zyczenie" component={CreateWish} />
+						<Route path="/lista-zyczen" component={Wishlist} />
+						<Route path="/moi-znajomi" component={Friends} />
+						<Route path="/lista-zakupow" component={ShoppingList} />
+						<Route
+							path="/zresetuj-haslo"
+							component={ResetPassword}
+						/>
+						<Route path="/utworz-haslo" component={NewPassword} />
+						<Route
+							path="/wyslano-link"
+							component={EmailSentConfirmation}
+						/>
+						<Route path="/" component={Home} />
+					</Switch>
+					<ErrorPrompt />
+					<Footer />
+				</Styled.GlobalWrapper>
 				{/* End off app */}
 			</ThemeProvider>
 		</BrowserRouter>
