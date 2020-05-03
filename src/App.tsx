@@ -23,9 +23,10 @@ import { ErrorPrompt } from './components/ErrorPrompt/ErrorPrompt';
 import { ResetPassword } from './pages/ResetPassword/ResetPassword';
 import { NewPassword } from './pages/NewPassword/NewPassword';
 import { EmailSentConfirmation } from './pages/EmailSentConfirmation/EmailSentConfirmation';
+import Footer from './components/Footer/Footer';
 
-axios.defaults.baseURL = 'http://localhost:8080';
-// axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
+// axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -66,6 +67,7 @@ const App = () => {
 					<Route path="/" component={Home} />
 				</Switch>
 				<ErrorPrompt />
+                <Footer />
 				{/* End off app */}
 			</ThemeProvider>
 		</BrowserRouter>

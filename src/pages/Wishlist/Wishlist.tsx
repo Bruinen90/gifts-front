@@ -24,7 +24,7 @@ const Wishlist: React.FC = () => {
 	return (
 		<PageWrapper>
 			<Typography variant="h4" component="h2" align="center">
-				Lista życzeń
+				Twoja lista życzeń
 			</Typography>
 			{usersWishes && usersWishes.length > 0 ? (
 				<>
