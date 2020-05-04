@@ -1,11 +1,18 @@
 import { put } from "redux-saga/effects";
 import axios from "axios";
 import * as actionTypes from "../../actions/actionTypes";
+import * as actionCreators from "../../actions/actionCreators";
 
 export function* fetchUserWishes(action?: {
     type?: any;
     payload?: { userId: string };
 }) {
+    yield put(
+        actionCreators.setLoading({
+            loading: true,
+            type: "general",
+        })
+    );
     try {
         if (action && action.payload) {
             const graphqlQuery = {
@@ -51,5 +58,5 @@ export function* fetchUserWishes(action?: {
             },
         });
     }
-    // Fetch for requested user
+    yield put(actionCreators.setLoading({ loading: false }));
 }

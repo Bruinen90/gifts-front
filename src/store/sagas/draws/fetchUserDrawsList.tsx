@@ -1,6 +1,7 @@
 import { put } from "redux-saga/effects";
 import axios from "axios";
 import * as actionTypes from "../../actions/actionTypes";
+import * as actionCreators from "../../actions/actionCreators";
 
 // Types
 import { DrawInterface } from "../../../types/Draw";
@@ -14,6 +15,12 @@ export function* fetchUserDrawsList() {
                 }
             }`,
         };
+        yield put(
+            actionCreators.setLoading({
+                loading: true,
+                type: "general",
+            })
+        );
         try {
             const response = yield axios.post("graphql", graphqlQuery);
             const drawsList = response.data.data.userDraws.drawsList.map(
@@ -38,5 +45,6 @@ export function* fetchUserDrawsList() {
                 },
             });
         }
+        yield put(actionCreators.setLoading({ loading: false }));
     }
 }
