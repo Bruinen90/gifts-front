@@ -23,3 +23,4 @@ export const CANCEL_FRIENDSHIP = "CANCEL_FRIENDSHIP";
 export const SET_SHOPPING_LIST = "SET_SHOPPING_LIST";
 export const SET_ERROR = "SET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
+export const SET_LOADING = "SET_LOADING";

@@ -1,6 +1,7 @@
 import { put } from "redux-saga/effects";
 import axios from "axios";
 import * as actionTypes from "../../actions/actionTypes";
+import * as actionCreators from "../../actions/actionCreators";
 
 // Types
 import { WishInput } from "../../../types/WishTypes";
@@ -30,6 +31,13 @@ export function* createWish(action: { type: string; payload: WishInput }) {
             _id: _id,
         },
     };
+    yield put(
+        actionCreators.setLoading({
+            loading: true,
+            category: "wishes",
+            type: "new-record",
+        })
+    );
     try {
         const response = yield axios.post("graphql", graphqlQuery);
         const responseData = response.data.data.createWish;
@@ -69,4 +77,9 @@ export function* createWish(action: { type: string; payload: WishInput }) {
             },
         });
     }
+    yield put(
+        actionCreators.setLoading({
+            loading: false,
+        })
+    );
 }

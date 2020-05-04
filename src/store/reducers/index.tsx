@@ -5,6 +5,7 @@ import draw from "./drawReducer";
 import wish from "./wishReducer";
 import friends from "./friendsReducer";
 import errors from "./errorsReducer";
+import loading from "./loadingReducer";
 
 export default combineReducers({
     auth,
@@ -12,4 +13,5 @@ export default combineReducers({
     wish,
     friends,
     errors,
+    loading,
 });

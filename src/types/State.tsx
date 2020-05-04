@@ -9,6 +9,7 @@ export interface State {
     wish: WishState;
     friends: FriendsState;
     errors: ErrorsState;
+    loading: LoadingState;
 }
 
 export interface Action {
@@ -50,4 +51,17 @@ export interface ErrorsState {
     friends?: string;
     wishes?: string;
     other?: string;
+}
+
+export type LoadingCategory = "wishes" | "friends" | "draws";
+export type LoadingType =
+    | "new-record"
+    | "edited-record"
+    | "fetching-records"
+    | "general";
+
+export interface LoadingState {
+    loading?: boolean;
+    category?: LoadingCategory;
+    type?: LoadingType;
 }
