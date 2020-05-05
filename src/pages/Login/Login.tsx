@@ -8,7 +8,6 @@ import {
     Input,
     InputAdornment,
     IconButton,
-    Button,
     Box,
     FormHelperText,
 } from "@material-ui/core";
@@ -23,6 +22,7 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 //Styles
 import * as Styled from "./stylesLogin";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import { ButtonWithLoader } from "../../components/ButtonWithLoader/ButtonWithLoader";
 
 interface FormFields {
     user: string;
@@ -117,9 +117,16 @@ const Login = () => {
                     )}
                 </FormControl>
                 <Box mt={2} mx="auto">
-                    <Button variant="contained" color="primary" type="submit">
+                    <ButtonWithLoader
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        loadingType="other"
+                        loadingCategory="auth"
+                        style={{ minWidth: "200px" }}
+                    >
                         Zaloguj
-                    </Button>
+                    </ButtonWithLoader>
                 </Box>
                 <Box my={4} mx="auto">
                     <Typography align="center">

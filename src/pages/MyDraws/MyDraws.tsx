@@ -5,7 +5,6 @@ import { useLocation } from "react-router";
 // MUI
 import {
     Typography,
-    Box,
     Grid,
     Snackbar,
     Card,

@@ -1,5 +1,4 @@
 import { styled } from '@material-ui/core';
-import { inherits } from 'util';
 
 export const FooterCont = styled('footer')(({ theme }) => ({
 	backgroundColor: '#444',

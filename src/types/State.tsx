@@ -53,12 +53,13 @@ export interface ErrorsState {
     other?: string;
 }
 
-export type LoadingCategory = "wishes" | "friends" | "draws";
+export type LoadingCategory = "wishes" | "friends" | "draws" | "auth";
 export type LoadingType =
     | "new-record"
     | "edited-record"
     | "fetching-records"
-    | "general";
+    | "general"
+    | "other";
 
 export interface LoadingState {
     loading?: boolean;

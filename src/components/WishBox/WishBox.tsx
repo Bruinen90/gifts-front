@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 // MUI
 import {
 	Grid,
-	Card,
 	CardHeader,
 	CardContent,
 	CardActions,

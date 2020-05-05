@@ -1,8 +1,5 @@
 import React from 'react';
 
-// MUI
-import { Typography } from '@material-ui/core';
-
 // Styles
 import * as Styled from './stylesFooter';
 
