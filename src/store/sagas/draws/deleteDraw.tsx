@@ -1,8 +1,11 @@
-import { put } from 'redux-saga/effects';
-import axios from 'axios';
-import * as actionTypes from '../../actions/actionTypes';
+import { put } from "redux-saga/effects";
+import axios from "axios";
+import * as actionTypes from "../../actions/actionTypes";
 
-export function* deleteDraw(action: { type: string; payload: { drawId: string } }) {
+export function* deleteDraw(action: {
+    type: string;
+    payload: { drawId: string };
+}) {
     const graphqlQuery = {
         query: `
             mutation {
@@ -18,7 +21,7 @@ export function* deleteDraw(action: { type: string; payload: { drawId: string } 
                 payload: action.payload,
             });
         } else {
-            throw new Error;
+            throw new Error();
         }
     } catch (err) {
         yield put({
