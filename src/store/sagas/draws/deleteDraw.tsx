@@ -1,6 +1,7 @@
 import { put } from "redux-saga/effects";
 import axios from "axios";
 import * as actionTypes from "../../actions/actionTypes";
+import * as actionCreators from "../../actions/actionCreators";
 
 export function* deleteDraw(action: {
     type: string;
@@ -13,6 +14,15 @@ export function* deleteDraw(action: {
             }
         `,
     };
+    yield put(
+        actionCreators.setLoading({
+            loading: true,
+            category: "draws",
+            type: "edited-record",
+            recordId: action.payload.drawId,
+            operationType: "cancel",
+        })
+    );
     try {
         const response = yield axios.post("graphql", graphqlQuery);
         if (response.data.data.deleteDraw.success) {
@@ -33,4 +43,5 @@ export function* deleteDraw(action: {
             },
         });
     }
+    yield put(actionCreators.setLoading({ loading: false }));
 }

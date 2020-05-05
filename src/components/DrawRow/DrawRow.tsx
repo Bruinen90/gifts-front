@@ -44,6 +44,7 @@ import { DrawRowProps } from "../../types/Draw";
 
 // Components
 import DrawResults from "../DrawResults/DrawResults";
+import { ButtonWithLoader } from "../ButtonWithLoader/ButtonWithLoader";
 
 const DrawRow: React.FC<DrawRowProps> = ({
     title,
@@ -306,21 +307,30 @@ const DrawRow: React.FC<DrawRowProps> = ({
                 {status !== "archived" && (
                     <CardActions>
                         {results ? (
-                            <Button
+                            <ButtonWithLoader
                                 onClick={handleArchiveDraw}
                                 color="secondary"
+                                loadingCategory="draws"
+                                loadingType="edited-record"
+                                recordId={_id}
+                                style={{ minWidth: "120px" }}
                             >
                                 Archiwizuj
-                            </Button>
+                            </ButtonWithLoader>
                         ) : adminMode ? (
                             <>
-                                <Button
+                                <ButtonWithLoader
                                     onClick={handleRunDraw}
                                     variant="contained"
                                     color="primary"
+                                    loadingCategory="draws"
+                                    loadingType="edited-record"
+                                    recordId={_id}
+                                    operationType="accept"
+                                    style={{ minWidth: "120px" }}
                                 >
                                     Losuj teraz
-                                </Button>
+                                </ButtonWithLoader>
                                 <Button
                                     startIcon={<Edit />}
                                     color="primary"
@@ -328,13 +338,18 @@ const DrawRow: React.FC<DrawRowProps> = ({
                                 >
                                     Edytuj
                                 </Button>
-                                <Button
+                                <ButtonWithLoader
                                     startIcon={<Delete />}
                                     color="secondary"
                                     onClick={handleDeleteDraw}
+                                    loadingCategory="draws"
+                                    loadingType="edited-record"
+                                    recordId={_id}
+                                    operationType="cancel"
+                                    style={{ minWidth: "120px" }}
                                 >
                                     Usuń
-                                </Button>
+                                </ButtonWithLoader>
                             </>
                         ) : (
                             <Button

@@ -60,9 +60,12 @@ export type LoadingType =
     | "fetching-records"
     | "general"
     | "other";
+export type LoadingOperation = "accept" | "cancel" | "other";
 
 export interface LoadingState {
     loading?: boolean;
     category?: LoadingCategory;
     type?: LoadingType;
+    recordId?: string;
+    operationType?: LoadingOperation;
 }

@@ -1,6 +1,7 @@
 import { put } from "redux-saga/effects";
 import axios from "axios";
 import * as actionTypes from "../../actions/actionTypes";
+import * as actionCreators from "../../actions/actionCreators";
 
 export function* archiveDraw(action: {
     type: string;
@@ -10,6 +11,14 @@ export function* archiveDraw(action: {
     const graphqlQuery = {
         query: `mutation{archiveDraw(drawId: "${drawId}") {success}}`,
     };
+    yield put(
+        actionCreators.setLoading({
+            loading: true,
+            category: "draws",
+            type: "edited-record",
+            recordId: drawId,
+        })
+    );
     try {
         const response = yield axios.post("graphql", graphqlQuery);
         if (response.data.data.archiveDraw.success) {
@@ -30,4 +39,5 @@ export function* archiveDraw(action: {
             },
         });
     }
+    yield put(actionCreators.setLoading({ loading: false }));
 }

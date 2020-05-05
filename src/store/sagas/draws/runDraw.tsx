@@ -1,6 +1,7 @@
 import { put } from "redux-saga/effects";
 import axios from "axios";
 import * as actionTypes from "../../actions/actionTypes";
+import * as actionCreators from "../../actions/actionCreators";
 
 // Sagas
 import { fetchUserWishes } from "../wishes/fetchUserWishes";
@@ -15,6 +16,15 @@ export function* runDraw(action: {
             mutation{runDraw(drawId:"${drawId}") {_id username email }}
         `,
     };
+    yield put(
+        actionCreators.setLoading({
+            loading: true,
+            category: "draws",
+            type: "edited-record",
+            recordId: drawId,
+            operationType: "accept",
+        })
+    );
     try {
         const response = yield axios.post("graphql", graphqlQuery);
         const creatorResults = response.data.data.runDraw;
@@ -38,4 +48,5 @@ export function* runDraw(action: {
             },
         });
     }
+    yield put(actionCreators.setLoading({ loading: false }));
 }
