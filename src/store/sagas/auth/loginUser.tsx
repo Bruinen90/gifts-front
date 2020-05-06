@@ -26,7 +26,7 @@ export function* loginUser(action: {
                         usernameOrEmail: "${payload.username}", 
                         password: "${payload.password}"
                     })
-                { token userId username email }
+                { token userId username email unsubscribed }
             }`,
     };
     yield put(

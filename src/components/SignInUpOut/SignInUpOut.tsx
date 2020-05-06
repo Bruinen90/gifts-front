@@ -4,12 +4,8 @@ import { useDispatch } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 
 // MUI
-import {
-    ButtonGroup,
-    Button,
-    Box,
-    Typography,
-} from "@material-ui/core";
+import { ButtonGroup, Button, Box } from "@material-ui/core";
+import { Person } from "@material-ui/icons";
 
 interface ButtonsWrapperProps {
     variant: "horizontal" | "vertical";
@@ -37,7 +33,11 @@ interface SignInUpOutProps {
     closeDrawer?: () => void;
 }
 
-const SignInUpOut: React.FC<SignInUpOutProps> = ({ username, variant, closeDrawer }) => {
+const SignInUpOut: React.FC<SignInUpOutProps> = ({
+    username,
+    variant,
+    closeDrawer,
+}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -48,7 +48,21 @@ const SignInUpOut: React.FC<SignInUpOutProps> = ({ username, variant, closeDrawe
     return username ? (
         <Box display="flex" alignItems="flex-end" marginLeft="2rem">
             <Box marginRight={2}>
-                <Typography>Witaj {username}</Typography>
+                <Button
+                    component={RouterLink}
+                    to="/ustawienia"
+                    style={{
+                        color: "inherit",
+                        textDecoration: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "8px",
+                        textTransform: 'none',
+                    }}
+                    onClick={closeDrawer}
+                >
+                    <Person style={{ marginRight: "8px" }} /> {username}
+                </Button>
             </Box>
             <Button color="inherit" variant="outlined" onClick={handleLogout}>
                 Wyloguj się

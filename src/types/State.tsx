@@ -23,6 +23,7 @@ export interface AuthState {
     token?: string;
     _id?: string;
     loginError?: string;
+    unsubscribed?: boolean;
 }
 
 export interface DrawState {
