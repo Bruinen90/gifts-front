@@ -78,8 +78,6 @@ export const NewPassword: React.FC = () => {
                     }
                     margin="normal"
                     inputRef={register({
-                        required: true,
-                        minLength: 5,
                         validate: (repassword) =>
                             repassword === getValues().password,
                     })}
