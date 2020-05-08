@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 import { useForm } from "react-hook-form";
 
 // MUI
@@ -23,47 +24,44 @@ import {
 
 // Components
 import { CenteredCard } from "../CenteredCard/CenteredCard";
+import { ButtonWithLoader } from "../ButtonWithLoader/ButtonWithLoader";
 
 // Types
 import { State } from "../../types/State";
 import { Edit, Cancel } from "@material-ui/icons";
 
-interface EmailsState {
-    emailInEdit: boolean;
-    emailChanged: boolean;
-}
-
-type ChangeResponse =
-    | "invalid-password"
-    | "success"
-    | "server-error"
-    | undefined;
-
 export const EmailSettings: React.FC = () => {
+    const dispatch = useDispatch();
     // Set unsubcribed from redux as default, but manage it in local state of useForm hook
     const user = useSelector((state: State) => state.auth);
+    const localError = useSelector((state: State) => state.localError);
     const { register, handleSubmit, errors, setValue, getValues } = useForm();
-    const [changeResponse, setChangeResponse] = useState<ChangeResponse>();
-    const [emailsForm, setEmailsForm] = useState<EmailsState>({
-        emailInEdit: false,
-        emailChanged: false,
-    });
+    const [emailInEdit, setEmailInEdit] = useState(false);
 
-    const onSubmit = (data: any) => console.log(data);
+    const onSubmit = async (data: any) => {
+        const payload = {
+            ...data,
+            oldEmail: user.email,
+        };
+        dispatch({
+            type: watcherTypes.WATCH_CHANGE_USER_EMAIL,
+            payload: payload,
+        });
+    };
 
     const handleStartEditingEmail = () => {
-        setEmailsForm({ emailInEdit: true, emailChanged: false });
+        setEmailInEdit(true);
     };
 
     const handleCancelEditingEmail = () => {
-        setEmailsForm({ emailInEdit: false, emailChanged: false });
+        setEmailInEdit(false);
         setValue("email", user.email);
     };
 
     useEffect(() => {
         setValue("email", user.email);
         setValue("unsubcribed", user.unsubscribed);
-    }, [user.email]);
+    }, [user.email, user.unsubscribed, setValue]);
 
     return (
         <CenteredCard>
@@ -76,10 +74,7 @@ export const EmailSettings: React.FC = () => {
                         flexDirection="column"
                         maxWidth="400px"
                     >
-                        <FormControl
-                            margin="normal"
-                            disabled={!emailsForm.emailInEdit}
-                        >
+                        <FormControl margin="normal" disabled={!emailInEdit}>
                             <InputLabel htmlFor="email">
                                 Twój adres email
                             </InputLabel>
@@ -95,12 +90,12 @@ export const EmailSettings: React.FC = () => {
                                         <IconButton
                                             aria-label="Edytuj adres email"
                                             onClick={
-                                                emailsForm.emailInEdit
+                                                emailInEdit
                                                     ? handleCancelEditingEmail
                                                     : handleStartEditingEmail
                                             }
                                         >
-                                            {emailsForm.emailInEdit ? (
+                                            {emailInEdit ? (
                                                 <Cancel color="secondary" />
                                             ) : (
                                                 <Edit />
@@ -116,27 +111,32 @@ export const EmailSettings: React.FC = () => {
                             )}
                         </FormControl>
 
-                        <TextField
-                            error={changeResponse === "invalid-password"}
-                            helperText={
-                                changeResponse === "invalid-password"
-                                    ? "Podane hasło jest nieprawidłowe"
-                                    : "Ze względów bezpieczeństwa podaj swoje hasło"
-                            }
-                            label="Hasło"
-                            margin="normal"
-                            inputRef={register({
-                                required: emailsForm.emailChanged,
-                                minLength: 5,
-                            })}
-                            name="password"
-                            type="password"
-                            autoComplete="off"
-                        />
+                        {emailInEdit && (
+                            <TextField
+                                error={
+                                    localError.errorCode ===
+                                    "invalid-change-email-password"
+                                }
+                                helperText={
+                                    localError.errorCode ===
+                                    "invalid-change-email-password"
+                                        ? "Podane hasło jest nieprawidłowe"
+                                        : "Aby zmienić email podaj swoje hasło"
+                                }
+                                label="Hasło"
+                                margin="normal"
+                                inputRef={register({
+                                    required: getValues().email !== user.email,
+                                    minLength: 5,
+                                })}
+                                name="password"
+                                type="password"
+                                autoComplete="off"
+                            />
+                        )}
                         <FormControlLabel
                             control={
                                 <Switch
-                                    checked={getValues().unsubcribed}
                                     name="unsubscribed"
                                     color="secondary"
                                     inputRef={register()}
@@ -148,9 +148,15 @@ export const EmailSettings: React.FC = () => {
                 </CardContent>
 
                 <CardActions>
-                    <Button variant="contained" color="primary" type="submit">
+                    <ButtonWithLoader
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        loadingType="edited-record"
+                        recordId="change-email-button"
+                    >
                         Zapisz zmiany
-                    </Button>
+                    </ButtonWithLoader>
                 </CardActions>
             </form>
         </CenteredCard>

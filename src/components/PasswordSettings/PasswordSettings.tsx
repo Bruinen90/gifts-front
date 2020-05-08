@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import * as actionTypes from "../../store/actions/actionTypes";
 
 // MUI
 import {
@@ -24,10 +26,10 @@ type ChangeResponse =
 
 export const PasswordSettings: React.FC = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [changeResponse, setChangeResponse] = useState<ChangeResponse>();
     const { register, handleSubmit, errors, getValues } = useForm();
     const onSubmit = async (formData: any) => {
-        console.log(formData);
         const { oldPassword, newPassword } = formData;
         const graphQLquery = {
             query: `
@@ -43,6 +45,7 @@ export const PasswordSettings: React.FC = () => {
             const response = await axios.post("/graphql", graphQLquery);
             console.log(response.data);
             if (response.data.data.changePassword.success) {
+                dispatch({ type: actionTypes.USER_LOGOUT });
                 history.push("/logowanie");
                 // Add prompt about successfully changed password
             } else {

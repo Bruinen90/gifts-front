@@ -9,6 +9,7 @@ export interface State {
     wish: WishState;
     friends: FriendsState;
     errors: ErrorsState;
+    localError: { errorCode: LocalErrorsIds };
     loading: LoadingState;
 }
 
@@ -53,6 +54,8 @@ export interface ErrorsState {
     wishes?: string;
     other?: string;
 }
+
+export type LocalErrorsIds = "invalid-change-email-password" | undefined;
 
 export type LoadingCategory = "wishes" | "friends" | "draws" | "auth";
 export type LoadingType =
