@@ -4,6 +4,7 @@ import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import * as actionTypes from "../../store/actions/actionTypes";
+import * as actionCreators from "../../store/actions/actionCreators";
 
 // MUI
 import {
@@ -45,9 +46,15 @@ export const PasswordSettings: React.FC = () => {
             const response = await axios.post("/graphql", graphQLquery);
             console.log(response.data);
             if (response.data.data.changePassword.success) {
-                dispatch({ type: actionTypes.USER_LOGOUT });
+                dispatch({ type: "USER_LOGOUT_WATCHER" });
                 history.push("/logowanie");
-                // Add prompt about successfully changed password
+                dispatch(
+                    actionCreators.setSuccess({
+                        page: "settings",
+                        message:
+                            "Twoje hasło zostało zaktualizowane, użyj nowego hasła aby ponownie się zalogować",
+                    })
+                );
             } else {
                 setChangeResponse("invalid-old-password");
             }

@@ -7,6 +7,7 @@ import friends from "./friendsReducer";
 import errors from "./errorsReducer";
 import loading from "./loadingReducer";
 import localError from "./localErrorsReducer";
+import success from "./successReducer";
 
 export default combineReducers({
     auth,
@@ -16,4 +17,5 @@ export default combineReducers({
     errors,
     loading,
     localError,
+    success,
 });

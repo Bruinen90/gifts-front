@@ -1,6 +1,11 @@
 import * as actionTypes from "./actionTypes";
 
-import { LoadingState, ErrorsState, LocalErrorsIds } from "../../types/State";
+import {
+    LoadingState,
+    ErrorsState,
+    LocalErrorsIds,
+    SuccessState,
+} from "../../types/State";
 
 export const setLoading = (payload: LoadingState) => ({
     type: actionTypes.SET_LOADING,
@@ -25,4 +30,9 @@ export const setLocalError = (errorId: LocalErrorsIds) => ({
 
 export const clearLocalError = () => ({
     type: actionTypes.CLEAR_LOCAL_ERROR,
+});
+
+export const setSuccess = (payload: SuccessState) => ({
+    type: actionTypes.SET_SUCCESS,
+    payload: payload,
 });

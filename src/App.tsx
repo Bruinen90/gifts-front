@@ -24,6 +24,7 @@ import { ResetPassword } from "./pages/ResetPassword/ResetPassword";
 import { NewPassword } from "./pages/NewPassword/NewPassword";
 import { EmailSentConfirmation } from "./pages/EmailSentConfirmation/EmailSentConfirmation";
 import { UserSettings } from "./pages/UserSettings/UserSettings";
+import { SuccessPrompt } from "./components/SuccessPrompt/SuccessPrompt";
 import Footer from "./components/Footer/Footer";
 
 // Styles
@@ -79,6 +80,7 @@ const App = () => {
                         <Route path="/" component={Home} />
                     </Switch>
                     <ErrorPrompt />
+                    <SuccessPrompt />
                     <Footer />
                 </Styled.GlobalWrapper>
                 {/* End off app */}

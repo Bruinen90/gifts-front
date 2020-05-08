@@ -27,3 +27,4 @@ export const SET_LOADING = "SET_LOADING";
 export const CHANGE_USER_EMAIL = "CHANGE_USER_EMAIL";
 export const SET_LOCAL_ERROR = "SET_LOCAL_ERROR";
 export const CLEAR_LOCAL_ERROR = "CLEAR_LOCAL_ERROR";
+export const SET_SUCCESS = "SET_SUCCESS";

@@ -10,6 +10,7 @@ export interface State {
     friends: FriendsState;
     errors: ErrorsState;
     localError: { errorCode: LocalErrorsIds };
+    success: SuccessState;
     loading: LoadingState;
 }
 
@@ -72,4 +73,19 @@ export interface LoadingState {
     type?: LoadingType;
     recordId?: string;
     operationType?: LoadingOperation;
+}
+
+export type SuccessPages =
+    | "draws"
+    | "wishes"
+    | "password-change"
+    | "friends"
+    | "login"
+    | "signup"
+    | "settings";
+
+export interface SuccessState {
+    page?: SuccessPages;
+    id?: string;
+    message?: string;
 }
