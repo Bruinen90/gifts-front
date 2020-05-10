@@ -53,7 +53,8 @@ const DrawResults: React.FC<DrawResultsProps> = ({
 				reserved: false,
 			},
 		});
-	};
+    };
+    
 	return (
 		<>
 			<Card variant="outlined">

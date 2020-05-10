@@ -4,6 +4,7 @@ export type ReservationPayload = {
 	creatorId: string;
 	drawId?: string;
 	userId?: string;
+	wishTitle: string;
 };
 
 export type ReservationStatusSetterType = ({

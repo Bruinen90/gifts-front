@@ -75,6 +75,7 @@ const WishBox: React.FC<WishBoxProps> = ({
 		const payload: ReservationPayload = {
 			wishId: wish._id,
 			reserved: newStatus,
+			wishTitle: wish.title,
 			creatorId: creatorId,
 		};
 		if (wish.forDraw) {

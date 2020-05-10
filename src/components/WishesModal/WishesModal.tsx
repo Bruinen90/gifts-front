@@ -67,7 +67,8 @@ const WishesModal: React.FC<WishesModalProps> = ({
 		const payload: ReservationPayload = {
 			wishId: wishId,
 			reserved: reserved,
-			creatorId: creatorId,
+            creatorId: creatorId,
+            wishTitle: wishesList?.find(wish => wish._id === wishId)!.title
 		};
 		if (drawId) {
 			payload.drawId = drawId;

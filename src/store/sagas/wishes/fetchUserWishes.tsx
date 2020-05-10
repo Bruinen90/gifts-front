@@ -7,12 +7,6 @@ export function* fetchUserWishes(action?: {
     type?: any;
     payload?: { userId: string };
 }) {
-    yield put(
-        actionCreators.setLoading({
-            loading: true,
-            type: "general",
-        })
-    );
     try {
         if (action && action.payload) {
             const graphqlQuery = {
@@ -58,5 +52,4 @@ export function* fetchUserWishes(action?: {
             },
         });
     }
-    yield put(actionCreators.setLoading({ loading: false }));
 }

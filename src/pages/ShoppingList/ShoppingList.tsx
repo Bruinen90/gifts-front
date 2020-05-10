@@ -33,9 +33,9 @@ export const ShoppingList: React.FC = () => {
 			wishId: wishId,
 			reserved: reserved,
 			drawId: drawId,
-			creatorId: creatorId,
+            creatorId: creatorId,
+            wishTitle: shoppingList?.find(wish => wish._id === wishId)!.title,
 		};
-		console.log('payload: ', payload);
 		if (drawId) {
 			payload.drawId = drawId;
 		}
