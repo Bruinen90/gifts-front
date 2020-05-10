@@ -136,10 +136,7 @@ const CreateDraw: React.FC = () => {
 			payload._id = originalId;
 		}
 		dispatch({ type: 'CREATE_DRAW_WATCHER', payload: payload });
-		history.push('/moje-losowania', {
-			drawTitle: formData.title,
-			edit: originalId && true,
-		});
+		history.push('/moje-losowania');
 	};
 
 	const handleTriggerValidation = async (

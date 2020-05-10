@@ -34,10 +34,9 @@ export const FriendBox: React.FC<FriendBoxProps> = ({
 	const minWidth = useMediaQuery(theme.breakpoints.up('md'));
 
 	const handleCancelFriendship = () => {
-		console.log('Canceling friendship with: ', _id);
 		dispatch({
 			type: watcherTypes.WATCH_CANCEL_FRIENDSHIP,
-			payload: { friendId: _id },
+			payload: { friendId: _id, friendUsername: username },
 		});
 	};
 
