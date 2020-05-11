@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import {useHistory} from 'react-router-dom';
 
 // MUI
 import { Typography, Grid, Card, CircularProgress } from "@material-ui/core";
@@ -7,6 +8,7 @@ import { Typography, Grid, Card, CircularProgress } from "@material-ui/core";
 // Components
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import DrawRow from "../../components/DrawRow/DrawRow";
+import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage';
 
 // Interfaces
 import { State } from "../../types/State";
@@ -14,7 +16,11 @@ import { DrawInterface } from "../../types/Draw";
 import { User } from "../../types/User";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 
+// Images
+import NoData from '../../img/undraw_no_data.svg';
+
 const MyDraws: React.FC = () => {
+    const history = useHistory()
     const [usersDraws, userId, shoppingList] = useSelector((state: State) => [
         state.draw.usersDraws,
         state.auth._id,
@@ -59,6 +65,11 @@ const MyDraws: React.FC = () => {
             payload: { drawId, drawTitle },
         });
     };
+
+    // Redirect to NewDraw page
+    const handleClickNewDraw = () => {
+        history.push('/nowe-losowanie')
+    }
     return (
         <PageWrapper>
             <Typography variant="h4" component="h2" align="center">
@@ -84,6 +95,7 @@ const MyDraws: React.FC = () => {
                         )}
 
                     {usersDraws &&
+                        usersDraws.length > 0 ?
                         usersDraws
                             .map((draw: DrawInterface) => {
                                 if (draw.results) {
@@ -138,7 +150,14 @@ const MyDraws: React.FC = () => {
                                         />
                                     );
                                 }
-                            })}
+                            }) : <EmptyListMessage 
+                                    imageUrl={NoData} 
+                                    message="Nie masz żadnych losowań, utwórz własne lub poczekaj na zaproszenie od znajomych" 
+                                    button={{
+                                        caption: 'Nowe losowanie', 
+                                        action: handleClickNewDraw
+                                    }}
+                                />}
                 </Grid>
             </LoadingSpinner>
         </PageWrapper>

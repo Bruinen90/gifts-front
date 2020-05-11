@@ -8,9 +8,6 @@ import plLocale from "date-fns/locale/pl";
 // Mui
 import {
     Grid,
-    IconButton,
-    Menu,
-    MenuItem,
     ListItemText,
     ListItemIcon,
     Dialog,
@@ -29,7 +26,6 @@ import {
 
 // Icons
 import {
-    MoreVert,
     Edit,
     Delete,
     ExitToApp,
@@ -63,15 +59,6 @@ const DrawRow: React.FC<DrawRowProps> = ({
     status,
 }) => {
     const history = useHistory();
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-    const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     type DrawFunction = (event: React.MouseEvent<HTMLElement>) => void;
 

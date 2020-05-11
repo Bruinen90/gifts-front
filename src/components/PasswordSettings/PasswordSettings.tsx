@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import * as actionTypes from "../../store/actions/actionTypes";
 import * as actionCreators from "../../store/actions/actionCreators";
 
 // MUI

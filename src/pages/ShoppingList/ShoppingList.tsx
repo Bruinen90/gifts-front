@@ -6,6 +6,7 @@ import { Typography } from '@material-ui/core';
 
 // Components
 import PageWrapper from '../../components/PageWrapper/PageWrapper';
+import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage';
 
 // Types
 import { State } from '../../types/State';
@@ -14,6 +15,9 @@ import {
 	ReservationPayload,
 } from '../../types/Reservations';
 import WishesList from '../../components/WishesList/WishesList';
+
+// Images
+import NoData from '../../img/undraw_no_data.svg';
 
 export const ShoppingList: React.FC = () => {
 	const dispatch = useDispatch();
@@ -59,8 +63,12 @@ export const ShoppingList: React.FC = () => {
 			<Typography variant="h2" align="center">
 				Lista zakupów
 			</Typography>
-			{shoppingList && shoppingList.length > 0 && 
-            <WishesList wishesList={populatedShoppingList!} viewMode="guest" setReservedStatus={handleSetReservationStatus} />}
+			{shoppingList && (shoppingList.length > 0 ?
+            <WishesList wishesList={populatedShoppingList!} viewMode="guest" setReservedStatus={handleSetReservationStatus} /> :
+            <EmptyListMessage
+				imageUrl={NoData}
+				message="Nie posiadasz jeszcze żadnych życzeń. Stwórz listę prezentów jakie chcesz otrzymać, aby ułatwić wybór znajomym oraz uniknąć rozczarowań"
+			/>)}
 		</PageWrapper>
 	);
 };

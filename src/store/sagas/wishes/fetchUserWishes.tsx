@@ -1,7 +1,6 @@
 import { put } from "redux-saga/effects";
 import axios from "axios";
 import * as actionTypes from "../../actions/actionTypes";
-import * as actionCreators from "../../actions/actionCreators";
 
 export function* fetchUserWishes(action?: {
     type?: any;
