@@ -21,6 +21,7 @@ export interface Wish extends WishInput {
     reserved?: boolean;
     forDraw?: string;
     imageUrl?: string;
+    updatedAt: Date | string;
 }
 
 export interface WishWithDrawData extends Wish {

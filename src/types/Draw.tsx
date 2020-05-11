@@ -18,6 +18,7 @@ export interface DrawInterface {
     participants?: User[];
     status: "pending" | "done" | "archived";
     results?: DrawResultsInterface;
+    updatedAt: Date | string;
 }
 
 export type DrawStatusType = "pending" | "done" | "archived";

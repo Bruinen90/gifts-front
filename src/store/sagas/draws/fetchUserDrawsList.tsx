@@ -11,7 +11,17 @@ export function* fetchUserDrawsList() {
         const graphqlQuery = {
             query: `{
                 userDraws {
-                    drawsList{ _id title date price participants {_id username email} results {_id username email gifts {_id title price link description}} creator {_id username email} status}
+                    drawsList{ 
+                        _id 
+                        title 
+                        date 
+                        price 
+                        participants {_id username email} 
+                        results {_id username email gifts {_id title price link description}} 
+                        creator {_id username email} 
+                        status 
+                        updatedAt
+                    }
                 }
             }`,
         };
@@ -25,10 +35,17 @@ export function* fetchUserDrawsList() {
             const response = yield axios.post("graphql", graphqlQuery);
             const drawsList = response.data.data.userDraws.drawsList.map(
                 (draw: DrawInterface) => {
-                    const formatedDate = new Date(
+                    const formatedCreatedDate = new Date(
                         parseInt(draw.date as string)
                     );
-                    return { ...draw, date: formatedDate };
+                    const formatedUpdatedDate = new Date(
+                        parseInt(draw.updatedAt as string)
+                    );
+                    return {
+                        ...draw,
+                        date: formatedCreatedDate,
+                        updatedAt: formatedUpdatedDate,
+                    };
                 }
             );
             yield put({

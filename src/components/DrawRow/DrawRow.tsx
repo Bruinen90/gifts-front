@@ -206,47 +206,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
                     opacity: status === "archived" ? 0.5 : 1,
                 }}
             >
-                <CardHeader
-                    title={title}
-                    action={
-                        adminMode &&
-                        !results && (
-                            <div>
-                                <IconButton
-                                    edge="end"
-                                    aria-label="dodaj uczetników/edytuj/usuń losowanie"
-                                    onClick={handleOpenMenu}
-                                >
-                                    <MoreVert fontSize="large" />
-                                </IconButton>
-                                <Menu
-                                    id="simple-menu"
-                                    anchorEl={anchorEl}
-                                    keepMounted
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleClose}
-                                >
-                                    <MenuItem onClick={handleEditDraw}>
-                                        <ListItemIcon>
-                                            <Edit />
-                                        </ListItemIcon>
-                                        <ListItemText>
-                                            Edytuj losowanie
-                                        </ListItemText>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleDeleteDraw}>
-                                        <ListItemIcon>
-                                            <Delete />
-                                        </ListItemIcon>
-                                        <ListItemText>
-                                            Usuń losowanie
-                                        </ListItemText>
-                                    </MenuItem>
-                                </Menu>
-                            </div>
-                        )
-                    }
-                />
+                <CardHeader title={title} />
                 <CardContent>
                     <Grid container spacing={1}>
                         <Grid item xs={12} md={6}>
@@ -327,7 +287,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
                                     loadingType="edited-record"
                                     recordId={_id}
                                     operationType="accept"
-                                    style={{ minWidth: "120px" }}
+                                    style={{ minWidth: "100px" }}
                                 >
                                     Losuj teraz
                                 </ButtonWithLoader>

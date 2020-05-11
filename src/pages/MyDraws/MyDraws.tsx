@@ -2,12 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // MUI
-import {
-    Typography,
-    Grid,
-    Card,
-    CircularProgress,
-} from "@material-ui/core";
+import { Typography, Grid, Card, CircularProgress } from "@material-ui/core";
 
 // Components
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
@@ -89,60 +84,61 @@ const MyDraws: React.FC = () => {
                         )}
 
                     {usersDraws &&
-                        usersDraws.map((draw: DrawInterface) => {
-                            if (draw.results) {
-                                return (
-                                    <DrawRow
-                                        title={draw.title}
-                                        date={draw.date as Date}
-                                        _id={draw._id}
-                                        key={draw._id}
-                                        results={draw.results}
-                                        creator={draw.creator as User}
-                                        participants={
-                                            draw.participants as [User]
-                                        }
-                                        adminMode={
-                                            draw.creator._id === userId
-                                        }
-                                        price={draw.price}
-                                        deleteDraw={dispatchDeleteDraw}
-                                        exitDraw={dispatchExitDraw}
-                                        runDraw={dispatchRunDraw}
-                                        archiveDraw={dispatchArchiveDraw}
-                                        status={draw.status}
-                                        gifts={shoppingList?.filter(
-                                            (listItem) =>
-                                                listItem.forDraw &&
-                                                listItem.forDraw ===
-                                                    draw._id
-                                        )}
-                                    />
-                                );
-                            } else {
-                                return (
-                                    <DrawRow
-                                        title={draw.title}
-                                        date={draw.date as Date}
-                                        _id={draw._id}
-                                        key={draw._id}
-                                        creator={draw.creator as User}
-                                        participants={
-                                            draw.participants as [User]
-                                        }
-                                        adminMode={
-                                            draw.creator._id === userId
-                                        }
-                                        price={draw.price}
-                                        deleteDraw={dispatchDeleteDraw}
-                                        exitDraw={dispatchExitDraw}
-                                        runDraw={dispatchRunDraw}
-                                        archiveDraw={dispatchArchiveDraw}
-                                        status={draw.status}
-                                    />
-                                );
-                            }
-                        })}
+                        usersDraws
+                            .map((draw: DrawInterface) => {
+                                if (draw.results) {
+                                    return (
+                                        <DrawRow
+                                            title={draw.title}
+                                            date={draw.date as Date}
+                                            _id={draw._id}
+                                            key={draw._id}
+                                            results={draw.results}
+                                            creator={draw.creator as User}
+                                            participants={
+                                                draw.participants as [User]
+                                            }
+                                            adminMode={
+                                                draw.creator._id === userId
+                                            }
+                                            price={draw.price}
+                                            deleteDraw={dispatchDeleteDraw}
+                                            exitDraw={dispatchExitDraw}
+                                            runDraw={dispatchRunDraw}
+                                            archiveDraw={dispatchArchiveDraw}
+                                            status={draw.status}
+                                            gifts={shoppingList?.filter(
+                                                (listItem) =>
+                                                    listItem.forDraw &&
+                                                    listItem.forDraw ===
+                                                        draw._id
+                                            )}
+                                        />
+                                    );
+                                } else {
+                                    return (
+                                        <DrawRow
+                                            title={draw.title}
+                                            date={draw.date as Date}
+                                            _id={draw._id}
+                                            key={draw._id}
+                                            creator={draw.creator as User}
+                                            participants={
+                                                draw.participants as [User]
+                                            }
+                                            adminMode={
+                                                draw.creator._id === userId
+                                            }
+                                            price={draw.price}
+                                            deleteDraw={dispatchDeleteDraw}
+                                            exitDraw={dispatchExitDraw}
+                                            runDraw={dispatchRunDraw}
+                                            archiveDraw={dispatchArchiveDraw}
+                                            status={draw.status}
+                                        />
+                                    );
+                                }
+                            })}
                 </Grid>
             </LoadingSpinner>
         </PageWrapper>
