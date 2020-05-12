@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 // MUI
 import { Typography, Grid, Card, CircularProgress } from "@material-ui/core";
@@ -8,7 +8,7 @@ import { Typography, Grid, Card, CircularProgress } from "@material-ui/core";
 // Components
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import DrawRow from "../../components/DrawRow/DrawRow";
-import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage';
+import EmptyListMessage from "../../components/EmptyListMessage/EmptyListMessage";
 
 // Interfaces
 import { State } from "../../types/State";
@@ -17,10 +17,10 @@ import { User } from "../../types/User";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 
 // Images
-import NoData from '../../img/undraw_no_data.svg';
+import NoData from "../../img/undraw_no_data.svg";
 
 const MyDraws: React.FC = () => {
-    const history = useHistory()
+    const history = useHistory();
     const [usersDraws, userId, shoppingList] = useSelector((state: State) => [
         state.draw.usersDraws,
         state.auth._id,
@@ -68,8 +68,8 @@ const MyDraws: React.FC = () => {
 
     // Redirect to NewDraw page
     const handleClickNewDraw = () => {
-        history.push('/nowe-losowanie')
-    }
+        history.push("/nowe-losowanie");
+    };
     return (
         <PageWrapper>
             <Typography variant="h4" component="h2" align="center">
@@ -84,6 +84,7 @@ const MyDraws: React.FC = () => {
                                 <Card
                                     style={{
                                         height: "100%",
+                                        minHeight: "300px",
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
@@ -94,70 +95,67 @@ const MyDraws: React.FC = () => {
                             </Grid>
                         )}
 
-                    {usersDraws &&
-                        usersDraws.length > 0 ?
-                        usersDraws
-                            .map((draw: DrawInterface) => {
-                                if (draw.results) {
-                                    return (
-                                        <DrawRow
-                                            title={draw.title}
-                                            date={draw.date as Date}
-                                            _id={draw._id}
-                                            key={draw._id}
-                                            results={draw.results}
-                                            creator={draw.creator as User}
-                                            participants={
-                                                draw.participants as [User]
-                                            }
-                                            adminMode={
-                                                draw.creator._id === userId
-                                            }
-                                            price={draw.price}
-                                            deleteDraw={dispatchDeleteDraw}
-                                            exitDraw={dispatchExitDraw}
-                                            runDraw={dispatchRunDraw}
-                                            archiveDraw={dispatchArchiveDraw}
-                                            status={draw.status}
-                                            gifts={shoppingList?.filter(
-                                                (listItem) =>
-                                                    listItem.forDraw &&
-                                                    listItem.forDraw ===
-                                                        draw._id
-                                            )}
-                                        />
-                                    );
-                                } else {
-                                    return (
-                                        <DrawRow
-                                            title={draw.title}
-                                            date={draw.date as Date}
-                                            _id={draw._id}
-                                            key={draw._id}
-                                            creator={draw.creator as User}
-                                            participants={
-                                                draw.participants as [User]
-                                            }
-                                            adminMode={
-                                                draw.creator._id === userId
-                                            }
-                                            price={draw.price}
-                                            deleteDraw={dispatchDeleteDraw}
-                                            exitDraw={dispatchExitDraw}
-                                            runDraw={dispatchRunDraw}
-                                            archiveDraw={dispatchArchiveDraw}
-                                            status={draw.status}
-                                        />
-                                    );
-                                }
-                            }) : <EmptyListMessage 
-                                    imageUrl={NoData} 
-                                    message="Nie masz żadnych losowań, utwórz własne lub poczekaj na zaproszenie od znajomych" 
-                                    button={{
-                                        caption: 'Nowe losowanie', 
-                                        action: handleClickNewDraw
-                                    }}
-                                />}
+                    {(usersDraws && usersDraws.length > 0) ||
+                    loadingState.type === "new-record" ? (
+                        usersDraws.map((draw: DrawInterface) => {
+                            if (draw.results) {
+                                return (
+                                    <DrawRow
+                                        title={draw.title}
+                                        date={draw.date as Date}
+                                        _id={draw._id}
+                                        key={draw._id}
+                                        results={draw.results}
+                                        creator={draw.creator as User}
+                                        participants={
+                                            draw.participants as [User]
+                                        }
+                                        adminMode={draw.creator._id === userId}
+                                        price={draw.price}
+                                        deleteDraw={dispatchDeleteDraw}
+                                        exitDraw={dispatchExitDraw}
+                                        runDraw={dispatchRunDraw}
+                                        archiveDraw={dispatchArchiveDraw}
+                                        status={draw.status}
+                                        gifts={shoppingList?.filter(
+                                            (listItem) =>
+                                                listItem.forDraw &&
+                                                listItem.forDraw === draw._id
+                                        )}
+                                    />
+                                );
+                            } else {
+                                return (
+                                    <DrawRow
+                                        title={draw.title}
+                                        date={draw.date as Date}
+                                        _id={draw._id}
+                                        key={draw._id}
+                                        creator={draw.creator as User}
+                                        participants={
+                                            draw.participants as [User]
+                                        }
+                                        adminMode={draw.creator._id === userId}
+                                        price={draw.price}
+                                        deleteDraw={dispatchDeleteDraw}
+                                        exitDraw={dispatchExitDraw}
+                                        runDraw={dispatchRunDraw}
+                                        archiveDraw={dispatchArchiveDraw}
+                                        status={draw.status}
+                                    />
+                                );
+                            }
+                        })
+                    ) : (
+                        <EmptyListMessage
+                            imageUrl={NoData}
+                            message="Nie masz żadnych losowań, utwórz własne lub poczekaj na zaproszenie od znajomych"
+                            button={{
+                                caption: "Nowe losowanie",
+                                action: handleClickNewDraw,
+                            }}
+                        />
+                    )}
                 </Grid>
             </LoadingSpinner>
         </PageWrapper>

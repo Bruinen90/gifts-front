@@ -5,21 +5,20 @@ import {
     ListItemText,
     ListItemSecondaryAction,
     Divider,
-    ListItem
+    ListItem,
 } from "@material-ui/core";
 
 // Icons
 import { PersonAdd, PersonAddDisabled } from "@material-ui/icons";
 
-// Types
-import {
-    UsersListType,
-    User,
-    UsersListTypesType
-} from "../../types/User";
-
 // Styles
 import * as Styled from "./stylesUsersList";
+
+// Components
+import LoadingOverlay from "../LoadingOverlay/LoadingOverlay";
+
+// Types
+import { UsersListType, User, UsersListTypesType } from "../../types/User";
 
 interface UserSearchResultsProps {
     usersList: UsersListType;
@@ -30,7 +29,7 @@ interface UserSearchResultsProps {
 const UsersList = ({
     usersList,
     handleUserClicked,
-    listType
+    listType,
 }: UserSearchResultsProps) => (
     <Styled.UsersList
         dense={true}
@@ -41,18 +40,23 @@ const UsersList = ({
         {usersList.length > 0 && <Divider />}
         {(usersList as User[]).map((user: User) => (
             <React.Fragment key={user._id}>
-                <ListItem button onClick={() => handleUserClicked(user)}>
+                <ListItem
+                    button
+                    onClick={() => handleUserClicked(user)}
+                    style={{ position: "relative" }}
+                >
                     <ListItemText
                         primary={user.username}
                         secondary={user.email}
                     />
                     <ListItemSecondaryAction>
                         {listType === "addingUsers" ? (
-                            <PersonAdd />
+                            <PersonAdd color="primary"/>
                         ) : (
                             <PersonAddDisabled />
                         )}
                     </ListItemSecondaryAction>
+                    <LoadingOverlay recordId={user._id} indicatorSize={20} />
                 </ListItem>
                 <Divider />
             </React.Fragment>

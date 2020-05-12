@@ -33,13 +33,24 @@ export function* createDraw(action: { type: string; payload: DrawInterface }) {
             participants: participants!.map((participant) => participant._id),
         },
     };
-    yield put(
-        actionCreators.setLoading({
-            loading: true,
-            category: "draws",
-            type: "new-record",
-        })
-    );
+    if (_id) {
+        yield put(
+            actionCreators.setLoading({
+                loading: true,
+                category: "draws",
+                type: "edited-record",
+                recordId: _id,
+            })
+        );
+    } else {
+        yield put(
+            actionCreators.setLoading({
+                loading: true,
+                category: "draws",
+                type: "new-record",
+            })
+        );
+    }
     try {
         const response = yield axios.post("graphql", graphqlQuery);
         const responseData = response.data.data;

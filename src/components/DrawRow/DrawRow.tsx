@@ -41,6 +41,7 @@ import { DrawRowProps } from "../../types/Draw";
 // Components
 import DrawResults from "../DrawResults/DrawResults";
 import { ButtonWithLoader } from "../ButtonWithLoader/ButtonWithLoader";
+import LoadingOverlay from "../LoadingOverlay/LoadingOverlay";
 
 const DrawRow: React.FC<DrawRowProps> = ({
     title,
@@ -186,7 +187,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
     };
 
     return (
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} lg={6} style={{ position: "relative" }}>
             <Card
                 style={{
                     height: "100%",
@@ -338,6 +339,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
                     </Button>
                 </DialogActions>
             </Dialog>
+            <LoadingOverlay recordId={_id!} />
         </Grid>
     );
 };

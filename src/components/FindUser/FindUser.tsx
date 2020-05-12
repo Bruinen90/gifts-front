@@ -85,7 +85,7 @@ const FindUser = React.forwardRef(
 					setSearchState('error');
 				}
 			}
-		}, [loggedUserId, removedFromResults, searchPhrase]);
+		}, [loggedUserId, searchPhrase]);
 
 		useEffect(() => {
 			if (searchResults.length === 0) {
