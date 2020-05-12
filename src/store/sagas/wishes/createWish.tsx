@@ -31,13 +31,24 @@ export function* createWish(action: { type: string; payload: WishInput }) {
 			_id: _id,
 		},
 	};
-	yield put(
-		actionCreators.setLoading({
-			loading: true,
-			category: 'wishes',
-			type: 'new-record',
-		})
-	);
+	if (_id) {
+		yield put(
+			actionCreators.setLoading({
+				loading: true,
+				category: 'wishes',
+				type: 'edited-record',
+				recordId: _id,
+			})
+		);
+	} else {
+		yield put(
+			actionCreators.setLoading({
+				loading: true,
+				category: 'wishes',
+				type: 'new-record',
+			})
+		);
+	}
 	try {
 		const response = yield axios.post('graphql', graphqlQuery);
 		const responseData = response.data.data.createWish;

@@ -39,6 +39,7 @@ import { ReservationPayload } from '../../types/Reservations';
 
 // Styles
 import * as Styled from './styleWishBox';
+import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 
 const WishBox: React.FC<WishBoxProps> = ({
 	wish,
@@ -217,6 +218,7 @@ const WishBox: React.FC<WishBoxProps> = ({
 					)}
 				</CardActions>
 			</Styled.WishCard>
+			<LoadingOverlay recordId={wish._id} />
 		</Grid>
 	);
 };

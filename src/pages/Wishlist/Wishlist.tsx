@@ -20,6 +20,7 @@ import NoData from '../../img/undraw_no_data.svg';
 const Wishlist: React.FC = () => {
 	const history = useHistory();
 	const usersWishes = useSelector((state: State) => state.wish.usersWishes);
+	const loadingState = useSelector((state: State) => state.loading);
 
 	const navigateToUserWishes = () => {
 		history.push('/nowe-zyczenie');
@@ -29,26 +30,24 @@ const Wishlist: React.FC = () => {
 			<Typography variant="h4" component="h2" align="center">
 				Twoja lista życzeń
 			</Typography>
+			<Box display="flex" justifyContent="center" margin="1rem 0">
+				<Button
+					color="primary"
+					variant="contained"
+					onClick={navigateToUserWishes}
+				>
+					Dodaj nowe życzenie
+				</Button>
+			</Box>
 			<LoadingSpinner type="general">
-				{usersWishes && usersWishes.length > 0 ? (
+				{(usersWishes && usersWishes.length > 0) ||
+				(loadingState.category === 'wishes' &&
+					loadingState.type === 'new-record') ? (
 					<>
 						<WishesList
-							wishesList={usersWishes}
+							wishesList={usersWishes || []}
 							viewMode="creator"
 						/>
-						<Box
-							display="flex"
-							justifyContent="center"
-							margin="1rem 0"
-						>
-							<Button
-								color="primary"
-								variant="contained"
-								onClick={navigateToUserWishes}
-							>
-								Dodaj nowe życzenie
-							</Button>
-						</Box>
 					</>
 				) : (
 					<EmptyListMessage

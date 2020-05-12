@@ -44,6 +44,7 @@ const WishesList: React.FC<WishesListProps> = ({
 						<Card
 							style={{
 								height: '100%',
+								minHeight: '300px',
 								display: 'flex',
 								flex: '1',
 								justifyContent: 'center',

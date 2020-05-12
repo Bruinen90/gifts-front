@@ -17,6 +17,13 @@ export function* setInvitationResponse(action: {
           mutation{setInvitationResponse(response: {invitationId: "${invitationId}", decision: "${decision}"} ) {success}}
         `,
 	};
+	yield put(
+		actionCreators.setLoading({
+			category: 'friends',
+			type: 'edited-record',
+			recordId: invitationId,
+		})
+	);
 	try {
 		const response = yield axios.post('graphql', graphqlQuery);
 		if (!response.data.data) {
@@ -60,4 +67,5 @@ export function* setInvitationResponse(action: {
 			},
 		});
 	}
+	yield put(actionCreators.setLoading({}));
 }

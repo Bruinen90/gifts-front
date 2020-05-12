@@ -5,6 +5,7 @@ import * as watcherTypes from '../../store/actions/watcherTypes';
 // MUI
 import { ListItem, Grid, ListItemText, Button } from '@material-ui/core';
 import { Close, Check } from '@material-ui/icons';
+import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 
 interface InvitationBoxProps {
 	_id: string;
@@ -53,7 +54,7 @@ const InvitationBox: React.FC<InvitationBoxProps> = ({
 		});
 	};
 	return (
-		<ListItem>
+		<ListItem style={{ position: 'relative' }}>
 			<Grid container alignItems="center">
 				<Grid item xs={12} sm={6}>
 					<ListItemText primary={username} secondary={email} />
@@ -97,6 +98,7 @@ const InvitationBox: React.FC<InvitationBoxProps> = ({
 					)}
 				</Grid>
 			</Grid>
+			<LoadingOverlay recordId={_id} indicatorSize={20} />
 		</ListItem>
 	);
 };

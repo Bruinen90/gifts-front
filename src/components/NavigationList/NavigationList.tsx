@@ -15,11 +15,11 @@ interface NavigationListProps {
 }
 
 const USER_ITEMS_LIST = [
-	{
-		target: '/nowe-losowanie',
-		icon: <AddCircle color="inherit" />,
-		text: 'Nowe losowanie',
-	},
+	// {
+	// 	target: '/nowe-losowanie',
+	// 	icon: <AddCircle color="inherit" />,
+	// 	text: 'Nowe losowanie',
+	// },
 	{
 		target: '/moje-losowania',
 		icon: <ListIcon color="inherit" />,

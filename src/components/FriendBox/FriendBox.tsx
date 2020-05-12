@@ -80,7 +80,7 @@ export const FriendBox: React.FC<FriendBoxProps> = ({
 							size="small"
 							color="secondary"
 						>
-							<PersonAddDisabled />
+							<PersonAddDisabled color="inherit" />
 						</IconButton>
 					)}
 				</ListItemSecondaryAction>

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // MUI
-import { Typography, Grid, Card, CircularProgress } from "@material-ui/core";
+import { Typography, Grid, Card, CircularProgress, Box, Button } from "@material-ui/core";
 
 // Components
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
@@ -18,6 +18,7 @@ import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 
 // Images
 import NoData from "../../img/undraw_no_data.svg";
+import { Add } from "@material-ui/icons";
 
 const MyDraws: React.FC = () => {
     const history = useHistory();
@@ -75,6 +76,16 @@ const MyDraws: React.FC = () => {
             <Typography variant="h4" component="h2" align="center">
                 Moje losowania
             </Typography>
+            <Box display="flex" justifyContent="center" margin={2}>
+                <Button 
+                    startIcon={<Add />} 
+                    variant="contained" 
+                    onClick={handleClickNewDraw}
+                    color="primary"
+                >
+                    Utwórz nowe losowanie
+                </Button>
+            </Box>
             <LoadingSpinner type="general">
                 <Grid container spacing={2}>
                     {loadingState.loading &&
