@@ -41,9 +41,9 @@ export const ButtonWithLoader: React.FC<ButtonWithLoaderProps> = ({
         componentLoading;
     return (
         <Button
-            {...other}
             disabled={isLoading}
             startIcon={isLoading ? null : startIcon}
+            {...other}
         >
             {isLoading ? (
                 <CircularProgress color="inherit" size={24} />

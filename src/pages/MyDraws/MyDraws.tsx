@@ -3,7 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // MUI
-import { Typography, Grid, Card, CircularProgress, Box, Button } from "@material-ui/core";
+import {
+    Typography,
+    Grid,
+    Card,
+    CircularProgress,
+    Box,
+    Button,
+} from "@material-ui/core";
 
 // Components
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
@@ -71,21 +78,24 @@ const MyDraws: React.FC = () => {
     const handleClickNewDraw = () => {
         history.push("/nowe-losowanie");
     };
+
     return (
         <PageWrapper>
             <Typography variant="h4" component="h2" align="center">
                 Moje losowania
             </Typography>
-            <Box display="flex" justifyContent="center" margin={2}>
-                <Button 
-                    startIcon={<Add />} 
-                    variant="contained" 
-                    onClick={handleClickNewDraw}
-                    color="primary"
-                >
-                    Utwórz nowe losowanie
-                </Button>
-            </Box>
+            {usersDraws && usersDraws.length > 0 && (
+                <Box display="flex" justifyContent="center" margin={2}>
+                    <Button
+                        startIcon={<Add />}
+                        variant="contained"
+                        onClick={handleClickNewDraw}
+                        color="primary"
+                    >
+                        Utwórz nowe losowanie
+                    </Button>
+                </Box>
+            )}
             <LoadingSpinner type="general">
                 <Grid container spacing={2}>
                     {loadingState.loading &&

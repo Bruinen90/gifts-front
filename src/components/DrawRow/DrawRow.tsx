@@ -22,6 +22,9 @@ import {
     CardContent,
     List,
     ListItem,
+    Popover,
+    Typography,
+    useTheme,
 } from "@material-ui/core";
 
 // Icons
@@ -60,6 +63,7 @@ const DrawRow: React.FC<DrawRowProps> = ({
     status,
 }) => {
     const history = useHistory();
+    const theme = useTheme();
 
     type DrawFunction = (event: React.MouseEvent<HTMLElement>) => void;
 
@@ -186,14 +190,21 @@ const DrawRow: React.FC<DrawRowProps> = ({
         });
     };
 
+    // Check if minimum members are added to start draw
+    const canRun = participants.length >= 3;
+
+    const [popoverEl, setPopoverEl] = useState<HTMLButtonElement | null>(null);
+    const handleOpenPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setPopoverEl(event.currentTarget);
+    };
+
+    const handleClosePopover = () => {
+        setPopoverEl(null);
+    };
+
     return (
         <Grid item xs={12} lg={6} style={{ position: "relative" }}>
-            <Card
-                style={{
-                    height: "100%",
-                    opacity: status === "archived" ? 0.5 : 1,
-                }}
-            >
+            <Card style={{ height: "100%" }}>
                 <CardHeader title={title} />
                 <CardContent>
                     <Grid container spacing={1}>
@@ -210,12 +221,24 @@ const DrawRow: React.FC<DrawRowProps> = ({
                                         secondary="data losowania"
                                     />
                                 </ListItem>
-                                <ListItem>
-                                    <ListItemIcon>
+                                <ListItem
+                                    style={{
+                                        color: canRun
+                                            ? "inherit"
+                                            : theme.palette.secondary.main,
+                                    }}
+                                >
+                                    <ListItemIcon style={{ color: "inherit" }}>
                                         <People />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary={participants.length}
+                                        primaryTypographyProps={{
+                                            color: "inherit",
+                                        }}
+                                        secondaryTypographyProps={{
+                                            color: "inherit",
+                                        }}
                                         secondary="liczba uczestników"
                                     />
                                 </ListItem>
@@ -252,7 +275,20 @@ const DrawRow: React.FC<DrawRowProps> = ({
                         )}
                     </Grid>
                 </CardContent>
-                {status !== "archived" && (
+                {status === "archived" ? (
+                    <ButtonWithLoader
+                        startIcon={<Delete />}
+                        color="secondary"
+                        onClick={handleDeleteDraw}
+                        loadingCategory="draws"
+                        loadingType="edited-record"
+                        recordId={_id}
+                        operationType="cancel"
+                        style={{ minWidth: "120px" }}
+                    >
+                        Usuń
+                    </ButtonWithLoader>
+                ) : (
                     <CardActions>
                         {results ? (
                             <ButtonWithLoader
@@ -268,9 +304,13 @@ const DrawRow: React.FC<DrawRowProps> = ({
                         ) : adminMode ? (
                             <>
                                 <ButtonWithLoader
-                                    onClick={handleRunDraw}
+                                    onClick={
+                                        canRun
+                                            ? handleRunDraw
+                                            : handleOpenPopover
+                                    }
                                     variant="contained"
-                                    color="primary"
+                                    color={canRun ? "primary" : "secondary"}
                                     loadingCategory="draws"
                                     loadingType="edited-record"
                                     recordId={_id}
@@ -279,6 +319,29 @@ const DrawRow: React.FC<DrawRowProps> = ({
                                 >
                                     Losuj teraz
                                 </ButtonWithLoader>
+                                <Popover
+                                    open={Boolean(popoverEl)}
+                                    anchorEl={popoverEl}
+                                    onClose={handleClosePopover}
+                                    anchorOrigin={{
+                                        vertical: "bottom",
+                                        horizontal: "left",
+                                    }}
+                                    transformOrigin={{
+                                        vertical: "top",
+                                        horizontal: "left",
+                                    }}
+                                >
+                                    <Typography
+                                        style={{
+                                            padding: "1rem",
+                                            maxWidth: "250px",
+                                        }}
+                                    >
+                                        Losowanie musi zawierać co najmniej 3
+                                        uczestników
+                                    </Typography>
+                                </Popover>
                                 <Button
                                     startIcon={<Edit />}
                                     color="primary"

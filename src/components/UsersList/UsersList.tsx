@@ -45,18 +45,18 @@ const UsersList = ({
                     onClick={() => handleUserClicked(user)}
                     style={{ position: "relative" }}
                 >
+                    <LoadingOverlay recordId={user._id} indicatorSize={20} />
                     <ListItemText
                         primary={user.username}
                         secondary={user.email}
                     />
                     <ListItemSecondaryAction>
                         {listType === "addingUsers" ? (
-                            <PersonAdd color="primary"/>
+                            <PersonAdd color="primary" />
                         ) : (
                             <PersonAddDisabled />
                         )}
                     </ListItemSecondaryAction>
-                    <LoadingOverlay recordId={user._id} indicatorSize={20} />
                 </ListItem>
                 <Divider />
             </React.Fragment>

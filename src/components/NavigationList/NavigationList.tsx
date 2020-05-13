@@ -2,7 +2,7 @@ import React from 'react';
 
 // MUI
 import { List } from '@material-ui/core';
-import { AddCircle, CardGiftcard, HelpOutline, People, ShoppingCart } from '@material-ui/icons';
+import { CardGiftcard, HelpOutline, People, ShoppingCart } from '@material-ui/icons';
 import ListIcon from '@material-ui/icons/List';
 
 // Components
