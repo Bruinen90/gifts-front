@@ -20,7 +20,7 @@ export function* createWish(action: { type: string; payload: WishInput }) {
                         _id: $_id,
                     }
                 )
-                {_id imageUrl}
+                {_id imageUrl updatedAt}
             }
         `,
 		variables: {
@@ -54,11 +54,21 @@ export function* createWish(action: { type: string; payload: WishInput }) {
 		const responseData = response.data.data.createWish;
 		const newWishId = responseData._id;
 		let newWishImgUrl = responseData.imageUrl;
-		let reducerPayload;
+		interface reducerPayload {
+			title: string;
+			link?: string;
+			description?: string;
+			price: string | number;
+			_id?: string;
+			imageUrl?: string;
+			updatedAt: Date;
+		}
+		let reducerPayload: reducerPayload = {
+			...action.payload,
+			updatedAt: responseData.updatedAt as Date,
+		};
 		if (newWishImgUrl) {
-			reducerPayload = { ...action.payload, imageUrl: newWishImgUrl };
-		} else {
-			reducerPayload = action.payload;
+			reducerPayload = { ...reducerPayload, imageUrl: newWishImgUrl };
 		}
 		if (newWishId === _id) {
 			yield put({

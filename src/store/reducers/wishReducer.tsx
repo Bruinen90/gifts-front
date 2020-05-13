@@ -15,7 +15,7 @@ export default (state: WishState = {}, action: Action) => {
             }
             return {
                 ...state,
-                usersWishes: usersWishes,
+                usersWishes: usersWishes.sort((wishA, wishB) => wishA.updatedAt > wishB.updatedAt ? -1 : 0),
             };
         case actionTypes.SET_USER_WISHES:
             return {
@@ -39,7 +39,7 @@ export default (state: WishState = {}, action: Action) => {
                     } else {
                         return updatedWish;
                     }
-                }),
+                }).sort((wishA, wishB) => wishA.updatedAt > wishB.updatedAt ? -1 : 0),
             };
         case actionTypes.SET_OTHER_USER_WISHES:
             let othersWishes;

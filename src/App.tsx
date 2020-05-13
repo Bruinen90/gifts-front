@@ -15,7 +15,7 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import CreateDraw from "./pages/CreateDraw/CreateDraw";
 import MyDraws from "./pages/MyDraws/MyDraws";
-import Wishlist from "./pages/Wishlist/Wishlist";
+import MyWishes from "./pages/MyWishes/MyWishes";
 import CreateWish from "./pages/CreateWish/CreateWish";
 import { Friends } from "./pages/Friends/Friends";
 import { ShoppingList } from "./pages/ShoppingList/ShoppingList";
@@ -64,7 +64,7 @@ const App = () => {
                         <Route path="/moje-losowania" component={MyDraws} />
                         <Route path="/nowe-zyczenie" component={CreateWish} />
                         <Route path="/edytuj-zyczenie" component={CreateWish} />
-                        <Route path="/lista-zyczen" component={Wishlist} />
+                        <Route path="/lista-zyczen" component={MyWishes} />
                         <Route path="/moi-znajomi" component={Friends} />
                         <Route path="/lista-zakupow" component={ShoppingList} />
                         <Route

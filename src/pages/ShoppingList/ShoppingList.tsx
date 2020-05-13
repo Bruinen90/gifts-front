@@ -67,7 +67,7 @@ export const ShoppingList: React.FC = () => {
             <WishesList wishesList={populatedShoppingList!} viewMode="guest" setReservedStatus={handleSetReservationStatus} /> :
             <EmptyListMessage
 				imageUrl={NoData}
-				message="Nie posiadasz jeszcze żadnych życzeń. Stwórz listę prezentów jakie chcesz otrzymać, aby ułatwić wybór znajomym oraz uniknąć rozczarowań"
+				message="Tutaj pojawią się prezenty, których chęć zakupu zadeklarujesz"
 			/>)}
 		</PageWrapper>
 	);

@@ -17,7 +17,7 @@ import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage
 // Images
 import NoData from '../../img/undraw_no_data.svg';
 
-const Wishlist: React.FC = () => {
+const MyWishes: React.FC = () => {
 	const history = useHistory();
 	const usersWishes = useSelector((state: State) => state.wish.usersWishes);
 	const loadingState = useSelector((state: State) => state.loading);
@@ -28,17 +28,19 @@ const Wishlist: React.FC = () => {
 	return (
 		<PageWrapper>
 			<Typography variant="h4" component="h2" align="center">
-				Twoja lista życzeń
+				Moja lista życzeń
 			</Typography>
-			<Box display="flex" justifyContent="center" margin="1rem 0">
-				<Button
-					color="primary"
-					variant="contained"
-					onClick={navigateToUserWishes}
-				>
-					Dodaj nowe życzenie
-				</Button>
-			</Box>
+			{usersWishes && usersWishes.length > 0 && (
+				<Box display="flex" justifyContent="center" margin="1rem 0">
+					<Button
+						color="primary"
+						variant="contained"
+						onClick={navigateToUserWishes}
+					>
+						Dodaj nowe życzenie
+					</Button>
+				</Box>
+			)}
 			<LoadingSpinner type="general">
 				{(usersWishes && usersWishes.length > 0) ||
 				(loadingState.category === 'wishes' &&
@@ -63,4 +65,4 @@ const Wishlist: React.FC = () => {
 		</PageWrapper>
 	);
 };
-export default Wishlist;
+export default MyWishes;
