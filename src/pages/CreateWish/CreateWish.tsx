@@ -4,13 +4,25 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 
 // MUI
-import { Typography, TextField, Button } from "@material-ui/core";
+import {
+    Typography,
+    TextField,
+    Button,
+    FormControl,
+    Input,
+    InputAdornment,
+    FormHelperText,
+    InputLabel,
+} from "@material-ui/core";
 
 // Styles
 import * as Styled from "./stylesCreateWish";
 
 // Types
 import { Wish, WishInput } from "../../types/WishTypes";
+
+// Components
+import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
 const CreateWish: React.FC = () => {
     const history = useHistory();
@@ -88,7 +100,7 @@ const CreateWish: React.FC = () => {
     };
 
     return (
-        <>
+        <PageWrapper>
             <Typography variant="h4" component="h2" align="center">
                 {originalId ? "Edytuj " : "Utwórz "} życzenie
             </Typography>
@@ -105,6 +117,7 @@ const CreateWish: React.FC = () => {
                     inputRef={register({ required: true, minLength: 3 })}
                     name="title"
                     onBlur={handleTriggerValidation}
+                    autoComplete="off"
                 />
                 <TextField
                     error={errors.hasOwnProperty("description")}
@@ -117,6 +130,7 @@ const CreateWish: React.FC = () => {
                     margin="normal"
                     name="description"
                     inputRef={register()}
+                    autoComplete="off"
                 />
                 <TextField
                     error={errors.hasOwnProperty("link")}
@@ -132,20 +146,29 @@ const CreateWish: React.FC = () => {
                         pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/,
                     })}
                     onBlur={handleTriggerValidation}
+                    autoComplete="off"
                 />
-                <TextField
-                    type="number"
-                    error={errors.hasOwnProperty("price")}
-                    helperText={
-                        errors.link &&
-                        "Podanie orientacyjnej ceny prezentu jest wymagane"
-                    }
-                    label="Orientacyjna cena"
+                <FormControl
                     margin="normal"
-                    name="price"
-                    inputRef={register({ required: true, min: 1 })}
-                    onBlur={handleTriggerValidation}
-                />
+                    error={errors.hasOwnProperty("price")}
+                >
+                    <InputLabel>Orientacyjna cena</InputLabel>
+                    <Input
+                        type="number"
+                        name="price"
+                        inputRef={register({ required: true, min: 1 })}
+                        onBlur={handleTriggerValidation}
+                        endAdornment={
+                            <InputAdornment position="end">zł</InputAdornment>
+                        }
+                        autoComplete="off"
+                    />
+                    {errors.price && (
+                        <FormHelperText>
+                            Podanie orientacyjnej ceny prezentu jest wymagane
+                        </FormHelperText>
+                    )}
+                </FormControl>
                 <Button
                     type="submit"
                     variant="contained"
@@ -155,7 +178,7 @@ const CreateWish: React.FC = () => {
                     Zapisz życzenie
                 </Button>
             </Styled.MyForm>
-        </>
+        </PageWrapper>
     );
 };
 

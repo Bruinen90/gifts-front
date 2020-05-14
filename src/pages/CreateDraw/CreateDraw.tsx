@@ -173,7 +173,6 @@ const CreateDraw: React.FC = () => {
 	};
 
 	return (
-		// Custom wrapper breaks react-hook-form lib, gotta check on that
 		<PageWrapper>
 			<Typography variant="h4" component="h2" align="center">
 				{originalId ? 'Edytuj ' : 'Utwórz '} losowanie

@@ -64,7 +64,6 @@ export function* fetchUserWishes(action?: {
 				.sort((wishA: Wish, wishB: Wish) =>
 					wishA.updatedAt > wishB.updatedAt ? -1 : 1
 				);
-			console.log(userWishes);
 			yield put({
 				type: actionTypes.SET_USER_WISHES,
 				payload: userWishes,

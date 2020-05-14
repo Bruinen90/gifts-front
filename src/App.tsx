@@ -9,6 +9,7 @@ import * as watchersTypes from "./store/actions/watcherTypes";
 
 // Components
 import NavBar from "./components/NavBar/NavBar";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 // Pages
 import Login from "./pages/Login/Login";
@@ -31,7 +32,7 @@ import Footer from "./components/Footer/Footer";
 import * as Styled from "./stylesApp";
 
 // axios.defaults.baseURL = "http://localhost:8080";
-axios.defaults.baseURL = 'https://bez-niespodzianek.herokuapp.com/';
+axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -82,6 +83,8 @@ const App = () => {
                     <ErrorPrompt />
                     <SuccessPrompt />
                     <Footer />
+                    {/* React router way to scroll window to top on each location change */}
+                    <ScrollToTop />
                 </Styled.GlobalWrapper>
                 {/* End off app */}
             </ThemeProvider>
