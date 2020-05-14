@@ -30,6 +30,7 @@ import Footer from "./components/Footer/Footer";
 
 // Styles
 import * as Styled from "./stylesApp";
+import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 
 // axios.defaults.baseURL = "http://localhost:8080";
 axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
@@ -57,17 +58,17 @@ const App = () => {
                     <Switch>
                         <Route path="/logowanie" component={Login} />
                         <Route path="/rejestracja" component={Signup} />
-                        <Route path="/nowe-losowanie" component={CreateDraw} />
-                        <Route
+                        <GuardedRoute path="/nowe-losowanie" component={CreateDraw} />
+                        <GuardedRoute
                             path="/edytuj-losowanie"
                             component={CreateDraw}
                         />
-                        <Route path="/moje-losowania" component={MyDraws} />
-                        <Route path="/nowe-zyczenie" component={CreateWish} />
-                        <Route path="/edytuj-zyczenie" component={CreateWish} />
-                        <Route path="/lista-zyczen" component={MyWishes} />
-                        <Route path="/moi-znajomi" component={Friends} />
-                        <Route path="/lista-zakupow" component={ShoppingList} />
+                        <GuardedRoute path="/moje-losowania" component={MyDraws} />
+                        <GuardedRoute path="/nowe-zyczenie" component={CreateWish} />
+                        <GuardedRoute path="/edytuj-zyczenie" component={CreateWish} />
+                        <GuardedRoute path="/lista-zyczen" component={MyWishes} />
+                        <GuardedRoute path="/moi-znajomi" component={Friends} />
+                        <GuardedRoute path="/lista-zakupow" component={ShoppingList} />
                         <Route
                             path="/zresetuj-haslo"
                             component={ResetPassword}

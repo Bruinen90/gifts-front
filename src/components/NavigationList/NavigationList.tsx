@@ -44,7 +44,7 @@ const USER_ITEMS_LIST = [
 
 const GUEST_ITEMS_LIST = [
 	{
-		target: '/jak-zaczac',
+		target: '/#jak-zaczac',
 		icon: <HelpOutline color="inherit" />,
 		text: 'Jak zacząć',
 	},
