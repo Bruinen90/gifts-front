@@ -32,8 +32,8 @@ import Footer from "./components/Footer/Footer";
 import * as Styled from "./stylesApp";
 import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 
-// axios.defaults.baseURL = "http://localhost:8080";
-axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
+axios.defaults.baseURL = "http://localhost:8080";
+// axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
 
 const App = () => {
     const dispatch = useDispatch();
