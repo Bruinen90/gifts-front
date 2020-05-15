@@ -25,6 +25,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-hook-form": "^5.1.1",
+    "react-hook-form-input": "^1.1.10",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-router-hash-link": "^1.2.2",

@@ -39,18 +39,23 @@ export function* changeUserEmail(action: {
 	try {
 		const response = yield axios.post('/graphql', graphQLquery);
 		if (response.data.data && response.data.data.changeEmail.success) {
-			// setChangeResponse("success");
 			yield put({
 				type: actionTypes.CHANGE_USER_EMAIL,
 				payload: { newEmail: email },
 			});
 			yield localStorage.setItem('email', email);
+			yield put({
+				type: actionTypes.SET_UNSUBSCRIBED,
+				payload: { unsubscribed },
+			});
+			yield localStorage.setItem('unsubscribed', unsubscribed.toString());
 			yield put(actionCreators.clearLocalError());
 			yield put(
 				actionCreators.setSuccess({
 					page: 'settings',
 					id: 'email-updated',
-					message: 'Adres email został poprawnie zaktualizowany',
+					message:
+						'Ustawienia email zostały poprawnie zaktualizowane',
 				})
 			);
 		} else {

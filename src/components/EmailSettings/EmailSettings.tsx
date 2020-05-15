@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as watcherTypes from '../../store/actions/watcherTypes';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+// import { RHFInput } from 'react-hook-form-input';
 
 // MUI
 import {
@@ -34,10 +35,18 @@ export const EmailSettings: React.FC = () => {
 	const user = useSelector((state: State) => state.auth);
 	const localError = useSelector((state: State) => state.localError);
 	const success = useSelector((state: State) => state.success);
-	const { register, handleSubmit, errors, setValue, getValues } = useForm();
+	const {
+		register,
+		handleSubmit,
+		errors,
+		setValue,
+		getValues,
+		control,
+	} = useForm();
 	const [emailInEdit, setEmailInEdit] = useState(false);
 
 	const onSubmit = async (data: any) => {
+		console.log(data);
 		const payload = {
 			...data,
 			oldEmail: user.email,
@@ -59,8 +68,8 @@ export const EmailSettings: React.FC = () => {
 
 	useEffect(() => {
 		setValue('email', user.email);
-		setValue('unsubcribed', user.unsubscribed);
-	}, [user.email, user.unsubscribed, setValue]);
+		setValue('unsubscribed', user.unsubscribed);
+	}, [setValue, user.email, user.unsubscribed]);
 
 	useEffect(() => {
 		if (success.id === 'email-updated') {
@@ -141,10 +150,11 @@ export const EmailSettings: React.FC = () => {
 						)}
 						<FormControlLabel
 							control={
-								<Switch
+								<Controller
+									as={<Switch checked={true}/>}
+									type="checkbox"
 									name="unsubscribed"
-									color="secondary"
-									inputRef={register()}
+									control={control}
 								/>
 							}
 							label="Nie chcę otrzymywać powiadomień na email"
