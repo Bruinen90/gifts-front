@@ -9,7 +9,7 @@ import { CenteredCard } from '../../components/CenteredCard/CenteredCard';
 import FindUser from '../../components/FindUser/FindUser';
 
 // MUI
-import { Box, Typography, Button, List } from '@material-ui/core';
+import { Box, Typography, Button, List, CircularProgress } from '@material-ui/core';
 
 // Types
 import { State } from '../../types/State';
@@ -23,6 +23,13 @@ import InvitationBox from '../../components/InvitationBox/InvitationBox';
 export const Friends: React.FC = () => {
 	const dispatch = useDispatch();
 	const friendsList = useSelector((state: State) => state.friends.friends);
+    const loggedUser = useSelector((state: State) => state.auth as User);
+    const loadingStatus = useSelector((state: State) => state.loading);
+    
+    const loadingFriends = (
+        loadingStatus.category === 'friends' && 
+        loadingStatus.type === 'fetching-records'
+        );
 
     const [sentInvitations, receivedInvitations] = useSelector(
         (state: State) => [state.friends.invitations?.sent, state.friends.invitations?.received ]
@@ -30,7 +37,6 @@ export const Friends: React.FC = () => {
 
 	const findUserRef = React.createRef<HTMLInputElement>();
 
-	const loggedUser: User = useSelector((state: State) => state.auth as User);
 
 	const handleSendInvitation = (user: User) => {
 		dispatch({
@@ -72,40 +78,59 @@ export const Friends: React.FC = () => {
 			<Typography variant="h2" align="center">
 				Znajomi
 			</Typography>
-			{(receivedInvitations || sentInvitations) &&
-				((receivedInvitations && receivedInvitations.length > 0) ||
-					(sentInvitations && sentInvitations.length > 0)) && (
-					<CenteredCard>
-						<Typography variant="h4" align="center">
-							Zaproszenia
-						</Typography>
-						{receivedInvitations && (
-							<List>
-								{receivedInvitations.map(invitation => (
-									<InvitationBox
-										key={invitation._id}
-										_id={invitation._id}
-										username={invitation.sender.username}
-										email={invitation.sender.email!}
-										invited={true}
-									/>
-								))}
-							</List>
-						)}
-						{sentInvitations && (
-							<List>
-								{sentInvitations.map(invitation => (
-									<InvitationBox
-										key={invitation._id}
-										_id={invitation._id}
-										username={invitation.receiver.username}
-										email={invitation.receiver.email!}
-										invited={false}
-									/>
-								))}
-							</List>
-						)}
-					</CenteredCard>
+            
+            {
+                (loadingFriends 
+                || 
+                (
+                    (receivedInvitations || sentInvitations) &&
+                    (
+                        (receivedInvitations && receivedInvitations.length > 0) ||
+                        (sentInvitations && sentInvitations.length > 0)
+                    )
+                 )) && 
+                    (
+                        <CenteredCard style={{textAlign: 'center'}}>
+                            <Typography variant="h4" align="center">
+                                Zaproszenia
+                            </Typography>
+                            {loadingFriends && 
+                                <Box 
+                                    display='flex' 
+                                    justifyContent="center" 
+                                    flex={1} 
+                                    marginY={3}
+                                >
+                                    <CircularProgress size={60} />
+                                </Box>
+                            }
+                            {receivedInvitations && (
+                                <List>
+                                    {receivedInvitations.map(invitation => (
+                                        <InvitationBox
+                                            key={invitation._id}
+                                            _id={invitation._id}
+                                            username={invitation.sender.username}
+                                            email={invitation.sender.email!}
+                                            invited={true}
+                                        />
+                                    ))}
+                                </List>
+                            )}
+                            {sentInvitations && (
+                                <List>
+                                    {sentInvitations.map(invitation => (
+                                        <InvitationBox
+                                            key={invitation._id}
+                                            _id={invitation._id}
+                                            username={invitation.receiver.username}
+                                            email={invitation.receiver.email!}
+                                            invited={false}
+                                        />
+                                    ))}
+                                </List>
+                            )}
+                        </CenteredCard>
 				)}
 			<CenteredCard padding={6}>
 				<Typography variant="h4" align="center">
@@ -129,7 +154,16 @@ export const Friends: React.FC = () => {
 					alignItems="center"
 					margin="2rem auto"
 				>
-					{friendsList && friendsList.length > 0 ? (
+                    {loadingFriends ?                                 
+                    <Box 
+                        display='flex' 
+                        justifyContent="center" 
+                        flex={1} 
+                        marginY={3}
+                    >
+                        <CircularProgress size={60} />
+                    </Box> : 
+					friendsList && friendsList.length > 0 ? (
 						<List style={{ width: '100%' }}>
 							{friendsList.map(friend => (
 								<FriendBox
