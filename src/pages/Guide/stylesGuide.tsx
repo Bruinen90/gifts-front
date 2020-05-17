@@ -29,9 +29,12 @@ export const GuideImgContainter = styled("div")(
     ({ theme }: { theme: Theme }) => ({
         textAlign: "center",
         [theme.breakpoints.up("sm")]: {
-            height: "350px",
+            height: "250px",
             display: "flex",
             alignItems: "flex-end",
+        },
+        [theme.breakpoints.up("xl")]: {
+            height: "300px",
         },
     })
 );
