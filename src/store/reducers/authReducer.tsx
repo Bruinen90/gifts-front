@@ -13,12 +13,12 @@ export default (state: AuthState = {}, action: Action) => {
 				unsubscribed,
 			} = action.payload;
 			return {
-				username: username,
-				email: email,
-				token: token,
+				username,
+				email,
+				token,
+				unsubscribed,
 				_id: userId,
 				loginError: undefined,
-				unsubscribed: unsubscribed,
 			};
 		case actionTypes.USER_LOGIN_FAILED:
 			return {

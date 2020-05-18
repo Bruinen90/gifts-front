@@ -39,7 +39,7 @@ export function* loginUser(action: {
 	try {
 		const response = yield axios.post('graphql', graphqlQuery);
 		const loginData = response.data.data.login;
-		const { token, username, email, userId, unsubscribed } = loginData;
+		const { token } = loginData;
 		yield localStorage.setItem('token', token);
 		// yield localStorage.setItem('username', username);
 		// yield localStorage.setItem('email', email);

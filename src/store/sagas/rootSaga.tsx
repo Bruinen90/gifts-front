@@ -22,6 +22,7 @@ import { fetchUserFriends } from './friends/fetchUserFriends';
 import { cancelFriendship } from './friends/cancelFriendship';
 import { changeUserEmail } from './auth/changeUserEmail';
 import { unsubscribe } from './auth/unsubscribe';
+import { tokenVerification } from './auth/tokenVerification';
 
 export default function* rootSaga() {
 	yield all([
@@ -61,5 +62,9 @@ export default function* rootSaga() {
 		),
 		yield takeLatest(watcherTypes.WATCH_CHANGE_USER_EMAIL, changeUserEmail),
 		yield takeLatest(watcherTypes.WATCH_UNSUBSCRIBE, unsubscribe),
+		yield takeLatest(
+			watcherTypes.WATCH_AUTO_LOGIN_USER,
+			tokenVerification
+		),
 	]);
 }
