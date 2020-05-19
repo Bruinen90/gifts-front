@@ -41,8 +41,8 @@ import * as Styled from './stylesApp';
 // Types
 import { State } from './types/State';
 
-axios.defaults.baseURL = 'http://localhost:8080';
-// axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
+// axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = "https://bez-niespodzianek.herokuapp.com/";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -118,7 +118,7 @@ const App = () => {
 					<Footer />
 					{/* React router way to scroll window to top on each location change */}
 					<ScrollToTop />
-					{/* Backdrop when loading basic data */}
+					{/* Backdrop when loading basic data - to be replaced with loading screen */}
 					<Backdrop
 						open={loadingBasicData}
 						style={{ zIndex: 100, color: '#444' }}
