@@ -4,7 +4,7 @@ import { Box, Theme, Typography } from "@material-ui/core";
 export const LogoBox = styled(Box)(
     ({ theme, scale = 1 }: { theme: Theme; scale?: number }) => ({
         maxHeight: "30px",
-        fontSize: 1.33 * scale + "rem",
+        fontSize: 1 * scale + "rem",
         [theme.breakpoints.up("sm")]: {
             height: "1em",
         },

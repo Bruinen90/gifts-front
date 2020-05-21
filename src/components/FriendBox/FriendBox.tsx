@@ -13,6 +13,7 @@ import {
 	Button,
 	IconButton,
 	Theme,
+	Grid,
 } from '@material-ui/core';
 import { CardGiftcard, PersonAddDisabled } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -49,41 +50,53 @@ export const FriendBox: React.FC<FriendBoxProps> = ({
 	return (
 		<>
 			<ListItem>
-				<ListItemText primary={username} secondary={email} />
-
-				<ListItemSecondaryAction
-					style={{ right: minWidth ? 'default' : 0 }}
-				>
-					<Button
-						color="primary"
-						startIcon={<CardGiftcard />}
+				<Grid container>
+					<Grid item xs={12} sm={5}>
+						<ListItemText primary={username} secondary={email} />
+					</Grid>
+					<Grid
+						item
+						xs={12}
+						sm={7}
 						style={{
-							marginRight: `${minWidth ? '1rem' : '0.25rem'}`,
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'flex-end',
 						}}
-						size={minWidth ? 'medium' : 'small'}
-						onClick={handleToggleWishesDialog}
 					>
-						Lista życzeń
-					</Button>
-					{minWidth ? (
 						<Button
-							color="secondary"
-							onClick={handleCancelFriendship}
-							startIcon={<PersonAddDisabled />}
+							color="primary"
+							startIcon={<CardGiftcard />}
+							style={{
+								marginRight: `${minWidth ? '1rem' : '0.25rem'}`,
+								whiteSpace: 'nowrap',
+							}}
+							size={minWidth ? 'medium' : 'small'}
+							onClick={handleToggleWishesDialog}
 						>
-							Usuń z listy znajomych
+							Lista życzeń
 						</Button>
-					) : (
-						<IconButton
-							onClick={handleCancelFriendship}
-							style={{ paddingRight: 0 }}
-							size="small"
-							color="secondary"
-						>
-							<PersonAddDisabled color="inherit" />
-						</IconButton>
-					)}
-				</ListItemSecondaryAction>
+						{minWidth ? (
+							<Button
+								color="secondary"
+								onClick={handleCancelFriendship}
+								startIcon={<PersonAddDisabled />}
+								style={{ whiteSpace: 'nowrap' }}
+							>
+								Usuń ze znajomych
+							</Button>
+						) : (
+							<IconButton
+								onClick={handleCancelFriendship}
+								style={{ paddingRight: 0 }}
+								size="small"
+								color="secondary"
+							>
+								<PersonAddDisabled color="inherit" />
+							</IconButton>
+						)}
+					</Grid>
+				</Grid>
 			</ListItem>
 			{wishesDialogOpened && (
 				<WishesModal

@@ -1,14 +1,23 @@
 import { put } from 'redux-saga/effects';
 import axios from 'axios';
-import * as actionTypes from '../../actions/actionTypes';
 import { Wish } from '../../../types/WishTypes';
+import * as actionTypes from '../../actions/actionTypes';
+import * as actionCreators from '../../actions/actionCreators';
 
 export function* fetchUserWishes(action?: {
 	type?: any;
 	payload?: { userId: string };
 }) {
-	try {
-		if (action && action.payload) {
+	if (action && action.payload) {
+		yield put(
+			actionCreators.setLoading({
+				loading: true,
+				category: 'wishes',
+				type: 'fetching-records',
+				recordId: action.payload.userId,
+			})
+		);
+		try {
 			const graphqlQuery = {
 				query: `
                     {
@@ -44,39 +53,50 @@ export function* fetchUserWishes(action?: {
 					userId: action.payload.userId,
 				},
 			});
+		} catch (err) {
+			yield put(
+				actionCreators.setError({
+					category: 'wishes',
+					message:
+						'Wystąpił błąd podczas pobierania listy życzeń dla tego użytkownika',
+				})
+			);
 		}
-		// Fetch for currently logged in user
-		if (axios.defaults.headers.common['Authorization']) {
-			const graphqlQuery = {
-				query: `
+		yield put(actionCreators.setLoading({ loading: false }));
+	} else {
+		try {
+			// Fetch for currently logged in user
+			if (axios.defaults.headers.common['Authorization']) {
+				const graphqlQuery = {
+					query: `
                     {userWishes { _id title link imageUrl description price buyer reserved updatedAt }}
                     `,
-			};
-			const response = yield axios.post('graphql', graphqlQuery);
-			if (!response.data.data) {
-				throw new Error();
+				};
+				const response = yield axios.post('graphql', graphqlQuery);
+				if (!response.data.data) {
+					throw new Error();
+				}
+				const userWishes = response.data.data.userWishes
+					.map((wish: Wish) => ({
+						...wish,
+						updatedAt: new Date(parseInt(wish.updatedAt as string)),
+					}))
+					.sort((wishA: Wish, wishB: Wish) =>
+						wishA.updatedAt > wishB.updatedAt ? -1 : 1
+					);
+				yield put({
+					type: actionTypes.SET_USER_WISHES,
+					payload: userWishes,
+				});
 			}
-			const userWishes = response.data.data.userWishes
-				.map((wish: Wish) => ({
-					...wish,
-					updatedAt: new Date(parseInt(wish.updatedAt as string)),
-				}))
-				.sort((wishA: Wish, wishB: Wish) =>
-					wishA.updatedAt > wishB.updatedAt ? -1 : 1
-				);
-			yield put({
-				type: actionTypes.SET_USER_WISHES,
-				payload: userWishes,
-			});
+		} catch (error) {
+			yield put(
+				actionCreators.setError({
+					category: 'wishes',
+					message:
+						'Wystąpił błąd podczas pobierania listy życzeń dla tego użytkownika',
+				})
+			);
 		}
-	} catch (error) {
-		yield put({
-			type: actionTypes.SET_ERROR,
-			payload: {
-				category: 'wishes',
-				message:
-					'Wystąpił błąd podczas pobierania listy życzeń, spróbuj ponownie później',
-			},
-		});
 	}
 }

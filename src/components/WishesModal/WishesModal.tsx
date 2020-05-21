@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // MUI
-import { Dialog, DialogTitle } from '@material-ui/core';
+import { Dialog, DialogTitle, Box, CircularProgress } from '@material-ui/core';
 
 // Types
 import { State } from '../../types/State';
@@ -77,11 +77,19 @@ const WishesModal: React.FC<WishesModalProps> = ({
 			type: 'RESERVE_WISH_WATCHER',
 			payload: payload,
 		});
-	};
+    };
+    
+    // Loading check
+    const loadingState = useSelector((state: State) => state.loading);
+    const isLoading = 
+        loadingState.recordId === userId && 
+        loadingState.category === 'wishes' && 
+        loadingState.type === 'fetching-records';
 
 	return (
 		<Dialog open={opened} onClose={toggle}>
 			<DialogTitle>Lista życzeń użytkownika {username}</DialogTitle>
+            {isLoading && <Box display="flex" justifyContent="center" margin="2rem"><CircularProgress /></Box>}
 			{wishesList && wishesList.length > 0 && (
 				<WishesList
 					wishesList={wishesList}
