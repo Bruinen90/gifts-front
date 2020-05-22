@@ -4,6 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 // MUI
 import { Dialog, DialogTitle, Box, CircularProgress } from '@material-ui/core';
 
+// Components
+import EmptyListMessage from '../EmptyListMessage/EmptyListMessage';
+
+// Images
+import NoData from '../../img/undraw_no_data.svg';
+
 // Types
 import { State } from '../../types/State';
 import WishesList from '../WishesList/WishesList';
@@ -89,15 +95,25 @@ const WishesModal: React.FC<WishesModalProps> = ({
 	return (
 		<Dialog open={opened} onClose={toggle}>
 			<DialogTitle>Lista życzeń użytkownika {username}</DialogTitle>
-            {isLoading && <Box display="flex" justifyContent="center" margin="2rem"><CircularProgress /></Box>}
-			{wishesList && wishesList.length > 0 && (
+            {isLoading ? 
+                <Box 
+                    display="flex" 
+                    justifyContent="center" 
+                    margin="2rem"
+                >
+                    <CircularProgress />
+                </Box> :
+			wishesList && wishesList.length > 0 ? (
 				<WishesList
 					wishesList={wishesList}
 					viewMode="guest"
 					setReservedStatus={handleSetReservationStatus}
 					inModal={true}
 				/>
-			)}
+			): <EmptyListMessage
+            imageUrl={NoData}
+            message={`Użytkownik ${username} nie posiada jeszcze żadnych życzeń`}
+        />}
 		</Dialog>
 	);
 };

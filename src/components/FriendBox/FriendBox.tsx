@@ -9,7 +9,6 @@ import WishesModal from '../WishesModal/WishesModal';
 import {
 	ListItem,
 	ListItemText,
-	ListItemSecondaryAction,
 	Button,
 	IconButton,
 	Theme,
