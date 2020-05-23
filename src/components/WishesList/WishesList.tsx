@@ -61,7 +61,7 @@ const WishesList: React.FC<WishesListProps> = ({
 					drawData={wish.drawData}
 					key={wish._id}
 					view={viewMode === 'creator' ? 'full' : 'simple'}
-					deleteWish={_ => handleDeleteWish(wish._id, wish.title)}
+					deleteWish={() => handleDeleteWish(wish._id, wish.title)}
 					setReservedStatus={setReservedStatus}
 					oneColumn={inModal}
 				/>

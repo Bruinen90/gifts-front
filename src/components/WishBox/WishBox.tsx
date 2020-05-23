@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 
@@ -31,15 +31,18 @@ import {
 	Block,
 } from '@material-ui/icons';
 
+// Styles
+import * as Styled from './styleWishBox';
+import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
+
+// Components
+import ConfirmationDialog from '../ConfirmationDialog';
+
 // Types
 import { State } from '../../types/State';
 import { User } from '../../types/User';
 import { WishBoxProps } from '../../types/WishTypes';
 import { ReservationPayload } from '../../types/Reservations';
-
-// Styles
-import * as Styled from './styleWishBox';
-import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 
 const WishBox: React.FC<WishBoxProps> = ({
 	wish,
@@ -91,6 +94,21 @@ const WishBox: React.FC<WishBoxProps> = ({
 
 	const handleCancelReservation = () => {
 		changeReservationStatus(false);
+	};
+
+	// Deleting wish
+	const [confirmationDialogOpened, setConfirmationDialogOpened] = useState(
+		false
+	);
+	const toggleConfirmationDialog = () => {
+		setConfirmationDialogOpened(prev => !prev);
+	};
+
+	const handleDeleteWish = () => {
+		if (deleteWish) {
+			deleteWish();
+		}
+		toggleConfirmationDialog();
 	};
 
 	return (
@@ -183,10 +201,18 @@ const WishBox: React.FC<WishBoxProps> = ({
 							<Button
 								color="secondary"
 								startIcon={<Delete />}
-								onClick={deleteWish}
+								onClick={toggleConfirmationDialog}
 							>
 								Usuń
 							</Button>
+							<ConfirmationDialog
+								title="Usuwanie życzenia"
+								description={`Czy na pewno chcesz usunąć życzenie ${wish.title} ze swojej listy?`}
+								acceptText="Tak, usuń życzenie"
+								confirmFunction={handleDeleteWish}
+								toggleDialog={toggleConfirmationDialog}
+								opened={confirmationDialogOpened}
+							/>
 							<Button
 								color="primary"
 								startIcon={<Edit />}

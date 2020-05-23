@@ -38,7 +38,7 @@ export interface WishesListProps {
 export interface WishBoxProps {
     wish: Wish;
     view: WishViewTypes;
-    deleteWish?: (_: React.MouseEvent) => void;
+    deleteWish?: () => void;
     setReservedStatus: ReservationStatusSetterType | undefined;
     drawData?: DrawInterface | undefined;
     oneColumn?: boolean;

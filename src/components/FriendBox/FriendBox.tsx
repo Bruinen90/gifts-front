@@ -4,6 +4,7 @@ import * as watcherTypes from '../../store/actions/watcherTypes';
 
 // Components
 import WishesModal from '../WishesModal/WishesModal';
+import ConfirmationDialog from '../ConfirmationDialog';
 
 // MUI
 import {
@@ -33,11 +34,20 @@ export const FriendBox: React.FC<FriendBoxProps> = ({
 	const theme: Theme = useTheme();
 	const minWidth = useMediaQuery(theme.breakpoints.up('md'));
 
+	// Canceling friendship
+	const [confirmationDialogOpened, setConfirmationDialogOpened] = useState(
+		false
+	);
+	const toggleConfirmationDialog = () => {
+		setConfirmationDialogOpened(prev => !prev);
+	};
+
 	const handleCancelFriendship = () => {
 		dispatch({
 			type: watcherTypes.WATCH_CANCEL_FRIENDSHIP,
 			payload: { friendId: _id, friendUsername: username },
 		});
+		toggleConfirmationDialog();
 	};
 
 	// Wisheslist
@@ -76,14 +86,24 @@ export const FriendBox: React.FC<FriendBoxProps> = ({
 							Lista życzeń
 						</Button>
 						{minWidth ? (
-							<Button
-								color="secondary"
-								onClick={handleCancelFriendship}
-								startIcon={<PersonAddDisabled />}
-								style={{ whiteSpace: 'nowrap' }}
-							>
-								Usuń ze znajomych
-							</Button>
+							<>
+								<Button
+									color="secondary"
+									onClick={toggleConfirmationDialog}
+									startIcon={<PersonAddDisabled />}
+									style={{ whiteSpace: 'nowrap' }}
+								>
+									Usuń ze znajomych
+								</Button>
+								<ConfirmationDialog
+									title="Anulowanie znajomości"
+									description={`Czy na pewno chcesz zakończyć znajomośc z użytkownikiem ${username}?`}
+									acceptText="Tak, zakończ znajomość"
+									toggleDialog={toggleConfirmationDialog}
+									opened={confirmationDialogOpened}
+									confirmFunction={handleCancelFriendship}
+								/>
+							</>
 						) : (
 							<IconButton
 								onClick={handleCancelFriendship}
