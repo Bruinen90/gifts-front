@@ -228,7 +228,7 @@ const Signup = () => {
 					onBlur={(event: React.FocusEvent<HTMLInputElement>) =>
 						handleValidate({
 							key: 'userName',
-							validationProps: { required: true, minLength: 3 },
+							validationProps: { required: true, minLength: 3, maxLength: 30 },
 							value: event.target.value,
 						})
 					}
@@ -241,7 +241,7 @@ const Signup = () => {
 						formData.userName.changed &&
 						(signupEffect.invalidField === 'userName'
 							? 'Wybrana nazwa użytkownika jest już zajęta'
-							: 'Nazwa użytkownika powinna mieć co najmniej 3 znaki')
+							: 'Nazwa użytkownika powinna zawierać od 3 do 30 znaków')
 					}
 				/>
 				<TextField
