@@ -94,7 +94,7 @@ export default (state: WishState = {}, action: Action) => {
                                         addedGift = {
                                             ...wish,
                                             reserved: reserved,
-                                            buyer: loggedUser._id,
+                                            buyer: loggedUser,
                                             creator: userWishesList.userId,
                                         };
                                         if (drawId) {
@@ -147,7 +147,7 @@ export default (state: WishState = {}, action: Action) => {
                 shoppingList: action.payload.shoppingList.map(
                     (listItem: Wish) => ({
                         ...listItem,
-                        buyer: action.payload.loggedUser._id,
+                        buyer: action.payload.loggedUser,
                         reserved: true,
                     })
                 ),

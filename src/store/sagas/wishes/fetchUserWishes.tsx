@@ -9,6 +9,7 @@ export function* fetchUserWishes(action?: {
 	payload?: { userId: string };
 }) {
 	if (action && action.payload) {
+		// Fetching for other user
 		yield put(
 			actionCreators.setLoading({
 				loading: true,
@@ -29,9 +30,9 @@ export function* fetchUserWishes(action?: {
                                 imageUrl 
                                 description 
                                 price 
-                                buyer 
                                 reserved 
                                 updatedAt 
+                                buyer { _id }
                             }
                     }
                 `,
@@ -69,7 +70,19 @@ export function* fetchUserWishes(action?: {
 			if (axios.defaults.headers.common['Authorization']) {
 				const graphqlQuery = {
 					query: `
-                    {userWishes { _id title link imageUrl description price buyer reserved updatedAt }}
+                    {
+                        userWishes { 
+                            _id 
+                            title 
+                            link 
+                            imageUrl 
+                            description 
+                            price 
+                            reserved 
+                            updatedAt 
+                            buyer { _id username } 
+                        }
+                    }
                     `,
 				};
 				const response = yield axios.post('graphql', graphqlQuery);

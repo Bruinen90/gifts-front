@@ -1,7 +1,6 @@
 import { User } from "./User";
 import { DrawInterface } from "./Draw";
 import { ReservationStatusSetterType } from "./Reservations";
-import { LoadingState } from "./State";
 
 export type WishViewTypes = "full" | "simple" | "withDrawData";
 
@@ -17,7 +16,7 @@ export interface Wish extends WishInput {
     _id: string;
     creator: string | User;
     price: number;
-    buyer?: string;
+    buyer?: User;
     reserved?: boolean;
     forDraw?: string;
     imageUrl?: string;

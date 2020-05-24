@@ -61,7 +61,8 @@ const WishBox: React.FC<WishBoxProps> = ({
 		| 'reserved-by-other-user' = 'not-reserved';
 
 	if (wish.reserved) {
-		if (wish.buyer === loggedUserId) {
+        console.log(wish.buyer)
+		if (wish.buyer?._id === loggedUserId) {
 			reservedStatus = 'reserved-by-curr-user';
 		} else {
 			reservedStatus = 'reserved-by-other-user';
@@ -122,7 +123,7 @@ const WishBox: React.FC<WishBoxProps> = ({
 				<Styled.ReservedOverlay>
 					<Block fontSize="inherit" />
 					<Typography align="center" variant="h4">
-						To życzenie zostało już zarezerwowane
+						To życzenie zostało zarezerwowane {wish.buyer?.username && `przez użytkownika ${wish.buyer.username} `}
 					</Typography>
 				</Styled.ReservedOverlay>
 			)}

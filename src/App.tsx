@@ -37,8 +37,8 @@ import * as Styled from './stylesApp';
 import { State } from './types/State';
 import LoadingScreen from './pages/LoadingScreen';
 
-// axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.baseURL = 'https://bez-niespodzianek.herokuapp.com/';
+axios.defaults.baseURL = 'http://localhost:8080';
+// axios.defaults.baseURL = 'https://bez-niespodzianek.herokuapp.com/';
 
 const App = () => {
 	const dispatch = useDispatch();
