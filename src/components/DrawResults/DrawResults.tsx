@@ -79,7 +79,7 @@ const DrawResults: React.FC<DrawResultsProps> = ({
 							Losowanie zakończone! Wylosowałeś użytkownika:
 						</Typography>
 						<Typography
-							variant="h3"
+							variant="h5"
 							component="div"
 							style={{ fontWeight: 'lighter' }}
 						>
