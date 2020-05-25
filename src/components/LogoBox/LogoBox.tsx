@@ -1,5 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
+
+// Images
 import GiftIcon from "../../img/gift.svg";
 
 // Styles
@@ -9,7 +11,7 @@ interface PropTypes {
     scale?: number;
 }
 
-const LogoBox: React.FC<PropTypes> = ({ scale }) => {
+export const LogoBox: React.FC<PropTypes> = ({ scale }) => {
     const history = useHistory();
 
     const handleGoToHomepage = () => {
@@ -29,5 +31,3 @@ const LogoBox: React.FC<PropTypes> = ({ scale }) => {
         </Styled.LogoBox>
     );
 };
-
-export default LogoBox;

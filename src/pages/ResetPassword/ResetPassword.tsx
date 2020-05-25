@@ -4,7 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 // Components
-import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import { PageWrapper } from "../../components/PageWrapper/PageWrapper";
 import { ButtonWithLoader } from "../../components/ButtonWithLoader/ButtonWithLoader";
 
 // MUI

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useLocation, useHistory } from "react-router-dom";
 
 // Components
-import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import { PageWrapper } from "../../components/PageWrapper/PageWrapper";
 
 // MUI
 import { Typography, TextField, Button } from "@material-ui/core";

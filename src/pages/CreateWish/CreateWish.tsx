@@ -22,9 +22,9 @@ import * as Styled from "./stylesCreateWish";
 import { Wish, WishInput } from "../../types/WishTypes";
 
 // Components
-import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import { PageWrapper } from "../../components/PageWrapper/PageWrapper";
 
-const CreateWish: React.FC = () => {
+export const CreateWish: React.FC = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -181,5 +181,3 @@ const CreateWish: React.FC = () => {
         </PageWrapper>
     );
 };
-
-export default CreateWish;

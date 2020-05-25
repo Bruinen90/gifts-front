@@ -12,7 +12,7 @@ interface LoadingOverlayProps {
     indicatorSize?: number;
 }
 
-const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
+export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
     recordId,
     indicatorSize,
 }) => {
@@ -40,5 +40,3 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
         );
     }
 };
-
-export default LoadingOverlay;

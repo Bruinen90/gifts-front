@@ -1,20 +1,18 @@
-import React from 'react';
+import React from "react";
 
 // Styles
-import * as Styled from './stylesFooter';
+import * as Styled from "./stylesFooter";
 
 // Components
-import LogoBox from '../LogoBox/LogoBox';
+import { LogoBox } from "../LogoBox/LogoBox";
 
-const Footer: React.FC = () => (
-	<Styled.FooterCont>
-		<Styled.LogoCont>
-			<LogoBox />
-		</Styled.LogoCont>
-		<Styled.CreatorLink href="https://www.bruinen.pl/">
-			©Bruinen web development
-		</Styled.CreatorLink>
-	</Styled.FooterCont>
+export const Footer: React.FC = () => (
+    <Styled.FooterCont>
+        <Styled.LogoCont>
+            <LogoBox />
+        </Styled.LogoCont>
+        <Styled.CreatorLink href="https://www.bruinen.pl/">
+            ©Bruinen web development
+        </Styled.CreatorLink>
+    </Styled.FooterCont>
 );
-
-export default Footer;

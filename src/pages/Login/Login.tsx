@@ -21,7 +21,7 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 //Styles
 import * as Styled from "./stylesLogin";
-import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import { PageWrapper } from "../../components/PageWrapper/PageWrapper";
 import { ButtonWithLoader } from "../../components/ButtonWithLoader/ButtonWithLoader";
 
 interface FormFields {
@@ -29,7 +29,7 @@ interface FormFields {
     password: string;
 }
 
-const Login = () => {
+export const Login: React.FC = () => {
     const history = useHistory();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -63,8 +63,8 @@ const Login = () => {
     };
     useEffect(() => {
         if (!errorMessage && userId) {
-			const targetLocation = location.search.split("?target=")[1] || "";
-            history.push('/'+targetLocation);
+            const targetLocation = location.search.split("?target=")[1] || "";
+            history.push("/" + targetLocation);
         }
     }, [errorMessage, history, location.search, userId]);
 
@@ -141,4 +141,3 @@ const Login = () => {
         </PageWrapper>
     );
 };
-export default Login;

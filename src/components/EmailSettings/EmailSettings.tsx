@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as watcherTypes from '../../store/actions/watcherTypes';
 import { useForm, Controller } from 'react-hook-form';
-// import { RHFInput } from 'react-hook-form-input';
 
 // MUI
 import {

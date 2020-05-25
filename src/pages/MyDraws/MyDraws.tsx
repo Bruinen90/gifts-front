@@ -13,9 +13,9 @@ import {
 } from "@material-ui/core";
 
 // Components
-import PageWrapper from "../../components/PageWrapper/PageWrapper";
-import DrawRow from "../../components/DrawRow/DrawRow";
-import EmptyListMessage from "../../components/EmptyListMessage/EmptyListMessage";
+import { PageWrapper } from "../../components/PageWrapper/PageWrapper";
+import { DrawRow } from "../../components/DrawRow/DrawRow";
+import { EmptyListMessage } from "../../components/EmptyListMessage/EmptyListMessage";
 
 // Interfaces
 import { State } from "../../types/State";
@@ -27,7 +27,7 @@ import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import NoData from "../../img/undraw_no_data.svg";
 import { Add } from "@material-ui/icons";
 
-const MyDraws: React.FC = () => {
+export const MyDraws: React.FC = () => {
     const history = useHistory();
     const [usersDraws, userId, shoppingList] = useSelector((state: State) => [
         state.draw.usersDraws,
@@ -182,4 +182,3 @@ const MyDraws: React.FC = () => {
         </PageWrapper>
     );
 };
-export default MyDraws;

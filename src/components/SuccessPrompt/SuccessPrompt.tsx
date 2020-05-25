@@ -16,7 +16,7 @@ export const SuccessPrompt: React.FC = () => {
     const handleCloseSnackbar = () => {
         dispatch(actionCreators.setSuccess({}));
     };
-    // Adjust prompt showtime to average reading speed + 2 sec for finding it out
+    // Adjust prompt showtime to average reading speed od 400ms per word + 2 sec for finding it out
     let promptShowtime = 0;
     if (success.message) {
         promptShowtime = 2000 + 400 * success.message.split(" ").length;

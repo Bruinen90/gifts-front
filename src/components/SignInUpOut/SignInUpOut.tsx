@@ -10,6 +10,7 @@ import { Person } from '@material-ui/icons';
 // Styles
 import * as Styled from './styles';
 
+// Types
 interface ButtonsWrapperProps {
 	variant: 'horizontal' | 'vertical';
 }
@@ -36,7 +37,7 @@ interface SignInUpOutProps {
 	closeDrawer?: () => void;
 }
 
-const SignInUpOut: React.FC<SignInUpOutProps> = ({
+export const SignInUpOut: React.FC<SignInUpOutProps> = ({
 	username,
 	variant,
 	closeDrawer,
@@ -94,5 +95,3 @@ const SignInUpOut: React.FC<SignInUpOutProps> = ({
 		</ButtonsWrapper>
 	);
 };
-
-export default SignInUpOut;

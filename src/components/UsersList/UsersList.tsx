@@ -7,15 +7,13 @@ import {
     Divider,
     ListItem,
 } from "@material-ui/core";
-
-// Icons
 import { PersonAdd, PersonAddDisabled } from "@material-ui/icons";
 
 // Styles
 import * as Styled from "./stylesUsersList";
 
 // Components
-import LoadingOverlay from "../LoadingOverlay/LoadingOverlay";
+import { LoadingOverlay } from "../LoadingOverlay/LoadingOverlay";
 
 // Types
 import { UsersListType, User, UsersListTypesType } from "../../types/User";
@@ -26,11 +24,11 @@ interface UserSearchResultsProps {
     handleUserClicked: (user: User) => void;
 }
 
-const UsersList = ({
+export const UsersList: React.FC<UserSearchResultsProps> = ({
     usersList,
     handleUserClicked,
     listType,
-}: UserSearchResultsProps) => (
+}) => (
     <Styled.UsersList
         dense={true}
         style={{ width: "100%" }}
@@ -63,5 +61,3 @@ const UsersList = ({
         ))}
     </Styled.UsersList>
 );
-
-export default UsersList;

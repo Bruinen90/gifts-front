@@ -1,14 +1,15 @@
 import React from "react";
 
 // Styles
-import * as Styled from "./styles";
+import * as Styled from "./stylesLoadingScreen";
+
 // Components
-import LogoBox from "../../components/LogoBox/LogoBox";
+import {LogoBox} from "../../components/LogoBox/LogoBox";
 
 // MUI
 import { CircularProgress } from "@material-ui/core";
 
-const LoadingScreen: React.FC = () => {
+export const LoadingScreen: React.FC = () => {
     return (
         <Styled.Wrapper>
             <LogoBox scale={window.innerWidth / 400} />
@@ -16,5 +17,3 @@ const LoadingScreen: React.FC = () => {
         </Styled.Wrapper>
     );
 };
-
-export default LoadingScreen;

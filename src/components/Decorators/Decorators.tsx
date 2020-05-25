@@ -8,6 +8,7 @@ import CircleIcon from '../../img/decorators/circle.svg';
 //Styles
 import * as Styled from './stylesDecorators';
 
+// To replace with SVG or something
 const PLUS_CORDS = [
 	{ left: 10, top: 15 },
 	{ left: 30, top: 80 },

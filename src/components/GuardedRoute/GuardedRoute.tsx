@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
+
+// Types
 import { State } from '../../types/State';
 
 interface GuardedRoute {
@@ -8,7 +10,7 @@ interface GuardedRoute {
 	component: React.FC;
 }
 
-const GuardedRoute: React.FC<GuardedRoute> = ({
+export const GuardedRoute: React.FC<GuardedRoute> = ({
 	path,
 	component: TargetComponent,
 	...other

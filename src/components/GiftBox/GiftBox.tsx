@@ -30,7 +30,7 @@ interface GiftBoxProps {
 	cancelReservation: ({ wishId }: { wishId: string }) => void;
 }
 
-const GiftBox: React.FC<GiftBoxProps> = ({
+export const GiftBox: React.FC<GiftBoxProps> = ({
 	_id,
 	title,
 	description,

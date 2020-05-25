@@ -4,7 +4,7 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 
 // Components
-import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import { PageWrapper } from "../../components/PageWrapper/PageWrapper";
 import { EmailSettings } from "../../components/EmailSettings/EmailSettings";
 import { PasswordSettings } from "../../components/PasswordSettings/PasswordSettings";
 

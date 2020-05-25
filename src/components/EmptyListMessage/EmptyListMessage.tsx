@@ -1,6 +1,9 @@
 import React from 'react';
+
+// MUI
 import { Box, Typography, Button } from '@material-ui/core';
 
+// Types
 interface EmptyListMessageProps {
 	imageUrl: string;
 	message: string;
@@ -10,7 +13,7 @@ interface EmptyListMessageProps {
 	};
 }
 
-const EmptyListMessage: React.FC<EmptyListMessageProps> = ({
+export const EmptyListMessage: React.FC<EmptyListMessageProps> = ({
 	imageUrl,
 	message,
 	button,
@@ -38,5 +41,3 @@ const EmptyListMessage: React.FC<EmptyListMessageProps> = ({
 		)}
 	</Box>
 );
-
-export default EmptyListMessage;

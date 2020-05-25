@@ -1,120 +1,118 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 // MUI
-import { Dialog, DialogTitle, Box, CircularProgress } from '@material-ui/core';
+import { Dialog, DialogTitle, Box, CircularProgress } from "@material-ui/core";
 
 // Components
-import EmptyListMessage from '../EmptyListMessage/EmptyListMessage';
+import { EmptyListMessage } from "../EmptyListMessage/EmptyListMessage";
+import { WishesList } from "../WishesList/WishesList";
 
 // Images
-import NoData from '../../img/undraw_no_data.svg';
+import NoData from "../../img/undraw_no_data.svg";
 
 // Types
-import { State } from '../../types/State';
-import WishesList from '../WishesList/WishesList';
+import { State } from "../../types/State";
 import {
-	ReservationStatusSetterType,
-	ReservationPayload,
-} from '../../types/Reservations';
-import { Wish } from '../../types/WishTypes';
+    ReservationStatusSetterType,
+    ReservationPayload,
+} from "../../types/Reservations";
+import { Wish } from "../../types/WishTypes";
+
 interface WishesModalProps {
-	userId: string;
-	drawId?: string;
-	username: string;
-	opened: boolean;
-	toggle: () => void;
+    userId: string;
+    drawId?: string;
+    username: string;
+    opened: boolean;
+    toggle: () => void;
 }
 
-const WishesModal: React.FC<WishesModalProps> = ({
-	userId,
-	drawId,
-	username,
-	opened,
-	toggle,
+export const WishesModal: React.FC<WishesModalProps> = ({
+    userId,
+    drawId,
+    username,
+    opened,
+    toggle,
 }) => {
-	const dispatch = useDispatch();
-	const [wishesList, setWishesList] = useState<Wish[]>();
-	const fetchedWishesList = useSelector((state: State) => {
-		const { othersWishes } = state.wish;
-		if (
-			othersWishes &&
-			othersWishes.find(
-				userWishesList => userWishesList.userId === userId
-			)
-		) {
-			return othersWishes.find(
-				userWishesList => userWishesList.userId === userId
-			)!.wishesList;
-		} else {
-			return undefined;
-		}
-	});
-	useEffect(() => {
-		dispatch({
-			type: 'FETCH_USER_WISHES_WATCHER',
-			payload: { userId: userId },
-		});
-	}, [userId, dispatch]);
+    const dispatch = useDispatch();
+    const [wishesList, setWishesList] = useState<Wish[]>();
+    const fetchedWishesList = useSelector((state: State) => {
+        const { othersWishes } = state.wish;
+        if (
+            othersWishes &&
+            othersWishes.find(
+                (userWishesList) => userWishesList.userId === userId
+            )
+        ) {
+            return othersWishes.find(
+                (userWishesList) => userWishesList.userId === userId
+            )!.wishesList;
+        } else {
+            return undefined;
+        }
+    });
+    useEffect(() => {
+        dispatch({
+            type: "FETCH_USER_WISHES_WATCHER",
+            payload: { userId: userId },
+        });
+    }, [userId, dispatch]);
 
-	useEffect(() => {
-		if (fetchedWishesList) {
-			setWishesList(
-				fetchedWishesList.map(wish => ({ ...wish, creator: userId }))
-			);
-		}
-	}, [fetchedWishesList, userId]);
+    useEffect(() => {
+        if (fetchedWishesList) {
+            setWishesList(
+                fetchedWishesList.map((wish) => ({ ...wish, creator: userId }))
+            );
+        }
+    }, [fetchedWishesList, userId]);
 
-	const handleSetReservationStatus: ReservationStatusSetterType = ({
-		wishId,
-		creatorId,
-		reserved,
-	}) => {
-		const payload: ReservationPayload = {
-			wishId: wishId,
-			reserved: reserved,
+    const handleSetReservationStatus: ReservationStatusSetterType = ({
+        wishId,
+        creatorId,
+        reserved,
+    }) => {
+        const payload: ReservationPayload = {
+            wishId: wishId,
+            reserved: reserved,
             creatorId: creatorId,
-            wishTitle: wishesList?.find(wish => wish._id === wishId)!.title
-		};
-		if (drawId) {
-			payload.drawId = drawId;
-		}
-		dispatch({
-			type: 'RESERVE_WISH_WATCHER',
-			payload: payload,
-		});
+            wishTitle: wishesList?.find((wish) => wish._id === wishId)!.title,
+        };
+        if (drawId) {
+            payload.drawId = drawId;
+        }
+        dispatch({
+            type: "RESERVE_WISH_WATCHER",
+            payload: payload,
+        });
     };
-    
+
     // Loading check
     const loadingState = useSelector((state: State) => state.loading);
-    const isLoading = 
-        loadingState.recordId === userId && 
-        loadingState.category === 'wishes' && 
-        loadingState.type === 'fetching-records';
+    const isLoading =
+        loadingState.recordId === userId &&
+        loadingState.category === "wishes" &&
+        loadingState.type === "fetching-records";
 
-	return (
-		<Dialog open={opened} onClose={toggle}>
-			<DialogTitle>Lista życzeń użytkownika {username}</DialogTitle>
-            {isLoading ? 
-                <Box 
-                    display="flex" 
-                    justifyContent="center" 
-                    margin="2rem"
-                >
+    return (
+        <Dialog open={opened} onClose={toggle}>
+            <DialogTitle>Lista życzeń użytkownika {username}</DialogTitle>
+            {isLoading ? (
+                <Box display="flex" justifyContent="center" margin="2rem">
                     <CircularProgress />
-                </Box> :
-			wishesList && wishesList.length > 0 ? (
-				<WishesList
-					wishesList={wishesList}
-					viewMode="guest"
-					setReservedStatus={handleSetReservationStatus}
-					inModal={true}
-				/>
-			): <EmptyListMessage
-            imageUrl={NoData}
-            message={`Użytkownik ${username} nie posiada jeszcze żadnych życzeń`}
-        />}
-		</Dialog>
-	);
+                </Box>
+            ) : wishesList && wishesList.length > 0 ? (
+                <WishesList
+                    wishesList={wishesList}
+                    viewMode="guest"
+                    setReservedStatus={handleSetReservationStatus}
+                    inModal={true}
+                />
+            ) : (
+                <EmptyListMessage
+                    imageUrl={NoData}
+                    message={`Użytkownik ${username} nie posiada jeszcze żadnych życzeń`}
+                />
+            )}
+        </Dialog>
+    );
 };
-export default WishesModal;
