@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // Types
 import { WishesListProps } from "../../types/WishTypes";
 import { State } from "../../types/State";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 
 // MUI
 import { Grid, CircularProgress, Card } from "@material-ui/core";
@@ -20,7 +21,7 @@ export const WishesList: React.FC<WishesListProps> = ({
     const dispatch = useDispatch();
     const handleDeleteWish = (wishId: string, wishTitle: string) => {
         dispatch({
-            type: "DELETE_WISH_WATCHER",
+            type: watcherTypes.WATCH_DELETE_WISH,
             payload: { wishId, wishTitle },
         });
     };

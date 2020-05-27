@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 
 // MUI
 import {
@@ -48,7 +49,7 @@ export const MyDraws: React.FC = () => {
     // Delete draw
     const dispatchDeleteDraw = (drawId: string, drawTitle: string) => {
         dispatch({
-            type: "DELETE_DRAW_WATCHER",
+            type: watcherTypes.WATCH_DELETE_DRAW,
             payload: { drawId, drawTitle },
         });
     };
@@ -56,20 +57,23 @@ export const MyDraws: React.FC = () => {
     // Exit draw
     const dispatchExitDraw = (drawId: string, drawTitle: string) => {
         dispatch({
-            type: "EXIT_DRAW_WATCHER",
+            type: watcherTypes.WATCH_EXIT_DRAW,
             payload: { drawId, drawTitle },
         });
     };
 
     // Run draw
     const dispatchRunDraw = (drawId: string, drawTitle: string) => {
-        dispatch({ type: "RUN_DRAW_WATCHER", payload: { drawId, drawTitle } });
+        dispatch({
+            type: watcherTypes.WATCH_RUN_DRAW,
+            payload: { drawId, drawTitle },
+        });
     };
 
     // Archive draw
     const dispatchArchiveDraw = (drawId: string, drawTitle: string) => {
         dispatch({
-            type: "ARCHIVE_DRAW_WATCHER",
+            type: watcherTypes.WATCH_ARCHIVE_DRAW,
             payload: { drawId, drawTitle },
         });
     };

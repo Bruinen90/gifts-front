@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 
 // MUI
 import {
@@ -90,7 +91,7 @@ export const CreateWish: React.FC = () => {
             clearedFormData._id = originalId;
         }
         dispatch({
-            type: "CREATE_WISH_WATCHER",
+            type: watcherTypes.WATCH_CREATE_WISH,
             payload: {
                 ...clearedFormData,
                 price: parseInt(clearedFormData.price as string),

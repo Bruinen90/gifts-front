@@ -4,6 +4,7 @@ import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import * as actionCreators from "../../store/actions/actionCreators";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 
 // MUI
 import {
@@ -45,7 +46,7 @@ export const PasswordSettings: React.FC = () => {
             const response = await axios.post("/graphql", graphQLquery);
             console.log(response.data);
             if (response.data.data.changePassword.success) {
-                dispatch({ type: "USER_LOGOUT_WATCHER" });
+                dispatch({ type: watcherTypes.WATCH_USER_LOGOUT });
                 history.push("/logowanie");
                 dispatch(
                     actionCreators.setSuccess({

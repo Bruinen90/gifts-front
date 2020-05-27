@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import * as watcherTypes from '../../store/actions/watcherTypes';
 
 // MUI
 import {
@@ -45,7 +46,7 @@ export const DrawResults: React.FC<DrawResultsProps> = ({
 
     const handleCancelReservation = (payload: { wishId: string }) => {
         dispatch({
-            type: "RESERVE_WISH_WATCHER",
+            type: watcherTypes.WATCH_RESERVE_WISH,
             payload: {
                 drawId: drawId,
                 userId: _id,

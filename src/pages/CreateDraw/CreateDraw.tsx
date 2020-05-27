@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 
 //Styles
 import * as Styled from "./stylesCreateDraw";
@@ -135,7 +136,7 @@ export const CreateDraw: React.FC = () => {
         if (originalId) {
             payload._id = originalId;
         }
-        dispatch({ type: "CREATE_DRAW_WATCHER", payload: payload });
+        dispatch({ type: watcherTypes.WATCH_CREATE_DRAW, payload: payload });
         history.push("/moje-losowania");
     };
 

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link, useLocation } from "react-router-dom";
+import * as watcherTypes from "../../store/actions/watcherTypes";
+
+// MUI
 import {
     Typography,
     TextField,
@@ -57,7 +60,7 @@ export const Login: React.FC = () => {
     const handleLogin = (event: React.SyntheticEvent) => {
         event.preventDefault();
         dispatch({
-            type: "LOGIN_USER_WATCHER",
+            type: watcherTypes.WATCH_LOGIN_USER,
             payload: { username: formData.user, password: formData.password },
         });
     };

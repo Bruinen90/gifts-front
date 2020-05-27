@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 
 // MUI
 import { Dialog, DialogTitle, Box, CircularProgress } from "@material-ui/core";
@@ -51,9 +52,11 @@ export const WishesModal: React.FC<WishesModalProps> = ({
             return undefined;
         }
     });
+
+    // Fetch user wishes
     useEffect(() => {
         dispatch({
-            type: "FETCH_USER_WISHES_WATCHER",
+            type: watcherTypes.WATCH_FETCH_USER_WISHES,
             payload: { userId: userId },
         });
     }, [userId, dispatch]);
@@ -81,7 +84,7 @@ export const WishesModal: React.FC<WishesModalProps> = ({
             payload.drawId = drawId;
         }
         dispatch({
-            type: "RESERVE_WISH_WATCHER",
+            type: watcherTypes.WATCH_RESERVE_WISH,
             payload: payload,
         });
     };
