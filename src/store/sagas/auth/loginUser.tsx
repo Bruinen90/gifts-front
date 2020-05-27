@@ -54,6 +54,7 @@ export function* loginUser(action: {
 		yield fetchUserFriends();
 		yield fetchShoppingList();
 	} catch (err) {
+		console.log("ERROR DURING LOGIN!!!!!!!!!!")
 		yield put({
 			type: actionTypes.USER_LOGIN_FAILED,
 			payload: { message: err.response.data.errors[0].message },

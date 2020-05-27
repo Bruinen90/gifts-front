@@ -14,6 +14,8 @@ export default (state: ErrorsState = {}, action: Action) => {
                 ...state,
                 [action.payload.category]: undefined,
             };
+        case actionTypes.CLEAR_ALL_ERRORS:
+            return {};
         default:
             return state;
     }
