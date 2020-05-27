@@ -41,10 +41,6 @@ export function* loginUser(action: {
 		const loginData = response.data.data.login;
 		const { token } = loginData;
 		yield localStorage.setItem('token', token);
-		// yield localStorage.setItem('username', username);
-		// yield localStorage.setItem('email', email);
-		// yield localStorage.setItem('userId', userId);
-		// yield localStorage.setItem('unsubscribed', unsubscribed);
 		yield put({
 			type: actionTypes.USER_LOGIN,
 			payload: response.data.data.login,

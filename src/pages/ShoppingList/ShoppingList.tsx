@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import * as watcherTypes from "../../store/actions/watcherTypes";
 
 // MUI
 import { Typography } from "@material-ui/core";
@@ -8,6 +9,7 @@ import { Typography } from "@material-ui/core";
 import { PageWrapper } from "../../components/PageWrapper/PageWrapper";
 import { EmptyListMessage } from "../../components/EmptyListMessage/EmptyListMessage";
 import { WishesList } from "../../components/WishesList/WishesList";
+import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 
 // Images
 import NoData from "../../img/undraw_no_data.svg";
@@ -44,7 +46,7 @@ export const ShoppingList: React.FC = () => {
             payload.drawId = drawId;
         }
         dispatch({
-            type: "RESERVE_WISH_WATCHER",
+            type: watcherTypes.WATCH_RESERVE_WISH,
             payload: payload,
         });
     };
@@ -63,6 +65,8 @@ export const ShoppingList: React.FC = () => {
             <Typography variant="h2" align="center">
                 Lista zakupów
             </Typography>
+            <LoadingSpinner type="other" category="auth" />
+            <LoadingSpinner type="fetching-records" category="wishes" />
             {shoppingList &&
                 (shoppingList.length > 0 ? (
                     <WishesList

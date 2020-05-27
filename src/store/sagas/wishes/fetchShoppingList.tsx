@@ -1,6 +1,7 @@
 import { put, select } from "redux-saga/effects";
 import axios from "axios";
 import * as actionTypes from "../../actions/actionTypes";
+import * as actionCreators from "../../actions/actionCreators";
 
 // Utils
 import { getLoggedUser } from "../utils/selectors";
@@ -9,6 +10,13 @@ export function* fetchShoppingList() {
     const grapghqlQuery = {
         query: `{getShoppingList {_id title link imageUrl description price forDraw creator {_id username email}}}`,
     };
+    yield put(
+        actionCreators.setLoading({
+            loading: true,
+            category: "wishes",
+            type: "fetching-records",
+        })
+    );
     try {
         const response = yield axios.post("graphql", grapghqlQuery);
         if (!response.data.data) {
@@ -31,4 +39,5 @@ export function* fetchShoppingList() {
             },
         });
     }
+    yield put(actionCreators.setLoading({ loading: false }));
 }
