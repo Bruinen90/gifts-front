@@ -19,6 +19,7 @@ import { State } from "../../types/State";
 import {
     ReservationStatusSetterType,
     ReservationPayload,
+    WishDoneSetterType,
 } from "../../types/Reservations";
 
 export const ShoppingList: React.FC = () => {
@@ -51,6 +52,10 @@ export const ShoppingList: React.FC = () => {
         });
     };
 
+    const handleSetWishAsDone: WishDoneSetterType = ({_id, title}) => {
+        console.log(_id)
+    }
+
     const populatedShoppingList = shoppingList?.map((item) => {
         let drawData;
         if (item.forDraw) {
@@ -73,6 +78,7 @@ export const ShoppingList: React.FC = () => {
                         wishesList={populatedShoppingList!}
                         viewMode="guest"
                         setReservedStatus={handleSetReservationStatus}
+                        setWishAsDone={handleSetWishAsDone}
                     />
                 ) : (
                     <EmptyListMessage

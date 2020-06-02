@@ -15,6 +15,7 @@ import {
     Button,
     CardMedia,
     Typography,
+    Box,
 } from "@material-ui/core";
 
 // Icons
@@ -29,6 +30,7 @@ import {
     Shuffle,
     Person,
     Block,
+    Done,
 } from "@material-ui/icons";
 
 // Styles
@@ -49,6 +51,7 @@ export const WishBox: React.FC<WishBoxProps> = ({
     view,
     deleteWish,
     setReservedStatus,
+    setWishAsDone,
     drawData,
     oneColumn,
 }) => {
@@ -61,7 +64,6 @@ export const WishBox: React.FC<WishBoxProps> = ({
         | "reserved-by-other-user" = "not-reserved";
 
     if (wish.reserved) {
-        console.log(wish.buyer);
         if (wish.buyer?._id === loggedUserId) {
             reservedStatus = "reserved-by-curr-user";
         } else {
@@ -96,6 +98,13 @@ export const WishBox: React.FC<WishBoxProps> = ({
     const handleCancelReservation = () => {
         changeReservationStatus(false);
     };
+
+    const handleSetAsDone = () => {
+        if(setWishAsDone) {
+            const { _id, title } = wish;
+            setWishAsDone({ _id, title });
+        }
+    }
 
     // Deleting wish
     const [confirmationDialogOpened, setConfirmationDialogOpened] = useState(
@@ -225,13 +234,22 @@ export const WishBox: React.FC<WishBoxProps> = ({
                             </Button>
                         </>
                     ) : reservedStatus === "reserved-by-curr-user" ? (
-                        <Button
-                            color="secondary"
-                            startIcon={<LockOpen />}
-                            onClick={handleCancelReservation}
-                        >
-                            Anuluj deklarację zakupu
-                        </Button>
+                        <Box display="flex" flexDirection="column" alignItems="flex-start">
+                            <Button 
+                                color="primary" 
+                                startIcon={<Done />}
+                                onClick={handleSetAsDone}
+                            >
+                                Prezent już wręczony
+                            </Button>
+                            <Button
+                                color="secondary"
+                                startIcon={<LockOpen />}
+                                onClick={handleCancelReservation}
+                            >
+                                Anuluj deklarację zakupu
+                            </Button>
+                        </Box>
                     ) : wish.reserved ? (
                         <Button disabled startIcon={<Block />}>
                             Prezent zarezerwowany przez innego użytkownika

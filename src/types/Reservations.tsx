@@ -13,3 +13,11 @@ export type ReservationStatusSetterType = ({
 	reserved,
 	drawId,
 }: ReservationPayload) => void;
+
+export type WishDoneSetterType = ({
+	_id,
+	title,
+}: {
+	_id: string;
+	title: string;
+}) => void;

@@ -16,6 +16,7 @@ export const WishesList: React.FC<WishesListProps> = ({
     wishesList,
     viewMode,
     setReservedStatus,
+    setWishAsDone,
     inModal,
 }) => {
     const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export const WishesList: React.FC<WishesListProps> = ({
             payload: { wishId, wishTitle },
         });
     };
+
     const loadingState = useSelector((state: State) => state.loading);
 
     return (
@@ -64,6 +66,7 @@ export const WishesList: React.FC<WishesListProps> = ({
                     view={viewMode === "creator" ? "full" : "simple"}
                     deleteWish={() => handleDeleteWish(wish._id, wish.title)}
                     setReservedStatus={setReservedStatus}
+                    setWishAsDone={setWishAsDone}
                     oneColumn={inModal}
                 />
             ))}
