@@ -152,6 +152,19 @@ export default (state: WishState = {}, action: Action) => {
                     })
                 ),
             };
+        case actionTypes.SET_WISH_DONE:
+            return {
+                ...state,
+                shoppingList: state.shoppingList!.map(wish => {
+                    if(wish._id !== action.payload.wishId) {
+                        return wish
+                    }
+                    return {
+                        ...wish,
+                        done: true,
+                    }
+                })
+            } 
         default:
             return state;
     }

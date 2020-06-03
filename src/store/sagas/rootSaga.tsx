@@ -23,6 +23,7 @@ import { cancelFriendship } from './friends/cancelFriendship';
 import { changeUserEmail } from './auth/changeUserEmail';
 import { unsubscribe } from './auth/unsubscribe';
 import { tokenVerification } from './auth/tokenVerification';
+import { setWishDone } from './wishes/setWishDone';
 
 export default function* rootSaga() {
 	yield all([
@@ -31,7 +32,10 @@ export default function* rootSaga() {
 		yield takeEvery(watcherTypes.WATCH_CREATE_DRAW, createDraw),
 		yield takeEvery(watcherTypes.WATCH_DELETE_DRAW, deleteDraw),
 		yield takeEvery(watcherTypes.WATCH_USER_AUTOLOGIN, autoLoginUser),
-		yield takeLatest(watcherTypes.WATCH_FETCH_USER_DRAWS_LIST, fetchUserDrawsList),
+		yield takeLatest(
+			watcherTypes.WATCH_FETCH_USER_DRAWS_LIST,
+			fetchUserDrawsList
+		),
 		yield takeEvery(watcherTypes.WATCH_EXIT_DRAW, exitDraw),
 		yield takeLatest(watcherTypes.WATCH_RUN_DRAW, runDraw),
 		yield takeLatest(watcherTypes.WATCH_ARCHIVE_DRAW, archiveDraw),
@@ -62,9 +66,7 @@ export default function* rootSaga() {
 		),
 		yield takeLatest(watcherTypes.WATCH_CHANGE_USER_EMAIL, changeUserEmail),
 		yield takeLatest(watcherTypes.WATCH_UNSUBSCRIBE, unsubscribe),
-		yield takeLatest(
-			watcherTypes.WATCH_AUTO_LOGIN_USER,
-			tokenVerification
-		),
+		yield takeLatest(watcherTypes.WATCH_AUTO_LOGIN_USER, tokenVerification),
+		yield takeLatest(watcherTypes.WATCH_SET_WISH_DONE, setWishDone),
 	]);
 }
