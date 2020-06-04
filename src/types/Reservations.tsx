@@ -17,7 +17,9 @@ export type ReservationStatusSetterType = ({
 export type WishDoneSetterType = ({
 	_id,
 	title,
+	done,
 }: {
 	_id: string;
 	title: string;
+	done: boolean;
 }) => void;

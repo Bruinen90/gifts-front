@@ -161,7 +161,7 @@ export default (state: WishState = {}, action: Action) => {
                     }
                     return {
                         ...wish,
-                        done: true,
+                        done: action.payload.done,
                     }
                 })
             } 

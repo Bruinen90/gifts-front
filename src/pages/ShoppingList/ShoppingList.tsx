@@ -52,10 +52,10 @@ export const ShoppingList: React.FC = () => {
 		});
 	};
 
-	const handleSetWishAsDone: WishDoneSetterType = ({ _id, title }) => {
+	const handleSetWishAsDone: WishDoneSetterType = ({ _id, title, done }) => {
 		dispatch({
 			type: watcherTypes.WATCH_SET_WISH_DONE,
-			payload: { wishId: _id, wishTitle: title },
+			payload: { wishId: _id, wishTitle: title, done },
 		});
 	};
 

@@ -8,7 +8,25 @@ import { getLoggedUser } from "../utils/selectors";
 
 export function* fetchShoppingList() {
     const grapghqlQuery = {
-        query: `{getShoppingList {_id title link imageUrl description price forDraw creator {_id username email}}}`,
+        query: `{
+            getShoppingList 
+                {
+                    _id 
+                    title 
+                    link 
+                    imageUrl 
+                    description 
+                    price 
+                    forDraw 
+                    done 
+                    creator 
+                        {
+                            _id 
+                            username 
+                            email
+                        }
+                    }
+                }`,
     };
     yield put(
         actionCreators.setLoading({

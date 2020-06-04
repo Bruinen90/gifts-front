@@ -31,6 +31,7 @@ export function* fetchUserWishes(action?: {
                                 description 
                                 price 
                                 reserved 
+                                done 
                                 updatedAt 
                                 buyer { _id }
                             }
@@ -79,6 +80,7 @@ export function* fetchUserWishes(action?: {
                             description 
                             price 
                             reserved 
+                            done 
                             updatedAt 
                             buyer { _id username } 
                         }

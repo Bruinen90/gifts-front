@@ -21,6 +21,7 @@ export interface Wish extends WishInput {
 	price: number;
 	buyer?: User;
 	reserved?: boolean;
+	done: boolean;
 	forDraw?: string;
 	imageUrl?: string;
 	updatedAt: Date | string;

@@ -5,9 +5,9 @@ import * as actionCreators from '../../actions/actionCreators';
 
 export function* setWishDone(action: {
 	type: string;
-	payload: { wishId: string; wishTitle: string };
+	payload: { wishId: string; wishTitle: string; done: boolean };
 }) {
-	const { wishId, wishTitle } = action.payload;
+	const { wishId, wishTitle, done } = action.payload;
 	yield put(
 		actionCreators.setLoading({
 			loading: true,
@@ -19,21 +19,26 @@ export function* setWishDone(action: {
 		const graphQLquery = {
 			query: `
                 mutation {
-                    setWishDone(wishData: {wishId: "${wishId}", done: true})
-                    {success}}
+                    setWishDone(input: {wishId: "${wishId}", done: ${done}})
+                    {success message}}
             `,
 		};
 		const response = yield axios.post('graphql', graphQLquery);
 		if (response.data.data && response.data.data.setWishDone.success) {
+			yield put({
+				type: actionTypes.SET_WISH_DONE,
+				payload: action.payload,
+			});
+			yield put(
+				actionCreators.setSuccess({
+					message: `Prezent "${wishTitle}" został oznaczony jako ${!done &&
+						'nie'} wręczony.`,
+				})
+			);
 		} else {
+			console.log('ERR!');
 			throw new Error();
 		}
-		yield put({ type: actionTypes.SET_WISH_DONE, payload: action.payload });
-		yield put(
-			actionCreators.setSuccess({
-				message: `Prezent "${wishTitle}" został oznaczony jako wręczony.`,
-			})
-		);
 	} catch (err) {
 		console.log(err);
 		yield put(
