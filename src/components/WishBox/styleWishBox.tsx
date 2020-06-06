@@ -1,15 +1,9 @@
 import { styled, Card } from '@material-ui/core';
 
-interface WishCardProps {
-	reserved: number;
-}
-
-export const WishCard = styled(Card)(({ reserved }: WishCardProps) => ({
+export const WishCard = styled(Card)(() => ({
 	height: '100%',
 	display: 'flex',
 	flexDirection: 'column',
-	opacity: reserved > 0 ? '0.15' : '1',
-	pointerEvents: reserved > 0 ? 'none' : 'all',
 }));
 
 export const ReservedOverlay = styled('div')({
@@ -24,4 +18,5 @@ export const ReservedOverlay = styled('div')({
 	alignItems: 'center',
 	justifyContent: 'center',
 	fontSize: '2rem',
+	backgroundColor: 'rgba(255,255,255,0.75)',
 });
