@@ -10,6 +10,7 @@ import { PageWrapper } from '../../components/PageWrapper/PageWrapper';
 import { EmptyListMessage } from '../../components/EmptyListMessage/EmptyListMessage';
 import { WishesList } from '../../components/WishesList/WishesList';
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+import { sortWishes } from '../../common/utils';
 
 // Images
 import NoData from '../../img/undraw_no_data.svg';
@@ -78,7 +79,7 @@ export const ShoppingList: React.FC = () => {
 			{shoppingList &&
 				(shoppingList.length > 0 ? (
 					<WishesList
-						wishesList={populatedShoppingList!}
+						wishesList={sortWishes(populatedShoppingList!)}
 						viewMode="guest"
 						setReservedStatus={handleSetReservationStatus}
 						setWishAsDone={handleSetWishAsDone}

@@ -15,7 +15,12 @@ export default (state: WishState = {}, action: Action) => {
             }
             return {
                 ...state,
-                usersWishes: usersWishes.sort((wishA, wishB) => wishA.updatedAt > wishB.updatedAt ? -1 : 0),
+                usersWishes: usersWishes.sort((wishA, wishB) => {
+                    let A = wishA.done ? -1000 : 0;
+                    let B = wishB.done ? -1000 : 0;
+                    wishA.updatedAt > wishB.updatedAt ? A-- : B--;
+                    return A-B;
+                }),
             };
         case actionTypes.SET_USER_WISHES:
             return {
