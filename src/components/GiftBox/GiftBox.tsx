@@ -55,15 +55,15 @@ export const GiftBox: React.FC<GiftBoxProps> = ({
 						</ListItemIcon>
 						<ListItemText
 							primary={price + ' zł'}
-							secondary="Orientacyjna cena"
+							secondary='Orientacyjna cena'
 						/>
 					</ListItem>
 					{link && (
-						<ListItem button component="a" href={link}>
+						<ListItem button component='a' href={link}>
 							<ListItemIcon>
 								<Link />
 							</ListItemIcon>
-							<ListItemText primary="Zobacz specyfikację lub zdjęcie" />
+							<ListItemText primary='Zobacz specyfikację lub zdjęcie' />
 						</ListItem>
 					)}
 					{description && (
@@ -79,7 +79,7 @@ export const GiftBox: React.FC<GiftBoxProps> = ({
 			<ExpansionPanelActions>
 				<Button
 					startIcon={<LockOpen />}
-					color="secondary"
+					color='secondary'
 					onClick={handleClickCancel}
 				>
 					Anuluj deklarancję zakupu

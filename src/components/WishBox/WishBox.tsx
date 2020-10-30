@@ -144,16 +144,16 @@ export const WishBox: React.FC<WishBoxProps> = ({
 		>
 			<Styled.WishCard>
 				<Box
-					display="flex"
-					justifyContent="center"
-					alignItems="center"
-					height="250px"
-					position="relative"
+					display='flex'
+					justifyContent='center'
+					alignItems='center'
+					height='250px'
+					position='relative'
 				>
 					{reservedStatus === 'reserved-by-other-user' && (
 						<Styled.ReservedOverlay>
-							<Block fontSize="inherit" />
-							<Typography align="center" variant="h4">
+							<Block fontSize='inherit' />
+							<Typography align='center' variant='h4'>
 								To życzenie zostało zarezerwowane{' '}
 								{wish.buyer &&
 									wish.buyer.username &&
@@ -163,11 +163,11 @@ export const WishBox: React.FC<WishBoxProps> = ({
 					)}
 					{reservedStatus === 'done' && (
 						<Styled.ReservedOverlay>
-							<Done fontSize="inherit" color="primary" />
+							<Done fontSize='inherit' color='primary' />
 							<Typography
-								align="center"
-								color="primary"
-								variant="h4"
+								align='center'
+								color='primary'
+								variant='h4'
 							>
 								Prezent już wręczony
 							</Typography>
@@ -175,14 +175,14 @@ export const WishBox: React.FC<WishBoxProps> = ({
 					)}
 					{wish.imageUrl ? (
 						<CardMedia
-							component="img"
+							component='img'
 							image={wish.imageUrl}
 							style={{ height: '250px' }}
 						/>
 					) : (
 						<Photo
 							style={{ fontSize: 120, opacity: 0.25 }}
-							color="disabled"
+							color='disabled'
 						/>
 					)}
 				</Box>
@@ -195,15 +195,21 @@ export const WishBox: React.FC<WishBoxProps> = ({
 							</ListItemIcon>
 							<ListItemText
 								primary={wish.price + ' zł'}
-								secondary="Orientacyjna cena"
+								secondary='Orientacyjna cena'
 							/>
 						</ListItem>
 						{wish.link && (
-							<ListItem button component="a" href={wish.link}>
+							<ListItem
+								button
+								component='a'
+								href={wish.link}
+								target='_blank'
+								rel='noreferrer'
+							>
 								<ListItemIcon>
 									<Link />
 								</ListItemIcon>
-								<ListItemText primary="Zobacz specyfikację lub zdjęcie" />
+								<ListItemText primary='Zobacz specyfikację lub zdjęcie' />
 							</ListItem>
 						)}
 						{wish.description && (
@@ -250,7 +256,7 @@ export const WishBox: React.FC<WishBoxProps> = ({
 					{view === 'full' ? (
 						<>
 							<Button
-								color="secondary"
+								color='secondary'
 								startIcon={<Delete />}
 								onClick={toggleConfirmationDialog}
 								disabled={
@@ -260,15 +266,15 @@ export const WishBox: React.FC<WishBoxProps> = ({
 								Usuń
 							</Button>
 							<ConfirmationDialog
-								title="Usuwanie życzenia"
+								title='Usuwanie życzenia'
 								description={`Czy na pewno chcesz usunąć życzenie ${wish.title} ze swojej listy?`}
-								acceptText="Tak, usuń życzenie"
+								acceptText='Tak, usuń życzenie'
 								confirmFunction={handleDeleteWish}
 								toggleDialog={toggleConfirmationDialog}
 								opened={confirmationDialogOpened}
 							/>
 							<Button
-								color="primary"
+								color='primary'
 								startIcon={<Edit />}
 								onClick={handleNavigateToEdit}
 								disabled={
@@ -280,19 +286,19 @@ export const WishBox: React.FC<WishBoxProps> = ({
 						</>
 					) : reservedStatus === 'reserved-by-curr-user' ? (
 						<Box
-							display="flex"
-							flexDirection="column"
-							alignItems="flex-start"
+							display='flex'
+							flexDirection='column'
+							alignItems='flex-start'
 						>
 							<Button
-								color="primary"
+								color='primary'
 								startIcon={<Done />}
 								onClick={handleSetAsDone}
 							>
 								Prezent już wręczony
 							</Button>
 							<Button
-								color="secondary"
+								color='secondary'
 								startIcon={<LockOpen />}
 								onClick={handleCancelReservation}
 							>
@@ -301,12 +307,12 @@ export const WishBox: React.FC<WishBoxProps> = ({
 						</Box>
 					) : wish.done ? (
 						<Box
-							display="flex"
-							flexDirection="column"
-							alignItems="flex-start"
+							display='flex'
+							flexDirection='column'
+							alignItems='flex-start'
 						>
 							<Button
-								color="secondary"
+								color='secondary'
 								startIcon={<Cancel />}
 								onClick={handleCancelDone}
 							>
@@ -319,7 +325,7 @@ export const WishBox: React.FC<WishBoxProps> = ({
 						</Button>
 					) : (
 						<Button
-							color="primary"
+							color='primary'
 							startIcon={<Check />}
 							onClick={handleReserveWish}
 							disabled={
