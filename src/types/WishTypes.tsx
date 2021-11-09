@@ -34,6 +34,7 @@ export interface WishWithDrawData extends Wish {
 export interface WishesListProps {
 	wishesList: WishWithDrawData[];
 	viewMode: 'creator' | 'guest';
+	allWishes?: boolean;
 	setReservedStatus?: ReservationStatusSetterType;
 	setWishAsDone?: WishDoneSetterType;
 	inModal?: boolean;

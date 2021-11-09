@@ -80,7 +80,8 @@ export const ShoppingList: React.FC = () => {
 				(shoppingList.length > 0 ? (
 					<WishesList
 						wishesList={sortWishes(populatedShoppingList!)}
-						viewMode="guest"
+                        viewMode="guest"
+                        allWishes={true}
 						setReservedStatus={handleSetReservationStatus}
 						setWishAsDone={handleSetWishAsDone}
 					/>

@@ -19,6 +19,7 @@ const TODAY = new Date().getTime();
 export const WishesList: React.FC<WishesListProps> = ({
 	wishesList,
 	viewMode,
+	allWishes,
 	setReservedStatus,
 	setWishAsDone,
 	inModal,
@@ -31,11 +32,12 @@ export const WishesList: React.FC<WishesListProps> = ({
 
 	const currentWishes = wishesList.filter(wish => {
 		const updateDate = new Date(wish.updatedAt);
-		const isOutdated = updateDate.getTime() + 30 * DAY < TODAY;
-		return !(isOutdated && (wish.reserved || wish.done));
+		const isOutdated = updateDate.getTime() + 60 * DAY < TODAY;
+		return !(isOutdated || wish.reserved || wish.done);
 	});
 	const outdatedWishesCount = wishesList.length - currentWishes.length;
-	const wishesToDisplay = showOldWishes ? wishesList : currentWishes;
+	const wishesToDisplay =
+		showOldWishes || allWishes ? wishesList : currentWishes;
 
 	const dispatch = useDispatch();
 	const handleDeleteWish = (wishId: string, wishTitle: string) => {
@@ -92,19 +94,21 @@ export const WishesList: React.FC<WishesListProps> = ({
 					/>
 				))}
 			</Grid>
-			<Box textAlign='center' marginY={3}>
-				{outdatedWishesCount > 0 && (
-					<Button
-						variant='contained'
-						color={showOldWishes ? 'secondary' : 'primary'}
-						startIcon={<History />}
-						onClick={toggleOldWishes}
-					>
-						{showOldWishes ? 'Ukryj' : 'Pokaż'} starsze prezenty (
-						{outdatedWishesCount})
-					</Button>
-				)}
-			</Box>
+			{!allWishes && (
+				<Box textAlign='center' marginY={3}>
+					{outdatedWishesCount > 0 && (
+						<Button
+							variant='contained'
+							color={showOldWishes ? 'secondary' : 'primary'}
+							startIcon={<History />}
+							onClick={toggleOldWishes}
+						>
+							{showOldWishes ? 'Ukryj' : 'Pokaż'} starsze prezenty
+							({outdatedWishesCount})
+						</Button>
+					)}
+				</Box>
+			)}
 		</>
 	);
 };
