@@ -141,7 +141,7 @@ export const Login: React.FC = () => {
 				<Box mt={2} mx='auto'>
 					<GoogleLogin
 						clientId='529166639237-fm73lim5b6r7tmeg960rv98dde5s1j9j.apps.googleusercontent.com'
-						buttonText='Login'
+						buttonText='Zaloguj się kontem Google'
 						onSuccess={responseGoogle}
 						onFailure={responseGoogle}
 						cookiePolicy={'single_host_origin'}
