@@ -70,6 +70,14 @@ export const Login: React.FC = () => {
 		console.log(res);
 	};
 
+	const googleLoginSuccess = (res: any) => {
+		const googleIdToken = res.getAuthResponse().id_token;
+		dispatch({
+			type: watcherTypes.WATCH_LOGIN_WITH_GOOGLE,
+			payload: { googleIdToken },
+		});
+	};
+
 	useEffect(() => {
 		if (!errorMessage && userId) {
 			const targetLocation = location.search.split('?target=')[1] || '';
@@ -140,9 +148,9 @@ export const Login: React.FC = () => {
 				</Box>
 				<Box mt={2} mx='auto'>
 					<GoogleLogin
-						clientId='529166639237-fm73lim5b6r7tmeg960rv98dde5s1j9j.apps.googleusercontent.com'
+						clientId='529166639237-o43kmts0h9t4b3mc3irpikkh0ejeuk8q.apps.googleusercontent.com'
 						buttonText='Zaloguj się kontem Google'
-						onSuccess={responseGoogle}
+						onSuccess={googleLoginSuccess}
 						onFailure={responseGoogle}
 						cookiePolicy={'single_host_origin'}
 					/>
