@@ -342,11 +342,16 @@ export const WishBox: React.FC<WishBoxProps> = ({
 						style={{ fontSize: '0.7rem', margin: '1rem' }}
 					>
 						Zaktualizowano:{' '}
-						{(wish.updatedAt as Date).toLocaleDateString('pl', {
-							day: 'numeric',
-							month: 'long',
-							year: 'numeric',
-						})}
+						{typeof wish.updatedAt === 'string'
+							? wish.updatedAt
+							: (wish.updatedAt as Date).toLocaleDateString(
+									'pl',
+									{
+										day: 'numeric',
+										month: 'long',
+										year: 'numeric',
+									}
+							  )}
 					</Typography>
 				)}
 			</Styled.WishCard>

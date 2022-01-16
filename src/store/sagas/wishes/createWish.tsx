@@ -65,7 +65,7 @@ export function* createWish(action: { type: string; payload: WishInput }) {
 		}
 		let reducerPayload: reducerPayload = {
 			...action.payload,
-			updatedAt: responseData.updatedAt as Date,
+			updatedAt: new Date(parseInt(responseData.updatedAt)),
 		};
 		if (newWishImgUrl) {
 			reducerPayload = { ...reducerPayload, imageUrl: newWishImgUrl };
