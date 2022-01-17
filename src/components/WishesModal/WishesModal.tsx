@@ -17,6 +17,7 @@ import { State } from "../../types/State";
 import {
     ReservationStatusSetterType,
     ReservationPayload,
+    WishDoneSetterType,
 } from "../../types/Reservations";
 import { Wish } from "../../types/WishTypes";
 
@@ -89,6 +90,23 @@ export const WishesModal: React.FC<WishesModalProps> = ({
         });
     };
 
+    const handleSetWishAsDone: WishDoneSetterType = ({ _id, title, done }) => {
+        setWishesList((prev) => {
+            const updatedWishes = prev!.map((wish) => {
+                if(wish._id !== _id) {
+                    return wish
+                } else {
+                    return {...wish, done}
+                }
+            })
+           return updatedWishes
+        })
+		dispatch({
+			type: watcherTypes.WATCH_SET_WISH_DONE,
+			payload: { wishId: _id, wishTitle: title, done },
+		});
+	};
+
     // Loading check
     const loadingState = useSelector((state: State) => state.loading);
     const isLoading =
@@ -108,6 +126,7 @@ export const WishesModal: React.FC<WishesModalProps> = ({
                     wishesList={wishesList}
                     viewMode="guest"
                     setReservedStatus={handleSetReservationStatus}
+                    setWishAsDone={handleSetWishAsDone}
                     inModal={true}
                 />
             ) : (

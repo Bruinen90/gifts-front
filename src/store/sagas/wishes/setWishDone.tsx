@@ -31,8 +31,9 @@ export function* setWishDone(action: {
 			});
 			yield put(
 				actionCreators.setSuccess({
-					message: `Prezent "${wishTitle}" został oznaczony jako ${!done &&
-						'nie'} wręczony.`,
+					message: `Prezent "${wishTitle}" został oznaczony jako ${
+						done ? '' : 'nie'
+					} wręczony.`,
 				})
 			);
 		} else {

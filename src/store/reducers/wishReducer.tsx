@@ -164,6 +164,7 @@ export default (state: WishState = {}, action: Action) => {
                     if(wish._id !== action.payload.wishId) {
                         return wish
                     }
+                    console.log('set wish done', wish)
                     return {
                         ...wish,
                         done: action.payload.done,
