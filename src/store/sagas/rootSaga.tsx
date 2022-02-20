@@ -25,6 +25,7 @@ import { unsubscribe } from './auth/unsubscribe';
 import { tokenVerification } from './auth/tokenVerification';
 import { setWishDone } from './wishes/setWishDone';
 import { loginWithGoogle } from './auth/loginWithGoogle';
+import { fetchUserNotifications } from './notifications/fetchUserNotifications';
 
 export default function* rootSaga() {
 	yield all([
@@ -70,5 +71,9 @@ export default function* rootSaga() {
 		yield takeLatest(watcherTypes.WATCH_AUTO_LOGIN_USER, tokenVerification),
 		yield takeLatest(watcherTypes.WATCH_SET_WISH_DONE, setWishDone),
 		yield takeLatest(watcherTypes.WATCH_LOGIN_WITH_GOOGLE, loginWithGoogle),
+		yield takeLatest(
+			watcherTypes.WATCH_FETCH_USER_NOTIFICATIONS,
+			fetchUserNotifications
+		),
 	]);
 }

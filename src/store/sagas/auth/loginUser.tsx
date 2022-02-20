@@ -12,6 +12,7 @@ import { fetchUserWishes } from '../wishes/fetchUserWishes';
 import { fetchUserInvitations } from '../friends/fetchUserInvitations';
 import { fetchUserFriends } from '../friends/fetchUserFriends';
 import { fetchShoppingList } from '../wishes/fetchShoppingList';
+import { fetchUserNotifications } from '../notifications/fetchUserNotifications';
 
 export function* loginUser(action: {
 	type: string;
@@ -53,8 +54,9 @@ export function* loginUser(action: {
 		yield fetchUserInvitations();
 		yield fetchUserFriends();
 		yield fetchShoppingList();
+		yield fetchUserNotifications();
 	} catch (err) {
-		console.log("ERROR DURING LOGIN!!!!!!!!!!")
+		console.log('ERROR DURING LOGIN!!!!!!!!!!');
 		yield put({
 			type: actionTypes.USER_LOGIN_FAILED,
 			payload: { message: err.response.data.errors[0].message },

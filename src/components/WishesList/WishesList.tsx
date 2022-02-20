@@ -32,7 +32,7 @@ export const WishesList: React.FC<WishesListProps> = ({
 
 	const currentWishes = wishesList.filter(wish => {
 		const updateDate = new Date(wish.updatedAt);
-		const isOutdated = updateDate.getTime() + 60 * DAY < TODAY;
+		const isOutdated = updateDate.getTime() + 120 * DAY < TODAY;
 		return !(isOutdated || wish.reserved || wish.done);
 	});
 	const outdatedWishesCount = wishesList.length - currentWishes.length;
