@@ -6,7 +6,7 @@ import * as actionCreators from '../../actions/actionCreators';
 export function* fetchUserNotifications() {
 	if (axios.defaults.headers.common['Authorization']) {
 		const graphqlQuery = {
-			query: `{getUserNotifications { type content createdAt }}`,
+			query: `{getUserNotifications { type content read createdAt }}`,
 		};
 		yield put(
 			actionCreators.setLoading({

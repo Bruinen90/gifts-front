@@ -12,6 +12,14 @@ export default (
 				...state,
 				notifications: [...state.notifications, ...action.payload],
 			};
+		case actionTypes.SET_ALL_NOTIFICATIONS_AS_READ:
+			return {
+				...state,
+				notifications: state.notifications.map(notification => ({
+					...notification,
+					read: true,
+				})),
+			};
 		default:
 			return state;
 	}

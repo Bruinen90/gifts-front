@@ -9,4 +9,5 @@ export interface Notification {
 	type: NotificationType;
 	content: string;
 	createdAt: Date;
+	read: boolean;
 }

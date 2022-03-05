@@ -72,6 +72,7 @@ export const NavBar: React.FC = () => {
 								color='inherit'
 								aria-label='powiadomienia'
 								onClick={handleOpenNotifications}
+								disabled={notificationsArray.length === 0}
 							>
 								<Badge
 									badgeContent={notificationsArray.length}

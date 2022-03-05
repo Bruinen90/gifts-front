@@ -21,3 +21,9 @@ export const NotificationDate = styled('span')({
 	fontSize: '0.7rem',
 	textAlign: 'right',
 });
+
+export const BottomRow = styled('div')(({ theme }) => ({
+	textAlign: 'right',
+	margin: '1rem',
+	color: theme.palette.primary.main,
+}));

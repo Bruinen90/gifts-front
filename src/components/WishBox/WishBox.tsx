@@ -57,7 +57,6 @@ export const WishBox: React.FC<WishBoxProps> = ({
 	drawData,
 	oneColumn,
 }) => {
-	console.log('box rerender', wish.title, wish.done);
 	const history = useHistory();
 	const loggedUserId = useSelector((state: State) => state.auth._id);
 
