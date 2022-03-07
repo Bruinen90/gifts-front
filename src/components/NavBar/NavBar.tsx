@@ -5,17 +5,9 @@ import { useSelector } from 'react-redux';
 import { State } from '../../types/State';
 
 // MUI
-import {
-	AppBar,
-	Box,
-	IconButton,
-	Theme,
-	Hidden,
-	Badge,
-} from '@material-ui/core';
+import { AppBar, Box, IconButton, Hidden, Badge } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 //Styles
 import * as Styled from './stylesNavBar';
@@ -28,10 +20,6 @@ import { LogoBox } from '../LogoBox/LogoBox';
 import NotificationsBox from '../NotificationsBox/NotificationsBox';
 
 export const NavBar: React.FC = () => {
-	const minScreen = useMediaQuery((theme: Theme) =>
-		theme.breakpoints.up('lg')
-	);
-
 	const username = useSelector((state: State) => state.auth.username);
 
 	const [navOpened, setNavOpened] = useState(false);
@@ -61,49 +49,48 @@ export const NavBar: React.FC = () => {
 				<LogoBox />
 
 				<Box display='flex' alignItems='center'>
-					{minScreen ? (
+					<Hidden mdDown>
 						<NavigationList
 							view='horizontal'
 							userLoggedIn={username !== undefined}
 						/>
-					) : (
-						<>
-							<IconButton
-								color='inherit'
-								aria-label='powiadomienia'
-								onClick={handleOpenNotifications}
-								disabled={notificationsArray.length === 0}
-							>
-								<Badge
-									badgeContent={notificationsArray.length}
-									color='secondary'
-								>
-									<NotificationsActiveIcon />
-								</Badge>
-							</IconButton>
-							<IconButton
-								edge='start'
-								color='inherit'
-								aria-label='menu'
-								onClick={handleToggleDrawer}
-							>
-								<MenuIcon />
-							</IconButton>
-							<NotificationsBox
-								opened={notificationsOpened}
-								handleClose={handleCloseNotifications}
-								anchorEl={notificationsAnchoEl}
-								notifications={notificationsArray}
-							/>
-							<NavigationDrawer
-								opened={navOpened}
-								toggleNavigationDrawer={handleToggleDrawer}
-								username={username}
-							/>
-						</>
-					)}
+					</Hidden>
+					<IconButton
+						color='inherit'
+						aria-label='powiadomienia'
+						onClick={handleOpenNotifications}
+						disabled={notificationsArray.length === 0}
+					>
+						<Badge
+							badgeContent={notificationsArray.length}
+							color='secondary'
+						>
+							<NotificationsActiveIcon />
+						</Badge>
+					</IconButton>
+					<NotificationsBox
+						opened={notificationsOpened}
+						handleClose={handleCloseNotifications}
+						anchorEl={notificationsAnchoEl}
+						notifications={notificationsArray}
+					/>
 					<Hidden mdDown>
 						<SignInUpOut username={username} variant='horizontal' />
+					</Hidden>
+					<Hidden lgUp>
+						<IconButton
+							edge='start'
+							color='inherit'
+							aria-label='menu'
+							onClick={handleToggleDrawer}
+						>
+							<MenuIcon />
+						</IconButton>
+						<NavigationDrawer
+							opened={navOpened}
+							toggleNavigationDrawer={handleToggleDrawer}
+							username={username}
+						/>
 					</Hidden>
 				</Box>
 			</Styled.ToolbarCont>

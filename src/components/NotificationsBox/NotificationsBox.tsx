@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import * as watcherTypes from '../../store/actions/watcherTypes';
 
 // Types
@@ -47,9 +48,42 @@ const NotificationsBox: React.FC<NotificationsBoxProps> = ({
 	notifications,
 }) => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const handleClickSetAllAsRead = () => {
 		dispatch({ type: watcherTypes.WATCH_SET_ALL_NOTIFICATIONS_AS_READ });
+	};
+
+	const notificationClicked = ({
+		notificationType,
+		notificationId,
+	}: {
+		notificationType: NotificationType;
+		notificationId: string;
+	}) => {
+		console.log(notificationType);
+		// Change notification status to "READ" in saga/db
+		let target = '';
+		switch (notificationType) {
+			case 'drawResults':
+				target = '/moje-losowania';
+				break;
+			case 'inviatationAccept':
+				target = '/moi-znajomi';
+				break;
+			case 'invitation':
+				target = '/moi-znajomi';
+				break;
+			case 'newDraw':
+				target = '/moje-losowania';
+				break;
+			case 'reservation':
+				target = '/moje-zyczenia';
+				break;
+			default:
+				target = '';
+		}
+		history.push(target);
 	};
 	return (
 		<Styled.Wrapper
@@ -62,9 +96,15 @@ const NotificationsBox: React.FC<NotificationsBoxProps> = ({
 				.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
 				.map(notification => (
 					<Styled.NotificationRow
-						key={notification.createdAt.toString()}
+						key={notification._id}
 						divider={true}
 						style={{ opacity: notification.read ? 0.33 : 1 }}
+						onClick={() =>
+							notificationClicked({
+								notificationType: notification.type,
+								notificationId: notification._id,
+							})
+						}
 					>
 						{generateIconForNotificationType(notification.type)}
 						<div>
