@@ -63,6 +63,10 @@ const NotificationsBox: React.FC<NotificationsBoxProps> = ({
 	}) => {
 		console.log(notificationType);
 		// Change notification status to "READ" in saga/db
+		dispatch({
+			type: watcherTypes.WATCH_SET_NOTIFICATION_AS_READ,
+			payload: { notificationId: notificationId },
+		});
 		let target = '';
 		switch (notificationType) {
 			case 'drawResults':
@@ -84,6 +88,7 @@ const NotificationsBox: React.FC<NotificationsBoxProps> = ({
 				target = '';
 		}
 		history.push(target);
+		handleClose();
 	};
 	return (
 		<Styled.Wrapper

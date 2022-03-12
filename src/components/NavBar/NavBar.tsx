@@ -40,8 +40,10 @@ export const NavBar: React.FC = () => {
 		setNotificationsAnchoEl(null);
 	};
 
-	const notificationsArray = useSelector(
-		(state: State) => state.notifications.notifications
+	const notificationsArray = useSelector((state: State) =>
+		state.notifications.notifications.filter(
+			notification => !notification.read
+		)
 	);
 	return (
 		<AppBar position='sticky'>

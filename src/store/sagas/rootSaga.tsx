@@ -27,6 +27,7 @@ import { setWishDone } from './wishes/setWishDone';
 import { loginWithGoogle } from './auth/loginWithGoogle';
 import { fetchUserNotifications } from './notifications/fetchUserNotifications';
 import { setAllNotificationsAsRead } from './notifications/setAllNotificationsAsRead';
+import { setNotificationAsRead } from './notifications/setNotificationAsRead';
 
 export default function* rootSaga() {
 	yield all([
@@ -79,6 +80,10 @@ export default function* rootSaga() {
 		yield takeLatest(
 			watcherTypes.WATCH_SET_ALL_NOTIFICATIONS_AS_READ,
 			setAllNotificationsAsRead
+		),
+		yield takeLatest(
+			watcherTypes.WATCH_SET_NOTIFICATION_AS_READ,
+			setNotificationAsRead
 		),
 	]);
 }

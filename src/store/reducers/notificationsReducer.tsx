@@ -20,6 +20,17 @@ export default (
 					read: true,
 				})),
 			};
+		case actionTypes.SET_NOTIFICATION_AS_READ:
+			return {
+				...state,
+				notifications: state.notifications.map(notification => {
+					if (notification._id !== action.payload.notificationId) {
+						return notification;
+					} else {
+						return { ...notification, read: true };
+					}
+				}),
+			};
 		default:
 			return state;
 	}
