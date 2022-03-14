@@ -8,18 +8,18 @@ export function* setAllNotificationsAsRead() {
 		const graphqlQuery = {
 			query: `mutation {setAllUsetNotificationsAsRead {success}}`,
 		};
-		yield put(
-			actionsCreators.setLoading({
-				category: 'notifications',
-				type: 'edited-record',
-			})
-		);
+		// yield put(
+		// 	actionsCreators.setLoading({
+		// 		category: 'notifications',
+		// 		type: 'edited-record',
+		// 	})
+		// );
 		try {
 			const response = yield axios.post('graphql', graphqlQuery);
 			if (!response.data.data) {
 				throw new Error();
 			}
-			if (response.data.data.success) {
+			if (response.data.data.setAllUsetNotificationsAsRead.success) {
 				yield put({ type: actionsTypes.SET_ALL_NOTIFICATIONS_AS_READ });
 			}
 		} catch (err) {

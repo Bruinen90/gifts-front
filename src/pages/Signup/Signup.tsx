@@ -153,8 +153,8 @@ export const Signup: React.FC = () => {
                 mutation {
                     createUser(userInput: 
                         {
-                            username: "${formData.userName.value}", 
-                            email: "${formData.email.value}", 
+                            username: "${formData.userName.value.trim()}", 
+                            email: "${formData.email.value.trim()}", 
                             password: "${formData.password.value}"
                         }
                     ) 
@@ -167,14 +167,13 @@ export const Signup: React.FC = () => {
 		try {
 			const response = await axios.post('graphql', graphqlQuery);
 			if (response.status < 400) {
-				console.log('RESPONSE OK');
 				setSignupEffect({
 					alertVisible: true,
 					success: true,
 					message:
 						'Poprawnie utworzono użytkownika, teraz możesz się zalogować',
 				});
-				setTimeout(() => history.push('/logowanie'), 3000);
+				setTimeout(() => history.push('/logowanie'), 2000);
 			}
 		} catch (error) {
 			let errorMessage;

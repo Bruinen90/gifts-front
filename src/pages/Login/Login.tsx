@@ -62,7 +62,10 @@ export const Login: React.FC = () => {
 		event.preventDefault();
 		dispatch({
 			type: watcherTypes.WATCH_LOGIN_USER,
-			payload: { username: formData.user, password: formData.password },
+			payload: {
+				username: formData.user.trim(),
+				password: formData.password,
+			},
 		});
 	};
 
@@ -96,9 +99,12 @@ export const Login: React.FC = () => {
 					value={formData.user}
 					onChange={handleChange('user')}
 					margin='normal'
-					error={errorMessage === 'User not found'}
+					error={
+						errorMessage === 'User not found, please, check login'
+					}
 					helperText={
-						errorMessage === 'User not found' &&
+						errorMessage ===
+							'User not found, please, check login' &&
 						'Użytkownik nie istnieje'
 					}
 				/>

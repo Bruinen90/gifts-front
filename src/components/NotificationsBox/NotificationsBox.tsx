@@ -52,6 +52,7 @@ const NotificationsBox: React.FC<NotificationsBoxProps> = ({
 
 	const handleClickSetAllAsRead = () => {
 		dispatch({ type: watcherTypes.WATCH_SET_ALL_NOTIFICATIONS_AS_READ });
+		handleClose();
 	};
 
 	const notificationClicked = ({
@@ -61,8 +62,6 @@ const NotificationsBox: React.FC<NotificationsBoxProps> = ({
 		notificationType: NotificationType;
 		notificationId: string;
 	}) => {
-		console.log(notificationType);
-		// Change notification status to "READ" in saga/db
 		dispatch({
 			type: watcherTypes.WATCH_SET_NOTIFICATION_AS_READ,
 			payload: { notificationId: notificationId },
