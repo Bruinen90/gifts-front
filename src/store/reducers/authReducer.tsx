@@ -24,8 +24,8 @@ export default (state: AuthState = {}, action: Action) => {
 			return {
 				loginError: action.payload.message,
 			};
-		case actionTypes.USER_LOGOUT:
-			return {};
+		// case actionTypes.USER_LOGOUT:
+		// 	return {};
 		case actionTypes.CHANGE_USER_EMAIL:
 			return {
 				...state,

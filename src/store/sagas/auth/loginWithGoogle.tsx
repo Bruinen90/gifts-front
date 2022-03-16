@@ -9,6 +9,7 @@ import { fetchUserWishes } from '../wishes/fetchUserWishes';
 import { fetchUserInvitations } from '../friends/fetchUserInvitations';
 import { fetchUserFriends } from '../friends/fetchUserFriends';
 import { fetchShoppingList } from '../wishes/fetchShoppingList';
+import { fetchUserNotifications } from '../notifications/fetchUserNotifications';
 
 export function* loginWithGoogle(action: { type: string; payload: any }) {
 	const { payload } = action;
@@ -48,6 +49,7 @@ export function* loginWithGoogle(action: { type: string; payload: any }) {
 		yield fetchUserInvitations();
 		yield fetchUserFriends();
 		yield fetchShoppingList();
+		yield fetchUserNotifications();
 	} catch (err) {
 		yield put({
 			type: actionTypes.USER_LOGIN_FAILED,
