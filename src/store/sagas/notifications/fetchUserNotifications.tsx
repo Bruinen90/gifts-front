@@ -22,6 +22,7 @@ export function* fetchUserNotifications() {
 			if (!responseNotifications) {
 				throw new Error();
 			}
+			console.log('fetched notifications', responseNotifications);
 			yield put({
 				type: actionTypes.SET_USER_NOTIFICATIONS,
 				// @ts-ignore

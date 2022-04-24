@@ -48,7 +48,8 @@ export function* setInvitationResponse(action: {
 				responseMessage = `Anulowano zaproszenie użytkownika ${invitedUser}`;
 				break;
 			default:
-				responseMessage = '';
+				responseMessage =
+					'Wystąpił błąd podczas zapisywania odpowiedzi na zaproszenie';
 		}
 		yield put(
 			actionCreators.setSuccess({
@@ -57,6 +58,12 @@ export function* setInvitationResponse(action: {
 				message: responseMessage,
 			})
 		);
+		yield put({
+			type: actionTypes.SET_NOTIFICATION_AS_READ_BY_CONTENT,
+			payload: {
+				searchedPhrase: `Użytkownik ${invitedUser}`,
+			},
+		});
 	} catch (error) {
 		yield put({
 			type: actionTypes.SET_ERROR,
