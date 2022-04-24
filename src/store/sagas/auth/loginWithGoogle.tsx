@@ -13,7 +13,6 @@ import { fetchUserNotifications } from '../notifications/fetchUserNotifications'
 
 export function* loginWithGoogle(action: { type: string; payload: any }) {
 	const { payload } = action;
-	console.log(payload);
 	const graphqlQuery = {
 		query: `
             {
@@ -34,7 +33,6 @@ export function* loginWithGoogle(action: { type: string; payload: any }) {
 	try {
 		const response = yield axios.post('graphql', graphqlQuery);
 		const loginData = response.data.data.loginWithGoogle;
-		console.log(loginData);
 		const { token } = loginData;
 		yield localStorage.setItem('token', token);
 		yield put({

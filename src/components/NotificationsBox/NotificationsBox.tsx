@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as watcherTypes from '../../store/actions/watcherTypes';
+import * as actionTypes from '../../store/actions/actionTypes';
+import socket from '../../socket';
+// import openSocket from 'socket.io-client';
 
 // Types
 import { Notification, NotificationType } from '../../types/Notification';
@@ -49,6 +52,22 @@ const NotificationsBox: React.FC<NotificationsBoxProps> = ({
 }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	// Websocket for notifications
+	useEffect(() => {
+		socket.auth = { token: localStorage.getItem('token') };
+		socket.connect();
+		socket.on('notification', data => {
+			if (data.action === 'new') {
+				dispatch({
+					type: actionTypes.SET_USER_NOTIFICATIONS,
+					payload: [data.notification],
+				});
+			}
+		});
+		return () => {
+			socket.off('notification');
+		};
+	}, [dispatch]);
 
 	const handleClickSetAllAsRead = () => {
 		dispatch({ type: watcherTypes.WATCH_SET_ALL_NOTIFICATIONS_AS_READ });
