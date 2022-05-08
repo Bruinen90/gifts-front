@@ -6,7 +6,7 @@ import * as actionCreators from '../../actions/actionCreators';
 export function* fetchUserNotifications() {
 	if (axios.defaults.headers.common['Authorization']) {
 		const graphqlQuery = {
-			query: `{getUserNotifications { _id type content read createdAt }}`,
+			query: `{getUserNotifications { _id type content read createdAt connectedRecordId }}`,
 		};
 		yield put(
 			actionCreators.setLoading({
@@ -19,10 +19,10 @@ export function* fetchUserNotifications() {
 			const response = yield axios.post('graphql', graphqlQuery);
 			const responseNotifications =
 				response.data.data.getUserNotifications;
+			console.log(responseNotifications);
 			if (!responseNotifications) {
 				throw new Error();
 			}
-			console.log('fetched notifications', responseNotifications);
 			yield put({
 				type: actionTypes.SET_USER_NOTIFICATIONS,
 				// @ts-ignore
@@ -32,6 +32,7 @@ export function* fetchUserNotifications() {
 				})),
 			});
 		} catch (error) {
+			console.log(error);
 			yield put({
 				type: actionTypes.SET_ERROR,
 				payload: {

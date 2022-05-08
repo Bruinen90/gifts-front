@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as watcherTypes from "../../store/actions/watcherTypes";
 
@@ -31,6 +31,11 @@ export const Friends: React.FC = () => {
     const friendsList = useSelector((state: State) => state.friends.friends);
     const loggedUser = useSelector((state: State) => state.auth as User);
     const loadingStatus = useSelector((state: State) => state.loading);
+
+    useEffect(() => {
+        dispatch({type: watcherTypes.WATCH_GET_INVITATIONS});
+        dispatch({type: watcherTypes.WATCH_FETCH_USER_FRIENDS});
+    }, [dispatch])
 
     const loadingFriends =
         loadingStatus.category === "friends" &&

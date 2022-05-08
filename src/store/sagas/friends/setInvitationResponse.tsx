@@ -1,7 +1,10 @@
-import { put } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import axios from 'axios';
 import * as actionTypes from '../../actions/actionTypes';
 import * as actionCreators from '../../actions/actionCreators';
+import { setNotificationAsRead } from '../notifications/setNotificationAsRead';
+import { State } from '../../../types/State';
+import { Notification } from '../../../types/Notification';
 
 export function* setInvitationResponse(action: {
 	type: string;
@@ -9,6 +12,7 @@ export function* setInvitationResponse(action: {
 		invitationId: string;
 		decision: 'accept' | 'reject' | 'cancel';
 		invitedUser: string;
+		connectedNotificationId: string;
 	};
 }) {
 	const { invitationId, decision, invitedUser } = action.payload;
@@ -58,12 +62,23 @@ export function* setInvitationResponse(action: {
 				message: responseMessage,
 			})
 		);
-		yield put({
-			type: actionTypes.SET_NOTIFICATION_AS_READ_BY_CONTENT,
-			payload: {
-				searchedPhrase: `Użytkownik ${invitedUser}`,
-			},
-		});
+		if (action.payload.decision !== 'cancel') {
+			const notifications = yield select(
+				(state: State) => state.notifications.notifications
+			);
+			const conntectedNotification = notifications.find(
+				(notification: Notification) =>
+					notification.connectedRecordId === invitationId.toString()
+			);
+			if (conntectedNotification) {
+				yield setNotificationAsRead({
+					type: actionTypes.SET_NOTIFICATION_AS_READ,
+					payload: {
+						notificationId: conntectedNotification._id,
+					},
+				});
+			}
+		}
 	} catch (error) {
 		yield put({
 			type: actionTypes.SET_ERROR,

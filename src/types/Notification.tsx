@@ -11,4 +11,5 @@ export interface Notification {
 	content: string;
 	createdAt: Date;
 	read: boolean;
+	connectedRecordId?: string;
 }

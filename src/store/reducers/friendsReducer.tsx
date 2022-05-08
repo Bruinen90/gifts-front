@@ -56,7 +56,6 @@ export default (state: FriendsState = {}, action: Action) => {
 			};
 		case actionTypes.SET_INVITATION_DECISION:
 			const { invitationId, decision } = action.payload;
-			console.log(action.payload);
 			const oldState = { ...state };
 			if (decision === 'accept') {
 				const newFriend = state.invitations!.received!.find(

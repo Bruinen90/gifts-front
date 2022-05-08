@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { put } from 'redux-saga/effects';
 import * as actionsTypes from '../../actions/actionTypes';
-import * as actionsCreators from '../../actions/actionCreators';
 
 export function* setNotificationAsRead(action: {
 	type: string;
 	payload: { notificationId: string };
 }) {
 	const { notificationId } = action.payload;
+	console.log('SETTING NOTIFICACIN AS READ', action.payload);
 	try {
 		const graphQLquery = {
 			query: `mutation {setNotificationAsRead(notificationId: "${notificationId}") {success}}`,

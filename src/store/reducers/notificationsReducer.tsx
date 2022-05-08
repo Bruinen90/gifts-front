@@ -31,21 +31,6 @@ export default (
 					}
 				}),
 			};
-		case actionTypes.SET_NOTIFICATION_AS_READ_BY_CONTENT:
-			return {
-				...state,
-				notifications: state.notifications.map(notification => {
-					if (
-						!notification.content.includes(
-							action.payload.searchedPhrase
-						)
-					) {
-						return notification;
-					} else {
-						return { ...notification, read: true };
-					}
-				}),
-			};
 		default:
 			return state;
 	}
