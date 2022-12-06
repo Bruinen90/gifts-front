@@ -37,8 +37,10 @@ import * as Styled from './stylesApp';
 // Types
 import { State } from './types/State';
 
-axios.defaults.baseURL = 'http://localhost:8080';
-// axios.defaults.baseURL = 'https://bez-niespodzianek.herokuapp.com/';
+axios.defaults.baseURL =
+	process.env.NODE_ENV === 'development'
+		? 'http://ec2-3-83-205-41.compute-1.amazonaws.com:8080'
+		: 'https://ec2-3-83-205-41.compute-1.amazonaws.com:8080';
 
 const App = () => {
 	const dispatch = useDispatch();
