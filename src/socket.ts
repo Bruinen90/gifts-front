@@ -2,8 +2,8 @@ import { io } from 'socket.io-client';
 
 const socket = io(
 	process.env.NODE_ENV === 'development'
-		? 'http://ncmatt.dedyn.io:8880/'
-		: 'http://ncmatt.dedyn.io:8880/',
+		? 'https://bez-niespodzianek-api.onrender.com'
+		: 'https://bez-niespodzianek-api.onrender.com',
 	{ autoConnect: false }
 );
 

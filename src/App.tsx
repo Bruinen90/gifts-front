@@ -39,8 +39,8 @@ import { State } from './types/State';
 
 axios.defaults.baseURL =
 	process.env.NODE_ENV === 'development'
-		? 'http://ncmatt.dedyn.io:8880/'
-		: 'http://ncmatt.dedyn.io:8880/';
+		? 'https://bez-niespodzianek-api.onrender.com'
+		: 'https://bez-niespodzianek-api.onrender.com';
 
 const App = () => {
 	const dispatch = useDispatch();
