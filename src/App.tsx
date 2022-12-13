@@ -39,8 +39,8 @@ import { State } from './types/State';
 
 axios.defaults.baseURL =
 	process.env.NODE_ENV === 'development'
-		? 'http://ec2-3-83-205-41.compute-1.amazonaws.com:8080'
-		: 'https://ec2-3-83-205-41.compute-1.amazonaws.com:8080';
+		? 'http://ncmatt.dedyn.io:8880/'
+		: 'http://ncmatt.dedyn.io:8880/';
 
 const App = () => {
 	const dispatch = useDispatch();
