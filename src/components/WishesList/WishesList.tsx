@@ -24,20 +24,29 @@ export const WishesList: React.FC<WishesListProps> = ({
 	setWishAsDone,
 	inModal,
 }) => {
-	const [showOldWishes, setShowOldWishes] = useState(false);
-
-	const toggleOldWishes = () => {
-		setShowOldWishes(prev => !prev);
-	};
-
 	const currentWishes = wishesList.filter(wish => {
 		const updateDate = new Date(wish.updatedAt);
 		const isOutdated = updateDate.getTime() + 120 * DAY < TODAY;
-		return !(isOutdated || wish.reserved || wish.done);
+		return !(isOutdated || wish.done);
 	});
+
+	const [showOldWishes, setShowOldWishes] = useState(false);
+	const [wishesToDisplay, setWishesToDisplay] = useState(currentWishes);
+
+	const toggleOldWishes = () => {
+		setWishesToDisplay(
+			showOldWishes
+				? currentWishes
+				: wishesList.sort((wishA, wishB) =>
+						wishA.updatedAt > wishB.updatedAt ? -1 : 1
+				  )
+		);
+		setShowOldWishes(prev => !prev);
+	};
+
 	const outdatedWishesCount = wishesList.length - currentWishes.length;
-	const wishesToDisplay =
-		showOldWishes || allWishes ? wishesList : currentWishes;
+	// const wishesToDisplay =
+	// 	showOldWishes || allWishes ? wishesList : currentWishes;
 
 	const dispatch = useDispatch();
 	const handleDeleteWish = (wishId: string, wishTitle: string) => {
